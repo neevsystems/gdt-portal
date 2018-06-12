@@ -3,6 +3,7 @@ const router 			= express.Router();
 
 const UserController 	= require('./controllers/UserController');
 const HomeController 	= require('./controllers/HomeController');
+const CalendarController 	= require('./controllers/CalendarController');
 
 const passport      	= require('passport');
 const path              = require('path');
@@ -21,6 +22,8 @@ router.put(     '/users',           passport.authenticate('jwt', {session:false}
 router.delete(  '/users',           passport.authenticate('jwt', {session:false}), UserController.remove);     // D
 router.post(    '/users/login',     UserController.login);
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
+
+router.get( '/Calendar',     CalendarController.getCalenderDetails);
 
 
 module.exports = router;
