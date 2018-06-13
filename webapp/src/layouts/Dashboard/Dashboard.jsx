@@ -11,8 +11,7 @@ import dashboardRoutes from "routes/dashboard.jsx";
 
 import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 
-import image from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import logo from "assets/img/gif-gdt-logo-1280.gif";
 
 const switchRoutes = (
   <Switch>
@@ -51,7 +50,7 @@ class App extends React.Component {
           routes={dashboardRoutes}
           logoText={"Neev Soft"}
           logo={logo}
-           image={image}
+           image={true}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color="blue"
