@@ -3,11 +3,10 @@ const router 			= express.Router();
 
 const UserController 	= require('./controllers/UserController');
 const HomeController 	= require('./controllers/HomeController');
-<<<<<<< HEAD
+
 const CalendarController 	= require('./controllers/CalendarController');
-=======
+
 const FileExchangeController=require('./controllers/FileExchange');
->>>>>>> 88f8ed4bd2adad639978bd728b27ed536fba7736
 
 const passport      	= require('passport');
 const path              = require('path');
