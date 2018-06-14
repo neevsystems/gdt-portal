@@ -45,7 +45,7 @@ class Calender extends React.Component {
             }}
              defaultDate={new Date()}
             navLinks= {true} // can click day/week names to navigate views
-            editable= {true}
+            contentHeight= {'auto'}
             eventLimit= {true} // allow "more" link when too many events
             events = {this.state.events}	
         />
