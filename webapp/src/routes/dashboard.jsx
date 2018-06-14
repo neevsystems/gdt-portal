@@ -21,6 +21,7 @@ const dashboardRoutes = [
     sidebarName: "Home Page",
     navbarName: "Home Desk",
     icon: Home,
+    hide: true,
     component: LandingView
   },
   {
@@ -76,7 +77,7 @@ const dashboardRoutes = [
     isLauncher: true,
     url: "http://www.google.com",
   },
-  { redirect: true, path: "/home", to: "/home/landingPage", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;
