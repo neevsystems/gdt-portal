@@ -1,13 +1,36 @@
 import React from "react";
-import { Grid } from "material-ui";
+import { Grid,Table, TableHead, TableRow,TableCell, TableBody  } from "material-ui";
 import {
   RegularCard,
- ItemGrid,Table
+ ItemGrid
 } from "components";
-
+import getAllUsers from '../../services/rosterService';
 
 
   class Roster extends React.Component {
+    constructor(props){
+      super(props);
+      this.state={
+        userList:[]
+      }
+
+      this.getUserList=this.getUserList.bind(this);
+    }
+    getUserList(){
+      var state=this;
+      getAllUsers().then(function (response) {
+        console.log(response);
+        
+        
+        state.setState({userList:response.data.users});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+    componentWillMount(){
+      this.getUserList();
+    }
   
     render() {
       return (
@@ -17,54 +40,37 @@ import {
           cardTitle="Simple Table"
           cardSubtitle="Here is a subtitle for this table"
           content={
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-              ]}
-            />
-          }
+            <Table>
+             <TableHead>
+             <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell >Email</TableCell>
+                <TableCell >Phone</TableCell>
+                <TableCell ></TableCell>
+          </TableRow>
+             </TableHead>
+             <TableBody>
+             {this.state.userList.map(function(n,key) {
+            return (
+              <TableRow key={key}>
+                <TableCell component="th" scope="row">
+                 {n.first+' '+n.last}
+                </TableCell>
+                <TableCell >{n.email}</TableCell>
+                <TableCell >{n.phone}</TableCell>
+                <TableCell>
+               
+                </TableCell>
+              </TableRow>
+            );
+          })}
+
+             </TableBody>
+          </Table>
+         }
         />
       </ItemGrid>
-      <ItemGrid xs={12} sm={12} md={12}>
-        <RegularCard
-          plainCard
-          cardTitle="Table on Plain Background"
-          cardSubtitle="Here is a subtitle for this table"
-          content={
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                [
-                  "4",
-                  "Philip Chaney",
-                  "$38,735",
-                  "Korea, South",
-                  "Overland Park"
-                ],
-                [
-                  "5",
-                  "Doris Greene",
-                  "$63,542",
-                  "Malawi",
-                  "Feldkirchen in Kärnten"
-                ],
-                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
-              ]}
-            />
-          }
-        />
-      </ItemGrid>
+         
     </Grid>
   );
 }
