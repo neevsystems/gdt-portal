@@ -28,6 +28,17 @@ const get = async function(req, res){
 }
 module.exports.get = get;
 
+const getall = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let users,err;
+    [err, users] = await to(User.findAll());
+    if(err) 
+        return ReE(res, err, 422);
+    else
+        return ReS(res, {users:users}, 200);
+}
+module.exports.getall = getall;
+
 const update = async function(req, res){
     let err, user, data
     user = req.user;

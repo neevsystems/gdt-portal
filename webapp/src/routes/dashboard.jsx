@@ -17,14 +17,14 @@ import {
 
 const dashboardRoutes = [
   {
-    path: "/home",
+    path: "/home/landingPage",
     sidebarName: "Home Page",
-    navbarName: "Home Page",
+    navbarName: "Home Desk",
     icon: Home,
     component: LandingView
   },
   {
-    path: "/servicedesk",
+    path: "/home/servicedesk",
     sidebarName: "Service Desk",
     navbarName: "Service Desk",
     icon: Dashboard,
@@ -32,14 +32,14 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   {
-    path: "/calender",
+    path: "/home/calender",
     sidebarName: "Calender",
     navbarName: "Calender",
     icon: Schedule,
     component: Calender
   },
   {
-    path: "/assetmanager",
+    path: "/home/assetmanager",
     sidebarName: "Asset Manager",
     navbarName: "Asset Manager",
     icon: Devices,
@@ -47,7 +47,7 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   {
-    path: "/helpcenter",
+    path: "/home/helpcenter",
     sidebarName: "Help center",
     navbarName: "Help center",
     icon: LiveHelp,
@@ -55,28 +55,28 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   {
-    path: "/fileexchange",
+    path: "/home/fileexchange",
     sidebarName: "File exchange",
     navbarName: "File exchange",
     icon: CreateNewFolder,
     component: FileExchange
   },
   {
-    path: "/roster",
+    path: "/home/roster",
     sidebarName: "Roster",
     navbarName: "Roster",
     icon: Person,
     component: Roster
   },
   {
-    path: "/monitoring",
+    path: "/home/monitoring",
     sidebarName: "Monitoring",
     navbarName: "Monitoring",
     icon: TrackChanges,
     isLauncher: true,
     url: "http://www.google.com",
   },
-  { redirect: true, path: "/", to: "/home", navbarName: "Redirect" }
+  { redirect: true, path: "/home", to: "/home/landingPage", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;
