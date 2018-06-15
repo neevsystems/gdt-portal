@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Back-end Node JS Server",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "author": "Neev Systems",
   "dependencies": {
@@ -25,5 +25,8 @@
     "serve-favicon": "~2.4.5",
     "serve-static": "^1.13.2",
     "validator": "^10.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }
