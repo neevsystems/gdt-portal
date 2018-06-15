@@ -7,9 +7,9 @@ const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport      = require('passport');
-
-const routes = require('./routes');
-const app = express();
+const path          = require('path');
+const routes        = require('./routes');
+const app           = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -48,12 +48,13 @@ app.use(function (req, res, next) {
 });
 
 app.use('/api', routes);
-
+app.use('/app', express.static(path.join(__dirname, '../webapp/build/')))
 app.use('/', function(req, res){
-	res.statusCode = 200;//send the appropriate status code
-	res.json({status:"success", message:"Parcel Pending API", data:{}})
+	res.redirect('/app');
 });
-
+app.use('/home', function(req, res){
+	res.redirect('/app');
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
