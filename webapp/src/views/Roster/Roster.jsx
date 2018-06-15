@@ -37,8 +37,8 @@ import getAllUsers from '../../services/rosterService';
     <Grid container>
       <ItemGrid xs={12} sm={12} md={12}>
         <RegularCard
-          cardTitle="Simple Table"
-          cardSubtitle="Here is a subtitle for this table"
+          cardTitle="User"
+          
           content={
             <Table>
              <TableHead>
@@ -46,7 +46,7 @@ import getAllUsers from '../../services/rosterService';
                 <TableCell>Name</TableCell>
                 <TableCell >Email</TableCell>
                 <TableCell >Phone</TableCell>
-                <TableCell ></TableCell>
+                <TableCell >Action</TableCell>
           </TableRow>
              </TableHead>
              <TableBody>
@@ -59,7 +59,7 @@ import getAllUsers from '../../services/rosterService';
                 <TableCell >{n.email}</TableCell>
                 <TableCell >{n.phone}</TableCell>
                 <TableCell>
-               
+               <button>edit</button>
                 </TableCell>
               </TableRow>
             );
