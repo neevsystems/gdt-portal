@@ -103,6 +103,14 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
                     label="Is Admin" />
                
                 </ItemGrid>
+                <ItemGrid xs={12} sm={12} md={6}>
+                <FormControlLabel style={{'margin-top': '34px'}}
+                    control={
+                        <Checkbox color="default" />
+                    }
+                    label="Is Active" />
+               
+                </ItemGrid>
               </Grid>
               
               
