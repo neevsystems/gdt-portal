@@ -12,13 +12,13 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 
 import logo from "assets/img/gif-gdt-logo-1280.gif";
-
+import {login} from '../../services/rosterService.js';
 const switchRoutes = (
-  <Switch>
+  <Switch> 
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
-      return <Route path={prop.path} component={prop.component} key={key} />;
+    return (<Route path={prop.path} component={prop.component} key={key} />);
     })}
   </Switch>
 );
@@ -41,6 +41,15 @@ class App extends React.Component {
   }
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
+  }
+  componentWillMount(){
+    login().then(function (response) {
+      console.log(response); 
+      sessionStorage.setItem('token', response.data.token);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   render() {
     const { classes, ...rest } = this.props;
