@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Back-end Node JS Server",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon --watch . --watch ./middleware --watch ./models --watch ./services --watch ./controllers   index.js"
   },
   "author": "Neev Systems",
   "dependencies": {
