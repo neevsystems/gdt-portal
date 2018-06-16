@@ -5,6 +5,7 @@ import LandingView from "views/LandingView/LandingView.jsx";
 import RosterRecord from "views/Roster/RosterRecord.jsx";
 import UploadFiles from "views/FileExchange/UploadFile";
 
+
 import {
   Dashboard,
   Person,
@@ -97,6 +98,7 @@ const dashboardRoutes = [
     isLauncher: true,
     url: "http://www.google.com",
   }, 
+  { redirect: true, path: "/home/ServerError", to: "/ServerError", navbarName: "Redirect" },
   { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }
 ];
 

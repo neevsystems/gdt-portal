@@ -48,10 +48,11 @@ app.use(function (req, res, next) {
 });
 
 app.post('/login/callback',
-  passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
+  passport.authenticate('saml', { failureRedirect: '/ServerError', failureFlash: true }),
   function(req, res) {
-    console.log('HERE2',req.body);
-    res.redirect('/app');
+    //console.log('HERE2',req.body);
+  
+    res.redirect('/home/ssosucess/#TEST12');
   }
 );
 
@@ -63,14 +64,12 @@ app.get('/login',
 );
 
 app.use('/api', routes);
-app.use('/app', express.static(path.join(__dirname, '../webapp/build/')));
+app.use('/home/', express.static(path.join(__dirname, '../webapp/build/')));
 app.use('/ServerError', express.static(path.join(__dirname, './pages/ServerError.html')));
-app.use('/home', function(req, res){
-	res.redirect('/app');
-});
+
 
 app.use('/', function(req, res){
-	res.redirect('/app');
+	res.redirect('/home');
 });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -88,7 +87,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   console.log(err.message);
-  res.redirect('/ServerError');
+  res.redirect('/home/ServerError');
 });
 
 module.exports = app;
