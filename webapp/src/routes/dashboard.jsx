@@ -25,6 +25,22 @@ const dashboardRoutes = [
     component: LandingView
   },
   {
+    path: "/home/assetmanager",
+    sidebarName: "Asset Manager",
+    navbarName: "Asset Manager",
+    icon: Devices,
+    isLauncher: true,
+    url: "http://www.google.com",
+  },
+  {
+    path: "/home/monitoring",
+    sidebarName: "Monitoring",
+    navbarName: "Monitoring",
+    icon: TrackChanges,
+    isLauncher: true,
+    url: "http://www.google.com",
+  },
+  {
     path: "/home/servicedesk",
     sidebarName: "Service Desk",
     navbarName: "Service Desk",
@@ -39,22 +55,7 @@ const dashboardRoutes = [
     icon: Schedule,
     component: Calender
   },
-  {
-    path: "/home/assetmanager",
-    sidebarName: "Asset Manager",
-    navbarName: "Asset Manager",
-    icon: Devices,
-    isLauncher: true,
-    url: "http://www.google.com",
-  },
-  {
-    path: "/home/helpcenter",
-    sidebarName: "Help center",
-    navbarName: "Help center",
-    icon: LiveHelp,
-    isLauncher: true,
-    url: "http://www.google.com",
-  },
+ 
   {
     path: "/home/fileexchange",
     sidebarName: "File exchange",
@@ -69,14 +70,15 @@ const dashboardRoutes = [
     icon: Person,
     component: Roster
   },
+ 
   {
-    path: "/home/monitoring",
-    sidebarName: "Monitoring",
-    navbarName: "Monitoring",
-    icon: TrackChanges,
+    path: "/home/helpcenter",
+    sidebarName: "Help center",
+    navbarName: "Help center",
+    icon: LiveHelp,
     isLauncher: true,
     url: "http://www.google.com",
-  },
+  }, 
   { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }
 ];
 

@@ -27,5 +27,5 @@ router.post('/fileupload',           FileExchangeController.uploadFiles);
 router.post(    '/users/login',     UserController.login);
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
 
-router.get(     '/allevents',        passport.authenticate('jwt', {session:false}), CalenderController.getall); 
+router.get(     '/allevents',         CalenderController.getall); 
 module.exports = router;
