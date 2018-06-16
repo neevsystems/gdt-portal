@@ -9,7 +9,6 @@ import "assets/css/material-design-iconic-font.min.css?v=1.2.0";
 import indexRoutes from "routes/index.jsx";
 
 const hist = createBrowserHistory();
-
 export function onEnter(nextState, transition, callback) {
   const { pathname } = nextState.location
   const isLoggedIn = sessionStorage.getItem('loggedin') === 'true'
