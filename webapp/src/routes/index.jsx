@@ -1,6 +1,6 @@
 import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 import ServerError from "views/Error/ServerError.jsx";
-import RedirectToLogin from "./Redirect"
+import RedirectToLogin from "./RedirectToLogin"
 
 const indexRoutes = [{ path: "/home", exact:false, component: Dashboard },
 { path: "/ServerError", exact:true, component: ServerError },
