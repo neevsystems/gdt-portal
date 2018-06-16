@@ -4,7 +4,7 @@ const SamlStrategy  = require('passport-saml').Strategy;
 const fs            = require('fs');
 const path          = require('path');
 const User          = require('../models').User;
-
+const authService   = require('./../services/AuthService');
 module.exports = function(passport){
     var opts = {};
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -26,8 +26,9 @@ module.exports = function(passport){
           cert: fs.readFileSync(path.join(__dirname, '../../certificates/SAML.cert'), 'utf-8')
         },
         function(profile, done) {
-            console.log(profile);
-          return done(null, {name:profile.nameID});
+            console.log('HERE1');
+            let user = authSSOUser(profile.nameID)
+          return done(null, user);
         })
       );
 
