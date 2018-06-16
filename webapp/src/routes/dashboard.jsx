@@ -2,6 +2,8 @@ import Roster from "views/Roster/Roster.jsx";
 import FileExchange from "views/FileExchange/FileExchange.jsx";
 import Calender from "views/Calender/Calender.jsx";
 import LandingView from "views/LandingView/LandingView.jsx";
+import RosterRecord from "views/Roster/RosterRecord.jsx";
+import UploadFiles from "views/FileExchange/UploadFile";
 
 import {
   Dashboard,
@@ -71,6 +73,22 @@ const dashboardRoutes = [
     component: Roster
   },
  
+  {
+    path: "/home/rosterrecord",
+    sidebarName: "Roster",
+    navbarName: "Roster",
+    hide:true,
+    icon: Person,
+    component: RosterRecord
+  },
+  {
+    path: "/home/uploadfiles",
+    sidebarName: "Upload Files",
+    navbarName: "UploadFiles",
+    hide:true,
+    icon: Person,
+    component: UploadFiles
+  },
   {
     path: "/home/helpcenter",
     sidebarName: "Help center",
