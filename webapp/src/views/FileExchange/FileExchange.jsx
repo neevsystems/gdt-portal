@@ -8,6 +8,7 @@ import { withStyles, Grid, Card,
     AttachFile,
     CloudDownload,
     CloudUpload,
+    Delete,
     InsertDriveFile
   } from "@material-ui/icons";
 
@@ -18,11 +19,11 @@ class FileExchange extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      files:[{filename:'test.png', size:'100kb',createdon:'01-01-2018'}
-    ,{filename:'test2.png', size:'100kb',createdon:'01-01-2018'},
-    {filename:'test3.png', size:'100kb',createdon:'01-01-2018'}
-    ,{filename:'test4.png', size:'100kb',createdon:'01-01-2018'},
-    {filename:'test5.png', size:'100kb',createdon:'01-01-2018'}
+      files:[{filename:'Installer.doc', description:'Installer',uploadedon:'01-01-2018'}
+    ,{filename:'Network.png', description:'Network',uploadedon:'01-02-2018'},
+    {filename:'Arch.png', description:'Architecture',uploadedon:'23-03-2018'}
+    ,{filename:'Update.pdf', description:'Update instructions',uploadedon:'23-04-2018'},
+    {filename:'Checklist.xls', description:'Policy check list',uploadedon:'18-05-2018'}
     ],
    
     
@@ -56,9 +57,9 @@ class FileExchange extends React.Component {
            <Table>
              <TableHead>
              <TableRow>
-                <TableCell>File</TableCell>
-                <TableCell >Size</TableCell>
-                <TableCell >Created On</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell >Description</TableCell>
+                <TableCell >Uploaded On</TableCell>
                 <TableCell ></TableCell>
           </TableRow>
              </TableHead>
@@ -67,13 +68,16 @@ class FileExchange extends React.Component {
             return (
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
-                <InsertDriveFile /> {n.filename}
+                 {n.filename}
                 </TableCell>
-                <TableCell >{n.size}</TableCell>
-                <TableCell >{n.createdon}</TableCell>
+                <TableCell >{n.description}</TableCell>
+                <TableCell >{n.uploadedon}</TableCell>
                 <TableCell>
                 <IconButton>
                   <CloudDownload />
+              </IconButton>
+              <IconButton>
+                  <Delete />
               </IconButton>
                 </TableCell>
               </TableRow>
