@@ -1,27 +1,28 @@
 import React from "react";
-import { Grid,Table, TableHead, TableRow,TableCell, TableBody  } from "material-ui";
-import {
-  RegularCard,
- ItemGrid
-} from "components";
-import getAllUsers from '../../services/rosterService';
+import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
+  TableFooter,TablePagination,IconButton } from "material-ui";
+import {  RegularCard, ItemGrid} from "components";
+import {  Edit,Delete,PersonAdd} from "@material-ui/icons";
+import {getAllUsers} from '../../services/rosterService';
 
 
   class Roster extends React.Component {
     constructor(props){
       super(props);
       this.state={
-        userList:[]
+        userList:[],
+        table:{
+          page: 0,
+          rowsPerPage: 10,
+        }
       }
-
       this.getUserList=this.getUserList.bind(this);
+      this.editUserClick=this.editUserClick.bind(this);
     }
     getUserList(){
       var state=this;
       getAllUsers().then(function (response) {
-        console.log(response);
-        
-        
+        console.log(response); 
         state.setState({userList:response.data.users});
       })
       .catch(function (error) {
@@ -31,41 +32,58 @@ import getAllUsers from '../../services/rosterService';
     componentWillMount(){
       this.getUserList();
     }
+    editUserClick(){
+    console.log(this.props)  ;
+    this.props.history.push('/home/rosterrecord');
+    }
   
     render() {
+      let stateObj=this;
       return (
+
     <Grid container>
       <ItemGrid xs={12} sm={12} md={12}>
         <RegularCard
-          cardTitle="User"
-          
+          cardTitle="Users List"
+          headerCardAction={
+            <div>
+              <IconButton onClick={this.uploadFile }>
+              <PersonAdd style={{color:"#fff"}} />
+                      
+              </IconButton>             
+            </div>
+          }
           content={
             <Table>
              <TableHead>
              <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell >Email</TableCell>
+                <TableCell >Role</TableCell>
                 <TableCell >Phone</TableCell>
-                <TableCell >Action</TableCell>
+                <TableCell ></TableCell>
           </TableRow>
              </TableHead>
              <TableBody>
              {this.state.userList.map(function(n,key) {
             return (
+             
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
                  {n.first+' '+n.last}
                 </TableCell>
                 <TableCell >{n.email}</TableCell>
+                <TableCell >Customer</TableCell>
                 <TableCell >{n.phone}</TableCell>
                 <TableCell>
-               <button>edit</button>
+              <IconButton onClick={()=>{stateObj.editUserClick()}}  > <Edit /></IconButton>
+              <IconButton><Delete /></IconButton>
                 </TableCell>
               </TableRow>
             );
           })}
 
-             </TableBody>
+             </TableBody>            
           </Table>
          }
         />

@@ -7,10 +7,11 @@ import { withStyles, Grid, Card,
   import {
     AttachFile,
     CloudDownload,
+    CloudUpload,
     InsertDriveFile
   } from "@material-ui/icons";
 
-import {ItemGrid} from "components";
+import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 
 class FileExchange extends React.Component {
@@ -22,43 +23,36 @@ class FileExchange extends React.Component {
     {filename:'test3.png', size:'100kb',createdon:'01-01-2018'}
     ,{filename:'test4.png', size:'100kb',createdon:'01-01-2018'},
     {filename:'test5.png', size:'100kb',createdon:'01-01-2018'}
-    ]
+    ],
+   
+    
     }
+    this.uploadFile=this.uploadFile.bind(this);
   }
-  state = {
-    value: 0
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
-  };
+  uploadFile(){
+    this.props.history.push('/home/uploadfiles');
+  }
+  
+  
   render() {
     const { classes } = this.props;
+   
     return (
       <div>
         <Grid container>
       <ItemGrid xs={12} sm={12} md={12}>
-      <Card className={classes.card}>
-      <CardHeader
-          classes={{
-            root: classes.cardHeader,
-            title: classes.cardTitle,
-            content: classes.cardHeaderContent
-          }}
-          title="File Exchange"
-          action={
-            <div>
-              <IconButton onClick={(e) => this.myInput.click() }>
-              <AttachFile />
-              <input id="myInput" type="file" ref={(ref) => this.myInput = ref} style={{ display: 'none' }} />            
-              </IconButton>             
-            </div>
-          } />
-          <CardContent>
-         {
+      <RegularCard
+          cardTitle="File List"
+          headerCardAction={
+              <div>
+                <IconButton onClick={this.uploadFile }>
+                <CloudUpload style={{color:"#fff"}} />
+                        
+                </IconButton>             
+              </div>
+            }
+          content={
+      
            <Table>
              <TableHead>
              <TableRow>
@@ -88,9 +82,9 @@ class FileExchange extends React.Component {
 
              </TableBody>
           </Table>
-         }
-        </CardContent>
-        </Card>
+        
+        }
+        />
       </ItemGrid>
       </Grid>
       

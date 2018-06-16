@@ -15,6 +15,7 @@ class Dashboard extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+  
   render() {
     return (
       <div>
