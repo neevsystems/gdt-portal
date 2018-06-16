@@ -88,3 +88,14 @@ const authUser = async function(userInfo){//returns token
 
 }
 module.exports.authUser = authUser;
+
+const authSSOUser = async function(email){//returns token
+    let user;
+    [err, user] = await to(User.findOne({where:{email:email}}));
+    console.log(err, user, body.email);
+    if(err) TE(err.message);
+    if(!user) TE('Not registered');
+    return user;
+
+}
+module.exports.authUser = authSSOUser;
