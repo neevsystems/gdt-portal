@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {BASE_URL,token} from '../util/constants';
-
+import {BASE_URL} from '../util/constants';
+var token=sessionStorage.getItem('token');
 
 export default function getAllEvents() {
   axios.defaults.headers.common['authorization'] = token;
