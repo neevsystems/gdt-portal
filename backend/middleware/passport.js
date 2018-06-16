@@ -27,7 +27,7 @@ module.exports = function(passport){
         },
         function(profile, done) {
             console.log('HERE1');
-            let user = authSSOUser(profile.nameID)
+            let user = authService.authSSOUser(profile.nameID)
           return done(null, user);
         })
       );
