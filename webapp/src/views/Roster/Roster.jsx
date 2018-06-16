@@ -49,8 +49,9 @@ import {getAllUsers} from '../../services/rosterService';
             <div>
               <IconButton onClick={this.uploadFile }>
               <PersonAdd style={{color:"#fff"}} />
-                      
-              </IconButton>             
+                     
+              </IconButton>    
+                        
             </div>
           }
           content={
@@ -59,8 +60,8 @@ import {getAllUsers} from '../../services/rosterService';
              <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell >Email</TableCell>
-                <TableCell >Role</TableCell>
-                <TableCell >Phone</TableCell>
+                <TableCell >User Type</TableCell>
+                <TableCell >User Status</TableCell>
                 <TableCell ></TableCell>
           </TableRow>
              </TableHead>
@@ -73,11 +74,11 @@ import {getAllUsers} from '../../services/rosterService';
                  {n.first+' '+n.last}
                 </TableCell>
                 <TableCell >{n.email}</TableCell>
-                <TableCell >Customer</TableCell>
-                <TableCell >{n.phone}</TableCell>
+                <TableCell >Customer_Standard</TableCell>
+                <TableCell >Active</TableCell>
                 <TableCell>
               <IconButton onClick={()=>{stateObj.editUserClick()}}  > <Edit /></IconButton>
-              <IconButton><Delete /></IconButton>
+             
                 </TableCell>
               </TableRow>
             );
