@@ -47,10 +47,24 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.post('/login/callback',
+  passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/app');
+  }
+);
+
+app.get('/login',
+  passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/app');
+  }
+);
+
 app.use('/api', routes);
 app.use('/app', express.static(path.join(__dirname, '../webapp/build/')))
 app.use('/', function(req, res){
-	res.redirect('/app');
+	res.redirect('/login');
 });
 app.use('/home', function(req, res){
 	res.redirect('/app');
@@ -70,6 +84,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  console.log(err.message);
   res.render('error');
 });
 
