@@ -7,9 +7,9 @@ const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport      = require('passport');
-
-const routes = require('./routes');
-const app = express();
+const path          = require('path');
+const routes        = require('./routes');
+const app           = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -47,13 +47,31 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/api', routes);
+app.post('/login/callback',
+  passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
+  function(req, res) {
+    console.log('HERE2',req.body);
+    res.redirect('/app');
+  }
+);
 
-app.use('/', function(req, res){
-	res.statusCode = 200;//send the appropriate status code
-	res.json({status:"success", message:"Parcel Pending API", data:{}})
+app.get('/login',
+  passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/app');
+  }
+);
+
+app.use('/api', routes);
+app.use('/app', express.static(path.join(__dirname, '../webapp/build/')));
+app.use('/ServerError', express.static(path.join(__dirname, './pages/ServerError.html')));
+app.use('/home', function(req, res){
+	res.redirect('/app');
 });
 
+app.use('/', function(req, res){
+	res.redirect('/app');
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -69,7 +87,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log(err.message);
+  res.redirect('/ServerError');
 });
 
 module.exports = app;
