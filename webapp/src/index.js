@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch,Redirect } from "react-router-dom";
 
 import "assets/css/material-dashboard-react.css?v=1.2.0";
 import "assets/css/material-design-iconic-font.min.css?v=1.2.0";
@@ -17,6 +17,26 @@ export function onEnter(nextState, transition, callback) {
   }
   return callback() // go as it is.
 }
+const PrivateRoute = ({component: Component, ...rest}) =>(
+  <Route
+      {...rest}
+      render={props =>
+          (sessionStorage.getItem("loggedin")===true ) ? (
+              <Component {...props} />
+          ) : (
+              <Redirect
+                  to={{
+                      pathname: "/login",
+                      state: {from: props.location}
+                  }}
+              />
+          )
+      }
+  />
+);
+
+
+
 
 ReactDOM.render(
 
