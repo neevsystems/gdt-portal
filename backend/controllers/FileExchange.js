@@ -12,7 +12,6 @@ var upload = multer({ storage: Storage }).array("imgUploader", 3); //Field name 
 module.exports.uploadFiles=function (req, res) {
     upload(req, res, function (err) {
         if (err) {
-            console.log(err);
             return res.end("Something went wrong!");
         }
         return res.end("File uploaded sucessfully!.");
