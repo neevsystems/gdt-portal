@@ -50,7 +50,7 @@ app.use(function (req, res, next) {
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
   function(req, res) {
-    res.redirect('/home/ssohandler/abcd/xyz');
+    res.redirect('/ssohandler/abcd/xyz');
   }
 );
 
@@ -65,6 +65,9 @@ app.use('/api', routes);
 app.use('/app', express.static(path.join(__dirname, '../webapp/build/')));
 app.use('/ServerError', express.static(path.join(__dirname, './pages/ServerError.html')));
 app.use('/home/*', function(req, res){
+	res.sendFile(path.join(__dirname, '../webapp/build/','index.html'))
+});
+app.use('/ssohandler/*', function(req, res){
 	res.sendFile(path.join(__dirname, '../webapp/build/','index.html'))
 });
 
