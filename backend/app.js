@@ -3,9 +3,9 @@ require('./global_functions');  //instantiate global functions
 
 console.log("Environment:", CONFIG.app)
 
-const express 		= require('express');
-const logger 	    = require('morgan');
-const bodyParser 	= require('body-parser');
+const express 		  = require('express');
+const logger 	      = require('morgan');
+const bodyParser 	  = require('body-parser');
 const passport      = require('passport');
 const path          = require('path');
 const routes        = require('./routes');

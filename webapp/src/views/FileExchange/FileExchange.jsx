@@ -14,6 +14,7 @@ import { withStyles, Grid, Card,
 
 import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
+import {getAllDocuments} from "../../services/documentsService.js";
 
 class FileExchange extends React.Component {
   constructor(props){
@@ -29,11 +30,25 @@ class FileExchange extends React.Component {
     
     }
     this.uploadFile=this.uploadFile.bind(this);
+    this.getAllDocs=this.getAllDocs.bind(this);
   }
   uploadFile(){
     this.props.history.push('/home/uploadfiles');
   }
-  
+  getAllDocs(){
+    var state=this;
+    getAllDocuments().then(function (response) {
+      console.log(response); 
+      state.setState({files:response.data.documents});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  }
+  componentWillMount(){
+    this.getAllDocs();
+  }
   
   render() {
     const { classes } = this.props;
@@ -68,12 +83,12 @@ class FileExchange extends React.Component {
             return (
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
-                 {n.filename}
+                 {n.fileName}
                 </TableCell>
-                <TableCell >{n.description}</TableCell>
-                <TableCell >{n.uploadedon}</TableCell>
+                <TableCell >{n.fileDesc}</TableCell>
+                <TableCell >{n.createdAt}</TableCell>
                 <TableCell>
-                <IconButton>
+                <IconButton onClick={()=>{window.open(n.filePath);}}>
                   <CloudDownload />
               </IconButton>
               <IconButton>
