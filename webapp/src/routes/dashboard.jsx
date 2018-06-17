@@ -4,7 +4,7 @@ import Calender from "views/Calender/Calender.jsx";
 import LandingView from "views/LandingView/LandingView.jsx";
 import RosterRecord from "views/Roster/RosterRecord.jsx";
 import UploadFiles from "views/FileExchange/UploadFile";
-
+import SSOHandler from "./SsoHandler"
 import {
   Dashboard,
   Person,
@@ -96,6 +96,13 @@ const dashboardRoutes = [
     icon: LiveHelp,
     isLauncher: true,
     url: "http://www.google.com",
+  },
+  {
+    path: "/home/ssohandler/:token/:email",
+    sidebarName: "SSOHandler",
+    navbarName: "SSOHandler",
+    hide:true,
+    component: SSOHandler
   },
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
   { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }

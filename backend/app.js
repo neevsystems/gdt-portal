@@ -50,7 +50,7 @@ app.use(function (req, res, next) {
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
   function(req, res) {
-    res.redirect('/home/ssos');
+    res.redirect('/home/ssohandler/abcd/xyz');
   }
 );
 

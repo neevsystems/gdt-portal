@@ -16,7 +16,7 @@ import {login} from '../../services/rosterService.js';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    sessionStorage.getItem('loggedin') === true
+    sessionStorage.getItem('jwttoken') 
       ? <Component {...props} />
       : <Redirect to='/login' />
   )} />

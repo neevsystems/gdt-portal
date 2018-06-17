@@ -5,6 +5,7 @@ import RedirectToLogin from "./RedirectToLogin"
 const indexRoutes = [{ path: "/home", exact:false, component: Dashboard },
 { path: "/ServerError", exact:true, component: ServerError },
 { path: "/login",exact:true, component: RedirectToLogin },
+
 { path: "/",exact:false, component: Dashboard },
 ];
 
