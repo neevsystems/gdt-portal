@@ -51,13 +51,7 @@ class App extends React.Component {
     this.refs.mainPanel.scrollTop = 0;
   }
   componentWillMount(){
-    login().then(function (response) {
-      console.log(response); 
-      sessionStorage.setItem('token', response.data.token);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+   
   }
   render() {
     const { classes, ...rest } = this.props;
