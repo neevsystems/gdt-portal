@@ -15,8 +15,6 @@ import logo from "assets/img/gif-gdt-logo-1280.gif";
 import {login} from '../../services/rosterService.js';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  console.log(sessionStorage.getItem('jwttoken') );
-  console.log(sessionStorage.getItem('jwttoken')?'found':'notfound' );
   return (<Route {...rest} render={(props) => (
     sessionStorage.getItem('jwttoken') 
       ? <Component {...props} />
@@ -29,9 +27,8 @@ const switchRoutes = (
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key}  />;
     else {
-      console.log(prop.path,prop.isPublic);
     if (prop.isPublic) return (<Route path={prop.path} component={prop.component} key={key} />);
-      else (<PrivateRoute path={prop.path} component={prop.component} key={key} />);
+      else return (<PrivateRoute path={prop.path} component={prop.component} key={key} />);
     }
     })}
   </Switch>

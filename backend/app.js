@@ -47,10 +47,9 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.post('/login/callback',function (req, res, next) {
+app.post('/login/callback',function  (req, res, next) {
 
   passport.authenticate('saml', {session: false}, (err, user, info) => {
-      console.log(err);
       if (err || !user) {
           return res.status(400).json({
               message: info ? info.message : 'Login failed',
@@ -62,9 +61,10 @@ app.post('/login/callback',function (req, res, next) {
           if (err) {
               res.send(err);
           }
-
-          const token = jwt.sign({email:user.email,id:user.id} ,'your_jwt_secret',{expiresIn:'8h'});
-
+          
+          let expiration_time = parseInt(CONFIG.jwt_expiration);
+          const token =  jwt.sign({user_id:1}, CONFIG.jwt_encryption, {expiresIn: expiration_time});
+    
           return res.redirect(`/ssohandler/${token}/${user.email}`);
       });
   })
@@ -108,7 +108,6 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  console.log(err.message);
   res.redirect('/home/servererror');
 });
 

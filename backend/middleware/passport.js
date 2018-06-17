@@ -25,14 +25,21 @@ module.exports = function(passport){
           issuer: CONFIG.issuer,
           cert: fs.readFileSync(path.join(__dirname, '../../certificates/SAML.cert'), 'utf-8')
         },
-        function(profile, done) {
-            console.log('HERE1');
-            let user = authService.authSSOUser(profile.nameID)
-          return done(null, user);
-        })
-      );
+        async function(profile, done) {
+            let err, user;
+            [err, user] = await to(authService.authSSOUser(profile.nameID));
+    
+            if(err) return done(err, false);
+            if(user) {
+                return done(null, user);
+            }else{
+                return done(null, false);
+            }
+        }
+      ));
 
     passport.use(new JwtStrategy(opts, async function(jwt_payload, done){
+
         let err, user;
         [err, user] = await to(User.findById(jwt_payload.user_id));
 
