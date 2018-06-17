@@ -2,7 +2,7 @@ require('./config');     //instantiate configuration variables
 require('./global_functions');  //instantiate global functions
 
 console.log("Environment:", CONFIG.app)
-
+const jwt           	= require('jsonwebtoken');
 const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
@@ -47,11 +47,30 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.post('/login/callback',
-  passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
-  function(req, res) {
-    res.redirect('/ssohandler/abcd/xyz');
-  }
+app.post('/login/callback',function (req, res, next) {
+
+  passport.authenticate('saml', {session: false}, (err, user, info) => {
+      console.log(err);
+      if (err || !user) {
+          return res.status(400).json({
+              message: info ? info.message : 'Login failed',
+              user   : user
+          });
+      }
+
+      req.login(user, {session: false}, (err) => {
+          if (err) {
+              res.send(err);
+          }
+
+          const token = jwt.sign({email:user.email,id:user.id} ,'your_jwt_secret',{expiresIn:'8h'});
+
+          return res.redirect(`/ssohandler/${token}/${user.email}`);
+      });
+  })
+  (req, res);
+
+}
 );
 
 app.get('/login',

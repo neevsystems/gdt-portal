@@ -90,11 +90,16 @@ const authUser = async function(userInfo){//returns token
 module.exports.authUser = authUser;
 
 const authSSOUser = async function(email){//returns token
-   /* let user;
+   let user;
     [err, user] = await to(User.findOne({where:{email:email}}));
     if(err) TE(err.message);
-    if(!user) TE('Not registered');*/
-    return {email:email};
+    if(!user) {
+        [err, user] = await to(User.create({email:email}));
+        if(err) TE('user already exists with that phone number');
+
+    }
+    console.log({email:user.email,id:1});
+    return {email:user.email,id:1};
 
 }
 module.exports.authSSOUser = authSSOUser;
