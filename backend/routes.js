@@ -1,6 +1,7 @@
 const express 			= require('express');
 const router 			= express.Router();
 
+
 const UserController 	= require('./controllers/UserController');
 const HomeController 	= require('./controllers/HomeController');
 const FileExchangeController=require('./controllers/FileExchange');
@@ -24,9 +25,12 @@ router.get(     '/users',            UserController.get);        // R
 router.put(     '/users',            UserController.update);     // U
 router.delete(  '/users',            UserController.remove);     // D
 
-router.post('/fileupload',           FileExchangeController.uploadFiles);
+router.post('/fileupload',  FileExchangeController.uploadFiles);
+router.get('/alldocuments',  FileExchangeController.getall);
 router.post(    '/users/login',     UserController.login);
+
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
 
 router.get(     '/allevents',         CalenderController.getall); 
+
 module.exports = router;

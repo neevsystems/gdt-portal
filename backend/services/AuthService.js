@@ -98,4 +98,4 @@ const authSSOUser = async function(email){//returns token
     return user;
 
 }
-module.exports.authUser = authSSOUser;
+module.exports.authSSOUser = authSSOUser;
