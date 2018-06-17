@@ -22,7 +22,6 @@ import {getAllUsers} from '../../services/rosterService';
     getUserList(){
       var state=this;
       getAllUsers().then(function (response) {
-        console.log(response); 
         state.setState({userList:response.data.users});
       })
       .catch(function (error) {
@@ -33,7 +32,6 @@ import {getAllUsers} from '../../services/rosterService';
       this.getUserList();
     }
     editUserClick(){
-    console.log(this.props)  ;
     this.props.history.push('/home/rosterrecord');
     }
   
