@@ -21,7 +21,7 @@ const PrivateRoute = ({component: Component, ...rest}) =>(
   <Route
       {...rest}
       render={props =>
-          (sessionStorage.getItem("loggedin")===true ) ? (
+          (sessionStorage.getItem("jwttoken") ) ? (
               <Component {...props} />
           ) : (
               <Redirect
