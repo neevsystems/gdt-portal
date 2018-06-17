@@ -7,7 +7,6 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
  class RosterRecord extends React.Component {
     constructor(props){
       super(props);
-      console.log(props);
     }
     render() {
         return (<div>

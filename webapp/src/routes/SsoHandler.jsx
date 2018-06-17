@@ -7,8 +7,6 @@ export class SSOHandler extends Component {
   }
   componentWillMount(){
     const { match: { params } } = this.props;
-    console.log(params.token);
-    console.log(params.email);
     sessionStorage.setItem('jwttoken',params.token);
   }
   render(){

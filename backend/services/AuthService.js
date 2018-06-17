@@ -98,8 +98,8 @@ const authSSOUser = async function(email){//returns token
         if(err) TE('user already exists with that phone number');
 
     }
-    console.log({email:user.email,id:1});
-    return {email:user.email,id:1};
+    
+    return user;
 
 }
 module.exports.authSSOUser = authSSOUser;
