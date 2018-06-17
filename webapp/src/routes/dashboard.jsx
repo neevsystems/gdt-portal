@@ -97,13 +97,7 @@ const dashboardRoutes = [
     isLauncher: true,
     url: "http://www.google.com",
   },
-  {
-    path: "/home/ssohandler/:token/:email",
-    sidebarName: "SSOHandler",
-    navbarName: "SSOHandler",
-    hide:true,
-    component: SSOHandler
-  },
+ 
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
   { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }
 ];
