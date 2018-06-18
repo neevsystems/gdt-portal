@@ -14,8 +14,8 @@ export const getAllDocuments= function() {
 
 export const saveDocument= function(bodyFormData){
   axios.defaults.headers.common['authorization'] = token;
-  axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
-  let fullurl=BASE_URL+'alldocuments';
+  //axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+  let fullurl=BASE_URL+'fileupload';
   let promise =axios({
     method: 'post',
     url: fullurl,
