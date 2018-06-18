@@ -63,7 +63,9 @@ app.get('/login',
 );
 
 app.use('/api', routes);
+app.use('/documents', express.static(__dirname + '/documents'));
 app.use('/app', express.static(path.join(__dirname, '../webapp/build/')));
+
 app.use('/ServerError', express.static(path.join(__dirname, './pages/ServerError.html')));
 app.use('/home', function(req, res){
 	res.redirect('/app');

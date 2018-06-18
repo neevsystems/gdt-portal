@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Grid, Table, TableHead, TableRow, TableCell, TableBody,
+  Grid, Table, TableHead, TableRow, TableCell, TableBody,TextField,
   TableFooter, TablePagination, IconButton, InputLabel, Checkbox, FormControlLabel
 } from "material-ui";
 import { RegularCard, ItemGrid, CustomInput, Button } from "components";
@@ -11,33 +11,50 @@ class UploadFiles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0, filename: ''
+      value: 0, filename: '',filedesc:''
     };
     this.handleChange = this.handleChange.bind(this);
     this.documentOnsubmit=this.documentOnsubmit.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
   }
   handleChange = (event, value) => {
     this.setState({ value });
     this.setState({ filename: this.myInput.value });
   };
+  handleTextChange=(event)=>{
+    this.setState({filedesc: event.target.value});
+
+  }
 
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
-  documentOnsubmit=()=>{
-    var fromData=document.getElementsByName("frmDocumet");
+  documentOnsubmit=(event)=>{
     var state=this;
-    saveDocument(fromData).then(function (response) {
-      console.log(response); 
-     
+    event.preventDefault();
+
+    const formData = new FormData();
+    
+    formData.append('fileName',this.myInput.files[0].name);
+    formData.append('fileFor','customer1');
+    formData.append('fileFrom','GDT');
+    formData.append('fileDesc',state.state.filedesc);
+    formData.append('files',this.myInput.files[0]);
+    saveDocument(formData).then(function (response) {
+     alert("File uploaded sucessfully!.");
+     state.props.history.push('/home/fileexchange');
     })
     .catch(function (error) {
       console.log(error);
+      alert("Somthing went wrong. try again");
+      state.props.history.push('/home/fileexchange');
     });
+    return false;
   }
   render() {
+    var state=this;
     return (<div>
-       <from name="frmDocumet" method="POST" onSubmit={(e)=>{e.preventDefault(); this.documentOnsubmit();}} >
+       <form id="frmDocumet" method="POST" name="frmDocumet" onSubmit={this.documentOnsubmit}  >
       <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
 
@@ -48,28 +65,28 @@ class UploadFiles extends React.Component {
                
                 <Grid container>
                   <ItemGrid xs={12} sm={12} md={6}>
-                    <input type='text' name="fileName" style={{ 'width': '50%' }} value={this.state.filename} disabled={true} />
+                    <input type='text' id="fileName" name="fileName" style={{ 'width': '50%' }} value={this.state.filename} disabled={true} />
                     <IconButton onClick={(e) => this.myInput.click()}>
                       <AttachFile />
-                      <input id="myInput"  name="files" type="file" ref={(ref) => this.myInput = ref} style={{ display: 'none' }} onChange={this.handleChange} />
+                      <input id="files"  name="files" type="file" ref={(ref) => this.myInput = ref} style={{ display: 'none' }} onChange={this.handleChange} />
                     </IconButton>
                   </ItemGrid>
                 </Grid>
                 <Grid container>
                   <ItemGrid xs={12} sm={12} md={6}>
-                    <CustomInput  name="fileDesc"
-                      labelText="Description"
-                      id="desc"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
+                  <TextField
+                      id="fileDesc"
+                      label="Description"
+                      margin="normal"
+                      onChange={(e)=>{state.handleTextChange(e);}}
+                      name="fileDesc"
                     />
                   </ItemGrid>
                 </Grid>
                
               </div>
             }
-            footer={<div><Button type="submit" style={{ 'background-color': '#333333' }}
+            footer={<div><Button type="submit" style={{ 'background-color': '#333333' }} 
              variant="contained" color="primary" >Save</Button>
               <Button style={{ 'background-color': '#333333' }} variant="contained" color="primary" >Cancel</Button></div>}
 
@@ -77,7 +94,7 @@ class UploadFiles extends React.Component {
 
         </ItemGrid>
       </Grid>
-      </from>
+      </form>
     </div>);
   }
 }

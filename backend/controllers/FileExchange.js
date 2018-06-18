@@ -3,14 +3,13 @@ const Document          = require('../models').Document;
 module.exports.uploadFiles= function (req, res) {
     var document={};
     const Storage = multer.diskStorage({
-        destination: function (req, file, callback) {            
-            console.log(req.body,':request ')
+        destination: function (req, file, callback) {        
             document={
                 fileName:req.body.fileName,
                 fileFor:req.body.fileFor,
                 fileFrom:req.body.fileFrom,
                 fileDesc:req.body.fileDesc,
-                filePath:CONFIG.FILE_PATH+'/'+file.originalname
+                filePath: req.protocol + '://' + req.get('host')+CONFIG.FILE_PATH.substr(1,CONFIG.FILE_PATH.length) +'/'+file.originalname
             };
             callback(null,CONFIG.FILE_PATH);
         },
