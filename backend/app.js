@@ -2,7 +2,9 @@ require('./config');     //instantiate configuration variables
 require('./global_functions');  //instantiate global functions
 
 console.log("Environment:", CONFIG.app)
-const jwt           	= require('jsonwebtoken');
+const jwt           = require('jsonwebtoken');
+const compression    = require('compression');
+const helmet        = require('helmet');
 const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
@@ -14,6 +16,8 @@ const app           = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compression());
+app.use(helmet())
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
@@ -61,10 +65,10 @@ app.post('/login/callback',function  (req, res, next) {
           if (err) {
               res.send(err);
           }
-          
+
           let expiration_time = parseInt(CONFIG.jwt_expiration);
           const token =  jwt.sign({user_id:1}, CONFIG.jwt_encryption, {expiresIn: expiration_time});
-    
+
           return res.redirect(`/ssohandler/${token}/${user.email}`);
       });
   })
