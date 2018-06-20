@@ -57,7 +57,7 @@ const dashboardRoutes = [
     icon: Schedule,
     component: Calender
   },
- 
+
   {
     path: "/home/fileexchange",
     sidebarName: "File exchange",
@@ -72,7 +72,7 @@ const dashboardRoutes = [
     icon: Person,
     component: Roster
   },
- 
+
   {
     path: "/home/rosterrecord",
     sidebarName: "Roster",
@@ -97,7 +97,7 @@ const dashboardRoutes = [
     isLauncher: true,
     url: "http://www.google.com",
   },
- 
+
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
   { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }
 ];

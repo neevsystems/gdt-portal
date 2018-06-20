@@ -7,6 +7,6 @@ export default function getAllEvents() {
   let promise =axios({
     method:'get',
     url:fullurl
-  })   
+  })
   return promise;
 }

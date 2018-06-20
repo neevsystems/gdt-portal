@@ -8,7 +8,7 @@ export const getAllUsers=function () {
   let promise =axios({
     method:'get',
     url:fullurl
-  })   
+  })
   return promise;
 }
 
@@ -18,13 +18,13 @@ export const login=function () {
   let userObj={
     "username":"sudhakar",
     "email":"sudhakar.vellanki@neevsystems.com",
-    "password":"tech123"    
+    "password":"tech123"
     };
   let fullurl=BASE_URL+'users/login';
   let promise =axios({
     method:'post',
     url:fullurl,
     data:userObj
-  })   
+  })
   return promise;
 }

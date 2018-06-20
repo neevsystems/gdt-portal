@@ -34,7 +34,7 @@ import {getAllUsers} from '../../services/rosterService';
     editUserClick(){
     this.props.history.push('/home/rosterrecord');
     }
-  
+
     render() {
       let stateObj=this;
       return (
@@ -47,9 +47,9 @@ import {getAllUsers} from '../../services/rosterService';
             <div>
               <IconButton onClick={this.uploadFile }>
               <PersonAdd style={{color:"#fff"}} />
-                     
-              </IconButton>    
-                        
+
+              </IconButton>
+
             </div>
           }
           content={
@@ -66,7 +66,7 @@ import {getAllUsers} from '../../services/rosterService';
              <TableBody>
              {this.state.userList.map(function(n,key) {
             return (
-             
+
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
                  {n.first+' '+n.last}
@@ -76,18 +76,18 @@ import {getAllUsers} from '../../services/rosterService';
                 <TableCell >Active</TableCell>
                 <TableCell>
               <IconButton onClick={()=>{stateObj.editUserClick()}}  > <Edit /></IconButton>
-             
+
                 </TableCell>
               </TableRow>
             );
           })}
 
-             </TableBody>            
+             </TableBody>
           </Table>
          }
         />
       </ItemGrid>
-         
+
     </Grid>
   );
 }

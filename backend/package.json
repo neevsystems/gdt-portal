@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Back-end Node JS Server",
   "scripts": {
-    "dev": "nodemon --watch . --watch ./middleware --watch ./models --watch ./services --watch ./controllers   index.js",
-    "start": "cross-env NODE_ENV=production pm2 start index.js -i max",
+    "start": "nodemon --watch . --watch ./middleware --watch ./models --watch ./services --watch ./controllers   index.js",
+    "prod": "cross-env NODE_ENV=production pm2 start index.js -i max",
     "stop": "pm2 stop all"
   },
   "author": "Neev Systems",

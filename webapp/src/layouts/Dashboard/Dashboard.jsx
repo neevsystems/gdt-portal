@@ -55,7 +55,6 @@ class App extends React.Component {
     this.refs.mainPanel.scrollTop = 0;
   }
   componentWillMount(){
-
   }
   render() {
     const { classes, ...rest } = this.props;
