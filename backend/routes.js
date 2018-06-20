@@ -1,6 +1,7 @@
 const express 			= require('express');
 const router 			= express.Router();
 
+
 const UserController 	= require('./controllers/UserController');
 const HomeController 	= require('./controllers/HomeController');
 const FileExchangeController=require('./controllers/FileExchange');
@@ -17,16 +18,19 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post(    '/users',  passport.authenticate('jwt', {session:false}) ,         UserController.create); 
-router.get(     '/allusers',passport.authenticate('jwt', {session:false}) ,        UserController.getall);    
-// passport.authenticate('jwt', {session:false}) ,                                           // C
-router.get(     '/users',passport.authenticate('jwt', {session:false}) ,            UserController.get);        // R
-router.put(     '/users',passport.authenticate('jwt', {session:false}) ,            UserController.update);     // U
-router.delete(  '/users',passport.authenticate('jwt', {session:false}) ,            UserController.remove);     // D
+router.post(    '/users',           UserController.create);
+router.get(     '/allusers',        UserController.getall);
+// passport.authenticate('jwt', {session:false})                                            // C
+router.get(     '/users',            UserController.get);        // R
+router.put(     '/users',            UserController.update);     // U
+router.delete(  '/users',            UserController.remove);     // D
 
-router.post('/fileupload',passport.authenticate('jwt', {session:false}) ,           FileExchangeController.uploadFiles);
+router.post('/fileupload',  FileExchangeController.uploadFiles);
+router.get('/alldocuments',  FileExchangeController.getall);
 router.post(    '/users/login',     UserController.login);
+
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
 
-router.get(     '/allevents',passport.authenticate('jwt', {session:false}) ,         CalenderController.getall); 
+router.get(     '/allevents',         CalenderController.getall);
+
 module.exports = router;

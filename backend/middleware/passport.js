@@ -13,7 +13,7 @@ module.exports = function(passport){
     passport.serializeUser(function(user, done) {
         done(null, user);
       });
-      
+
       passport.deserializeUser(function(user, done) {
         done(null, user);
       });
@@ -28,7 +28,6 @@ module.exports = function(passport){
         async function(profile, done) {
             let err, user;
             [err, user] = await to(authService.authSSOUser(profile.nameID));
-    
             if(err) return done(err, false);
             if(user) {
                 return done(null, user);

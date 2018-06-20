@@ -3,7 +3,7 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
     TableFooter,TablePagination,IconButton,InputLabel,Checkbox,FormControlLabel} from "material-ui";
   import {  RegularCard, ItemGrid,CustomInput,Button} from "components";
   import {  Edit,Delete, Save} from "@material-ui/icons";
-  
+
  class RosterRecord extends React.Component {
     constructor(props){
       super(props);
@@ -54,7 +54,7 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
                   />
                 </ItemGrid>
               </Grid>
-             
+
               <Grid container>
                 <ItemGrid xs={12} sm={12} md={4}>
                   <CustomInput
@@ -100,7 +100,7 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
                         <Checkbox color="default" />
                     }
                     label="Is Admin" />
-               
+
                 </ItemGrid>
                 <ItemGrid xs={12} sm={12} md={6}>
                 <FormControlLabel style={{'margin-top': '34px'}}
@@ -108,18 +108,18 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
                         <Checkbox color="default" />
                     }
                     label="Is Active" />
-               
+
                 </ItemGrid>
               </Grid>
-              
-              
+
+
             </div>
           }
           footer={<div><Button style={{'background-color':'#333333'}} variant="contained" color="primary" >Save</Button>
           <Button style={{'background-color':'#333333'}} variant="contained" color="primary" >Cancel</Button></div>}
-          
+
           />
-           
+
             </ItemGrid>
       </Grid>
 

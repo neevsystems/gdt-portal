@@ -32,7 +32,7 @@ const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let users,err;
     [err, users] = await to(User.findAll());
-    if(err) 
+    if(err)
         return ReE(res, err, 422);
     else
         return ReS(res, {users:users}, 200);
@@ -68,6 +68,7 @@ module.exports.remove = remove;
 
 const login = async function(req, res){
     const body = req.body;
+
     let err, user;
     [err, user] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
