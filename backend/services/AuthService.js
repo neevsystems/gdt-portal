@@ -98,7 +98,6 @@ const authSSOUser = async function(email){//returns token
         if(err) TE('user already exists with that phone number');
 
     }
-
     return user;
 
 }

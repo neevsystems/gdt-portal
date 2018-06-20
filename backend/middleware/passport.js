@@ -28,7 +28,6 @@ module.exports = function(passport){
         async function(profile, done) {
             let err, user;
             [err, user] = await to(authService.authSSOUser(profile.nameID));
-
             if(err) return done(err, false);
             if(user) {
                 return done(null, user);

@@ -97,7 +97,6 @@ const dashboardRoutes = [
     isLauncher: true,
     url: "http://www.google.com",
   },
-
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
   { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }
 ];
