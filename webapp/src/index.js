@@ -17,11 +17,12 @@ export function onEnter(nextState, transition, callback) {
   }
   return callback() // go as it is.
 }
+
 const PrivateRoute = ({component: Component, ...rest}) =>(
   <Route
       {...rest}
       render={props =>
-          (sessionStorage.getItem("loggedin")===true ) ? (
+          sessionStorage.getItem("jwttoken")  ? (
               <Component {...props} />
           ) : (
               <Redirect
@@ -43,9 +44,10 @@ ReactDOM.render(
   <Router history={hist}>
     <Switch>
       {indexRoutes.map((prop, key) => {
-        
-        return (prop.exact)? <Route exact  path={prop.path} component={prop.component} key={key} onEnter={onEnter}/>
-        :<Route  path={prop.path} component={prop.component} key={key} onEnter={onEnter} />;
+
+        return (prop.exact)? <Route exact  path={prop.path} component={prop.component} key={key} />
+        :<Route  path={prop.path} component={prop.component} key={key}  />;
+        //:<PrivateRoute  path={prop.path} component={prop.component} key={key}  />;
       })}
     </Switch>
   </Router>,

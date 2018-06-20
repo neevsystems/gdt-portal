@@ -2,10 +2,12 @@ require('./config');     //instantiate configuration variables
 require('./global_functions');  //instantiate global functions
 
 console.log("Environment:", CONFIG.app)
-
-const express 		  = require('express');
-const logger 	      = require('morgan');
-const bodyParser 	  = require('body-parser');
+const jwt           = require('jsonwebtoken');
+const compression    = require('compression');
+const helmet        = require('helmet');
+const express 		= require('express');
+const logger 	    = require('morgan');
+const bodyParser 	= require('body-parser');
 const passport      = require('passport');
 const path          = require('path');
 const routes        = require('./routes');
@@ -14,6 +16,8 @@ const app           = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compression());
+app.use(helmet())
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
@@ -47,12 +51,30 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.post('/login/callback',
-  passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
-  function(req, res) {
-    console.log('HERE2',req.body);
-    res.redirect('/app');
-  }
+app.post('/login/callback',function  (req, res, next) {
+
+  passport.authenticate('saml', {session: false}, (err, user, info) => {
+      if (err || !user) {
+          return res.status(400).json({
+              message: info ? info.message : 'Login failed',
+              user   : user
+          });
+      }
+
+      req.login(user, {session: false}, (err) => {
+          if (err) {
+              res.send(err);
+          }
+
+          let expiration_time = parseInt(CONFIG.jwt_expiration);
+          const token =  jwt.sign({user_id:1}, CONFIG.jwt_encryption, {expiresIn: expiration_time});
+
+          return res.redirect(`/ssohandler/${token}/${user.email}`);
+      });
+  })
+  (req, res);
+
+}
 );
 
 app.get('/login',
@@ -67,8 +89,11 @@ app.use('/documents', express.static(__dirname + '/documents'));
 app.use('/app', express.static(path.join(__dirname, '../webapp/build/')));
 
 app.use('/ServerError', express.static(path.join(__dirname, './pages/ServerError.html')));
-app.use('/home', function(req, res){
-	res.redirect('/app');
+app.use('/home/*', function(req, res){
+	res.sendFile(path.join(__dirname, '../webapp/build/','index.html'))
+});
+app.use('/ssohandler/*', function(req, res){
+	res.sendFile(path.join(__dirname, '../webapp/build/','index.html'))
 });
 
 app.use('/', function(req, res){
@@ -89,8 +114,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  console.log(err.message);
-  res.redirect('/ServerError');
+  res.redirect('/home/servererror');
 });
 
 module.exports = app;

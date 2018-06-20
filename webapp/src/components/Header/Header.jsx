@@ -34,7 +34,7 @@ function Header({ ...props }) {
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           <Button href="/#" className={classes.title}>
-            {makeBrand()}
+            {makeBrand()?makeBrand():'<p>To be added</p>'}
           </Button>
         </div>
         <Hidden smDown implementation="css">
