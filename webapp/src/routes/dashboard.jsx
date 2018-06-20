@@ -12,6 +12,7 @@ import {
   Devices,
   TrackChanges,
   Home,
+  Help,
   LiveHelp,
   CreateNewFolder,
 
@@ -90,10 +91,18 @@ const dashboardRoutes = [
     component: UploadFiles
   },
   {
-    path: "/home/helpcenter",
-    sidebarName: "Help center",
-    navbarName: "Help center",
+    path: "/home/kcenter",
+    sidebarName: "Knowledge center",
+    navbarName: "Knowledge center",
     icon: LiveHelp,
+    isLauncher: true,
+    url: "http://www.google.com",
+  },
+  {
+    path: "/home/portalDoc",
+    sidebarName: "Portal Training Doc",
+    navbarName: "Portal Training Doc",
+    icon: Help,
     isLauncher: true,
     url: "http://www.google.com",
   },
