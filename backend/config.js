@@ -18,3 +18,5 @@ CONFIG.jwt_expiration  = process.env.JWT_EXPIRATION || '10000';
 
 CONFIG.entryPoint   = process.env.SAML_ENTRYPOINT
 CONFIG.issuer       = process.env.SAML_ISSUER
+
+CONFIG.logRoot     = process.env.LOG_ROOT || 'D://logs'

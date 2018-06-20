@@ -5,9 +5,21 @@ const jwt           	= require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
     var Model = sequelize.define('User', {
+        title         : DataTypes.STRING,
+        firstName     : DataTypes.STRING,
+        middleName    : DataTypes.STRING,
+        lastName      : DataTypes.STRING,
+        email         : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
+        mobile        : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        homeMobile    : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        passphrase    : DataTypes.STRING,
+        isAdmin       : DataTypes.BOOLEAN,
+        isActive      : DataTypes.BOOLEAN,
+        isEmployee    : DataTypes.BOOLEAN,
+
         first     : DataTypes.STRING,
         last      : DataTypes.STRING,
-        email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
+        //email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
         phone     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
         password  : DataTypes.STRING,
     });

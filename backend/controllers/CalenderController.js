@@ -1,10 +1,6 @@
 const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-   // let users,err;
-   // [err, users] = await to(User.findAll());
-    //if(err) 
-     //   return ReE(res, err, 422);
-   // else
+   console.log(req.user);
    let events=[
     {
         title: 'All Day Event',
