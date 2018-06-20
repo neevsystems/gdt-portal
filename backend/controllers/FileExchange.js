@@ -1,4 +1,5 @@
 const multer = require('multer');
+const fs = require('fs-extra');
 const Document          = require('../models').Document;
 module.exports.uploadFiles= function (req, res) {
     var document={};
@@ -26,6 +27,20 @@ module.exports.uploadFiles= function (req, res) {
     });
 };
 
+const moveFile=async function(fromFile,toFile){
+    try {
+        await fs.move(fromFile, toFile)
+        console.log('success!')
+        return true;
+      } catch (err) {
+        console.error(err)
+        return false;
+      }
+}
+const archiveFile=async function(req,res){
+
+}
+module.exports.archiveFile = archiveFile;
 const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let docs,err;
