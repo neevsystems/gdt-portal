@@ -11,6 +11,15 @@ export const getAllDocuments= function() {
   })   
   return promise;
 };
+export const archivedFile= function(fid) {
+  axios.defaults.headers.common['authorization'] = token;
+  let fullurl=BASE_URL+'archivefile/'+fid;
+  let promise =axios({
+    method:'get',
+    url:fullurl
+  })   
+  return promise;
+};
 
 export const saveDocument= function(bodyFormData){
   axios.defaults.headers.common['authorization'] = token;

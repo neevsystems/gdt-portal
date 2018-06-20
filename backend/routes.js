@@ -26,6 +26,7 @@ router.put(     '/users',            UserController.update);     // U
 router.delete(  '/users',            UserController.remove);     // D
 
 router.post('/fileupload',  FileExchangeController.uploadFiles);
+router.get('/archivefile/:id',  FileExchangeController.archiveFile);
 router.get('/alldocuments',  FileExchangeController.getall);
 router.post(    '/users/login',     UserController.login);
 
