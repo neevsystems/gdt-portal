@@ -3,7 +3,7 @@ const Document          = require('../models').Document;
 module.exports.uploadFiles= function (req, res) {
     var document={};
     const Storage = multer.diskStorage({
-        destination: function (req, file, callback) {        
+        destination: function (req, file, callback) {
             document={
                 fileName:req.body.fileName,
                 fileFor:req.body.fileFor,
@@ -17,10 +17,10 @@ module.exports.uploadFiles= function (req, res) {
             callback(null,file.originalname);
         }
     });
-    var upload = multer({ storage: Storage }).any(); //Field name and max count  
+    var upload = multer({ storage: Storage }).any(); //Field name and max count
     upload(req, res, async function (err) {
         [err, doc] = await to(Document.create(document));
-        if(err) 
+        if(err)
             return ReE(res, err, 422);
         return ReS(res, {message:'File uploaded sucessfully!.', document:doc}, 201);
     });
@@ -30,7 +30,7 @@ const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let docs,err;
     [err, docs] = await to(Document.findAll());
-    if(err) 
+    if(err)
         return ReE(res, err, 422);
     else
         return ReS(res, {documents:docs}, 200);

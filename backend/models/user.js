@@ -31,14 +31,14 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Model.prototype.comparePassword = async function (pw) {
-        let err, pass
+       /* let err, pass
         if(!this.password) TE('password not set');
 
         [err, pass] = await to(bcrypt_p.compare(pw, this.password));
         if(err) TE(err);
 
         if(!pass) TE('invalid password');
-
+*/
         return this;
     }
 

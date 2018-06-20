@@ -32,7 +32,7 @@ const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let users,err;
     [err, users] = await to(User.findAll());
-    if(err) 
+    if(err)
         return ReE(res, err, 422);
     else
         return ReS(res, {users:users}, 200);
@@ -68,13 +68,10 @@ module.exports.remove = remove;
 
 const login = async function(req, res){
     const body = req.body;
-   
+
     let err, user;
-    console.log('Local Code');
-    [err, user] = await to(authService.authUser(body));
-    console.log(err)
+    [err, user] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
-    
     return ReS(res, {token:user.getJWT(), user:user.toWeb()});
 }
 module.exports.login = login;

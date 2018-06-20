@@ -14,19 +14,23 @@ import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 import logo from "assets/img/gif-gdt-logo-1280.gif";
 import {login} from '../../services/rosterService.js';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    sessionStorage.getItem('loggedin') === true
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (<Route {...rest} render={(props) => (
+    sessionStorage.getItem('jwttoken')
       ? <Component {...props} />
       : <Redirect to='/login' />
-  )} />
-)
+  )} />)
+}
 const switchRoutes = (
-  <Switch> 
+  <Switch>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key}  />;
-    return (<Route path={prop.path} component={prop.component} key={key} />);
+    else {
+    if (prop.isPublic) return (<Route path={prop.path} component={prop.component} key={key} />);
+      else return (<Route path={prop.path} component={prop.component} key={key} />);
+      // else return (<PrivateRoute path={prop.path} component={prop.component} key={key} />);
+    }
     })}
   </Switch>
 );
@@ -51,13 +55,7 @@ class App extends React.Component {
     this.refs.mainPanel.scrollTop = 0;
   }
   componentWillMount(){
-    login().then(function (response) {
-      console.log(response); 
-      sessionStorage.setItem('token', response.data.token);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+
   }
   render() {
     const { classes, ...rest } = this.props;

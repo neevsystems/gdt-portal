@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
-export class RedirectToLogin extends Component {
+export class SSOHandler extends Component {
   constructor( props ){
     super();
     this.state = { ...props };
   }
   componentWillMount(){
-  //  window.location = 'http://localhost:3001/login';
+    const { match: { params } } = this.props;
+    sessionStorage.setItem('jwttoken',params.token);
   }
   render(){
-   // return (<section>Redirecting...</section>);
     return <Redirect to='/home' />;
   }
 }
 
-export default RedirectToLogin;
+export default SSOHandler;
