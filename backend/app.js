@@ -6,14 +6,20 @@ const jwt           = require('jsonwebtoken');
 const compression    = require('compression');
 const helmet        = require('helmet');
 const express 		= require('express');
-const logger 	    = require('morgan');
+const morgan 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport      = require('passport');
 const path          = require('path');
 const routes        = require('./routes');
 const app           = express();
 
-app.use(logger('dev'));
+var winston = require('./winston');
+if(CONFIG.app==='dev'){
+    app.use(morgan('dev'));
+
+}else{
+    app.use(morgan('combined', { stream: winston.stream }));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
@@ -33,8 +39,8 @@ models.sequelize.authenticate().then(() => {
     console.error('Unable to connect to SQL database:',CONFIG.db_name, err);
 });
 if(CONFIG.app==='dev'){
-    models.sequelize.sync();//creates table if they do not already exist
-    // models.sequelize.sync({ force: true });//deletes all tables then recreates them useful for testing and development purposes
+   // models.sequelize.sync();//creates table if they do not already exist
+    models.sequelize.sync({ force: true });//deletes all tables then recreates them useful for testing and development purposes
 }
 // CORS
 app.use(function (req, res, next) {

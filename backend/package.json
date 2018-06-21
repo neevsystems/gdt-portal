@@ -9,8 +9,6 @@
   },
   "author": "Neev Systems",
   "dependencies": {
-    "bcrypt": "^2.0.1",
-    "bcrypt-promise": "^2.0.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.2",
     "connect": "^3.6.6",
@@ -32,7 +30,9 @@
     "sequelize-cli": "^4.0.0",
     "serve-favicon": "~2.4.5",
     "serve-static": "^1.13.2",
-    "validator": "^10.3.0"
+    "validator": "^10.3.0",
+    "winston": "^3.0.0",
+    "winston-daily-rotate-file": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.17.5",
