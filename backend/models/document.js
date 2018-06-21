@@ -1,4 +1,3 @@
-'use strict';
 const jwt           	= require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
@@ -8,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         fileFrom    : {type: DataTypes.STRING, allowNull: true},
         fileDesc    : {type: DataTypes.STRING, allowNull: true},
         filePath    : {type: DataTypes.STRING, allowNull: true},
+        isArchived  : {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
     });
-
     return Model;
 }

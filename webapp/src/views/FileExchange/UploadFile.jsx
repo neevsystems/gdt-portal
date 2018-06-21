@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Grid, Table, TableHead, TableRow, TableCell, TableBody,TextField,
+  Grid, Table, TableHead, TableRow, TableCell, TableBody,TextField,Input,InputAdornment,
   TableFooter, TablePagination, IconButton, InputLabel, Checkbox, FormControlLabel
 } from "material-ui";
 import { RegularCard, ItemGrid, CustomInput, Button } from "components";
@@ -23,7 +23,6 @@ class UploadFiles extends React.Component {
   };
   handleTextChange=(event)=>{
     this.setState({filedesc: event.target.value});
-
   }
 
   handleChangeIndex = index => {
@@ -32,9 +31,7 @@ class UploadFiles extends React.Component {
   documentOnsubmit=(event)=>{
     var state=this;
     event.preventDefault();
-
-    const formData = new FormData();
-    
+    const formData = new FormData();    
     formData.append('fileName',this.myInput.files[0].name);
     formData.append('fileFor','customer1');
     formData.append('fileFrom','GDT');
@@ -64,17 +61,28 @@ class UploadFiles extends React.Component {
               <div>
                
                 <Grid container>
-                  <ItemGrid xs={12} sm={12} md={6}>
-                    <input type='text' id="fileName" name="fileName" style={{ 'width': '50%' }} value={this.state.filename} disabled={true} />
-                    <IconButton onClick={(e) => this.myInput.click()}>
+                  <ItemGrid xs={12} sm={12} md={8}>
+                  <Grid container spacing={2} alignItems="flex-end">
+                  <Grid item xs={10} sm={10} md={11}>
+                  <Input fullWidth
+                  id="fileName" name="fileName"
+                 value= {this.state.filename}
+                      disabled
+                      placeholder="Select File"
+                    />
+                    </Grid>
+                      <Grid item>
+                      <IconButton onClick={(e) => this.myInput.click()}>
                       <AttachFile />
                       <input id="files"  name="files" type="file" ref={(ref) => this.myInput = ref} style={{ display: 'none' }} onChange={this.handleChange} />
                     </IconButton>
-                  </ItemGrid>
+                        </Grid>
+                    </Grid>
+                    </ItemGrid>
                 </Grid>
                 <Grid container>
-                  <ItemGrid xs={12} sm={12} md={6}>
-                  <TextField
+                  <ItemGrid xs={12} sm={12} md={8}>
+                  <TextField fullWidth
                       id="fileDesc"
                       label="Description"
                       margin="normal"
