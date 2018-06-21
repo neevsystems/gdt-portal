@@ -7,8 +7,6 @@ const createUser =  async function(req, res){
 
     [err, user] = await to(User.create(userInfo));
     if(err) { console.log(err);
-
-
         return ReE(res,'Unable to Create user');
     }
     return ReS(res, {message:'Successfully created new user.',user:user.toJSON()}, 201);

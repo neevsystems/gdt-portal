@@ -9,8 +9,6 @@
   },
   "author": "Neev Systems",
   "dependencies": {
-    "bcrypt": "^2.0.1",
-    "bcrypt-promise": "^2.0.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.2",
     "connect": "^3.6.6",

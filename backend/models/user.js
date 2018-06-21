@@ -1,6 +1,6 @@
 'use strict';
-const bcrypt 			= require('bcrypt');
-const bcrypt_p 			= require('bcrypt-promise');
+//const bcrypt 			= require('bcrypt');
+//const bcrypt_p 			= require('bcrypt-promise');
 const jwt           	= require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         this.Companies = this.belongsToMany(models.Company, {through: 'UserCompany'});
     };
  */
-    Model.beforeSave(async (user, options) => {
+   /* Model.beforeSave(async (user, options) => {
         let err;
         if (user.changed('password')){
             let salt, hash
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             user.password = hash;
         }
     });
-
+*/
     Model.prototype.comparePassword = async function (pw) {
        /* let err, pass
         if(!this.password) TE('password not set');
