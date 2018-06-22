@@ -22,7 +22,12 @@ router.post(    '/users',           UserController.createUser);
 router.get(     '/allusers',        UserController.getall);
 // passport.authenticate('jwt', {session:false})                                            // C
 router.get(     '/users',            UserController.get);        // R
+
+router.get(     '/user/:id',            UserController.getuser);
+router.put(     '/users',            UserController.update);     // U
+
 router.put(     '/users',            UserController.updateUser);     // U
+
 router.delete(  '/users',            UserController.remove);     // D
 
 router.post('/fileupload',  FileExchangeController.uploadFiles);

@@ -31,8 +31,9 @@ import {getAllUsers} from '../../services/rosterService';
     componentWillMount(){
       this.getUserList();
     }
-    editUserClick(){
-    this.props.history.push('/home/rosterrecord');
+    editUserClick(id){
+    let routeUrl='/home/rosterrecord/'+id;
+    this.props.history.push(routeUrl);
     }
 
     render() {
@@ -75,22 +76,18 @@ import {getAllUsers} from '../../services/rosterService';
                 <TableCell >Customer_Standard</TableCell>
                 <TableCell >Active</TableCell>
                 <TableCell>
-              <IconButton onClick={()=>{stateObj.editUserClick()}}  > <Edit /></IconButton>
-
+              <IconButton onClick={()=>{stateObj.editUserClick(n.id)}}  > <Edit /></IconButton>
                 </TableCell>
               </TableRow>
             );
           })}
-
              </TableBody>
           </Table>
          }
         />
       </ItemGrid>
-
     </Grid>
   );
 }
 }
-
 export default Roster;

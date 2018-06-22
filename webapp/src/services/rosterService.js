@@ -11,6 +11,15 @@ export const getAllUsers=function () {
   })
   return promise;
 }
+export const getUser=function (id) {
+  axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
+  let fullurl=BASE_URL+'users/'+id;
+  let promise =axios({
+    method:'get',
+    url:fullurl
+  })
+  return promise;
+}
 
 
 export const login=function () {

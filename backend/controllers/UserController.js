@@ -69,6 +69,17 @@ const getall = async function(req, res){
 }
 module.exports.getall = getall;
 
+const getSingleUser = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');    
+    let user,err;
+    [err, user] = await to(User.findOne({where:{id:req.params.id}}));
+    if(err)
+        return ReE(res, err, 422);
+    else
+        return ReS(res, {user:user}, 200);
+}
+module.exports.getuser = getSingleUser;
+
 const update = async function(req, res){
     let err, user, data
     user = req.user;
