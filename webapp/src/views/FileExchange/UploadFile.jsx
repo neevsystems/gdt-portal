@@ -31,6 +31,7 @@ class UploadFiles extends React.Component {
   documentOnsubmit=(event)=>{
     var state=this;
     event.preventDefault();
+    if(this.myInput.files.length>0){
     const formData = new FormData();    
     formData.append('fileName',this.myInput.files[0].name);
     formData.append('fileFor','customer1');
@@ -46,6 +47,7 @@ class UploadFiles extends React.Component {
       alert("Somthing went wrong. try again");
       state.props.history.push('/home/fileexchange');
     });
+  }
     return false;
   }
   render() {
@@ -96,7 +98,9 @@ class UploadFiles extends React.Component {
             }
             footer={<div><Button type="submit" style={{ 'background-color': '#333333' }} 
              variant="contained" color="primary" >Save</Button>
-              <Button style={{ 'background-color': '#333333' }} variant="contained" color="primary" >Cancel</Button></div>}
+              <Button style={{ 'background-color': '#333333' }} variant="contained" color="primary" 
+              onClick={()=>{state.props.history.push('/home/fileexchange');}}
+              >Cancel</Button></div>}
 
           />
 

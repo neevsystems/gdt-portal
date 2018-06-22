@@ -14,7 +14,7 @@ import { withStyles, Grid, Card,
 
 import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
-import {getAllDocuments} from "../../services/documentsService.js";
+import {getAllDocuments,archivedFile} from "../../services/documentsService.js";
 
 class FileExchange extends React.Component {
   constructor(props){
@@ -31,6 +31,7 @@ class FileExchange extends React.Component {
     }
     this.uploadFile=this.uploadFile.bind(this);
     this.getAllDocs=this.getAllDocs.bind(this);
+    this.archFile=this.archFile.bind(this);
   }
   uploadFile(){
     this.props.history.push('/home/uploadfiles');
@@ -46,13 +47,29 @@ class FileExchange extends React.Component {
     });
 
   }
+  archFile(fid){
+    var r = window.confirm("Do you want to archive the file ?");
+    if(r==true){
+      archivedFile(fid).then((resp)=>{
+        if(resp.data.success)
+        {
+          alert("File Archived Successfully.");
+          this.getAllDocs();
+        }
+        else
+        alert("Archive File Failed. Contact Administrator");
+      }).catch(function(error){
+        console.log(error);
+      })
+    }
+  }
   componentWillMount(){
     this.getAllDocs();
   }
   
   render() {
     const { classes } = this.props;
-   
+   var stateObj=this;
     return (
       <div>
         <Grid container>
@@ -75,6 +92,7 @@ class FileExchange extends React.Component {
                 <TableCell>Name</TableCell>
                 <TableCell >Description</TableCell>
                 <TableCell >Uploaded On</TableCell>
+                <TableCell >Archived</TableCell>
                 <TableCell ></TableCell>
           </TableRow>
              </TableHead>
@@ -87,13 +105,14 @@ class FileExchange extends React.Component {
                 </TableCell>
                 <TableCell >{n.fileDesc}</TableCell>
                 <TableCell >{n.createdAt}</TableCell>
+                <TableCell >{n.isArchived?'Y':'N'}</TableCell>
                 <TableCell>
                 <IconButton onClick={()=>{window.open(n.filePath);}}>
                   <CloudDownload />
               </IconButton>
-              <IconButton>
+             {n.isArchived?null:(<IconButton onClick={()=>{stateObj.archFile(n.id);}} >
                   <Delete />
-              </IconButton>
+              </IconButton>)} 
                 </TableCell>
               </TableRow>
             );

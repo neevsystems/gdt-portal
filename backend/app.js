@@ -92,6 +92,7 @@ app.get('/login',
 
 app.use('/api', routes);
 app.use('/documents', express.static(__dirname + '/documents'));
+app.use('/documents/archived', express.static(__dirname + '/documents/archived'));
 app.use('/app', express.static(path.join(__dirname, '../webapp/build/')));
 
 app.use('/ServerError', express.static(path.join(__dirname, './pages/ServerError.html')));

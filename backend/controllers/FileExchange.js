@@ -1,5 +1,7 @@
 const multer = require('multer');
 const fs = require('fs-extra');
+var path = require('path');
+
 const Document          = require('../models').Document;
 module.exports.uploadFiles= function (req, res) {
     var document={};
@@ -38,7 +40,34 @@ const moveFile=async function(fromFile,toFile){
       }
 }
 const archiveFile=async function(req,res){
-
+    console.log(req.params.id,' :resp');
+    let doc,err;
+    var archiveVirPath=req.protocol + '://' + req.get('host')+CONFIG.ARCHIVED_PATH.substr(1,CONFIG.ARCHIVED_PATH.length) +'/';
+    [err,doc]=await to(Document.findOne({where:{id:req.params.id,isArchived:false}}));
+    if((doc==undefined?null:doc)!=null ){
+        let fname=doc.fileName;
+        
+        let sourceFile= path.join(__dirname,'../',doc.filePath.replace(req.protocol + '://' + req.get('host'),''));
+        let destFile=path.join(__dirname,'../','/'+CONFIG.ARCHIVED_PATH.substr(1,CONFIG.ARCHIVED_PATH.length) +'/');
+        moveFile(sourceFile,destFile+fname).then(async function(resdata){
+            if(resdata==true){
+                doc.isArchived=true;
+                doc.filePath=archiveVirPath+fname;
+                let uerr,udoc;
+                [uerr,udoc]=await to(doc.save());
+                if(err){                    
+                    return ReE(res, err);
+                }
+                return ReS(res, {message :'Archived file successfully: '});
+            }
+            else{
+                return ReE(res, 'Failed to Archive file');
+            }
+        })
+    }
+    else{
+        return ReE(res, 'Failed to Archive file');
+    }
 }
 module.exports.archiveFile = archiveFile;
 const getall = async function(req, res){
