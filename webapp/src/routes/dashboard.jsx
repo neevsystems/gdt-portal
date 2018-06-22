@@ -19,14 +19,7 @@ import {
 } from "@material-ui/icons";
 
 const dashboardRoutes = [
-  {
-    path: "/home/landingPage",
-    sidebarName: "Home Page",
-    navbarName: "Home Desk",
-    icon: Home,
-    hide: true,
-    component: LandingView
-  },
+
   {
     path: "/home/assetmanager",
     sidebarName: "Asset Manager",
@@ -107,7 +100,7 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
-  { redirect: true, path: "/", to: "/home/landingPage", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/home/calender", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

@@ -1,13 +1,25 @@
 'use strict';
-const bcrypt 			= require('bcrypt');
-const bcrypt_p 			= require('bcrypt-promise');
+//const bcrypt 			= require('bcrypt');
+//const bcrypt_p 			= require('bcrypt-promise');
 const jwt           	= require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
     var Model = sequelize.define('User', {
+        title         : DataTypes.STRING,
+        firstName     : DataTypes.STRING,
+        middleName    : DataTypes.STRING,
+        lastName      : DataTypes.STRING,
+        email         : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
+        mobile        : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        homeMobile    : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        passphrase    : DataTypes.STRING,
+        isAdmin       : DataTypes.BOOLEAN,
+        isActive      : DataTypes.BOOLEAN,
+        isEmployee    : DataTypes.BOOLEAN,
+
         first     : DataTypes.STRING,
         last      : DataTypes.STRING,
-        email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
+        //email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
         phone     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
         password  : DataTypes.STRING,
     });
@@ -16,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         this.Companies = this.belongsToMany(models.Company, {through: 'UserCompany'});
     };
  */
-    Model.beforeSave(async (user, options) => {
+   /* Model.beforeSave(async (user, options) => {
         let err;
         if (user.changed('password')){
             let salt, hash
@@ -29,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             user.password = hash;
         }
     });
-
+*/
     Model.prototype.comparePassword = async function (pw) {
        /* let err, pass
         if(!this.password) TE('password not set');

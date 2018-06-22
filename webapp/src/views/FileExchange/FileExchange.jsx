@@ -20,14 +20,7 @@ class FileExchange extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      files:[{filename:'Installer.doc', description:'Installer',uploadedon:'01-01-2018'}
-    ,{filename:'Network.png', description:'Network',uploadedon:'01-02-2018'},
-    {filename:'Arch.png', description:'Architecture',uploadedon:'23-03-2018'}
-    ,{filename:'Update.pdf', description:'Update instructions',uploadedon:'23-04-2018'},
-    {filename:'Checklist.xls', description:'Policy check list',uploadedon:'18-05-2018'}
-    ],
-   
-    
+      files:[]
     }
     this.uploadFile=this.uploadFile.bind(this);
     this.getAllDocs=this.getAllDocs.bind(this);

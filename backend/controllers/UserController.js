@@ -1,6 +1,36 @@
 const User          = require('../models').User;
 const authService   = require('./../services/AuthService');
 
+const createUser =  async function(req, res){
+    const userInfo = req.body;
+    userInfo.isEmployee = false;
+
+    [err, user] = await to(User.create(userInfo));
+    if(err) { console.log(err);
+        return ReE(res,'Unable to Create user');
+    }
+    return ReS(res, {message:'Successfully created new user.',user:user.toJSON()}, 201);
+
+}
+module.exports.createUser = createUser;
+const updateUser =  async function(req, res){
+
+    const userInfo = req.body;
+    userInfo.isEmployee = false;
+     if(userInfo.id){
+        [err, user] = await to(User.findById(userInfo.id));
+        if(err || !user) return ReE(res,'Unable to find user');
+
+        [err, user] = await to(user.update(userInfo));
+        if(err) return ReE(res,'Unable to Update user');
+        return ReS(res, {message:'Successfully updated new user.', user:user.toJSON()}, 201);
+    }else{
+        ReE(res,'can not update user without ID');
+    }
+
+}
+module.exports.updateUser = updateUser;
+
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     const body = req.body;

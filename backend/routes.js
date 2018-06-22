@@ -18,12 +18,16 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post(    '/users',           UserController.create);
+router.post(    '/users',           UserController.createUser);
 router.get(     '/allusers',        UserController.getall);
 // passport.authenticate('jwt', {session:false})                                            // C
 router.get(     '/users',            UserController.get);        // R
+
 router.get(     '/user/:id',            UserController.getuser);
 router.put(     '/users',            UserController.update);     // U
+
+router.put(     '/users',            UserController.updateUser);     // U
+
 router.delete(  '/users',            UserController.remove);     // D
 
 router.post('/fileupload',  FileExchangeController.uploadFiles);
@@ -33,6 +37,6 @@ router.post(    '/users/login',     UserController.login);
 
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
 
-router.get(     '/allevents',         CalenderController.getall);
+router.get(     '/allevents',passport.authenticate('jwt', {session:false}) ,         CalenderController.getall);
 
 module.exports = router;
