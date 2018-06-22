@@ -75,7 +75,7 @@ const dashboardRoutes = [
   },
 
   {
-    path: "/home/rosterrecord",
+    path: "/home/rosterrecord/:uid",
     sidebarName: "Roster",
     navbarName: "Roster",
     hide:true,

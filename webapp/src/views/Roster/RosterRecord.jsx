@@ -3,12 +3,28 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
     TableFooter,TablePagination,IconButton,InputLabel,Checkbox,FormControlLabel} from "material-ui";
   import {  RegularCard, ItemGrid,CustomInput,Button} from "components";
   import {  Edit,Delete, Save} from "@material-ui/icons";
-
+  import {getUser} from '../../services/rosterService';
  class RosterRecord extends React.Component {
     constructor(props){
       super(props);
+      this.state={
+        user:{}
+      }
+      this.getUserById=this.getUserById.bind(this);
+    }
+    componentWillMount(){
+
+    }
+    getUserById(id){
+      let stateObj=this;
+      getUser(id).then((resp)=>{
+        stateObj.setState({user:resp.data.user});
+      }).catch(function(error){
+        console.log(error);
+      });
     }
     render() {
+      let stateObj=this;
         return (<div>
             <Grid container>
       <ItemGrid xs={12} sm={12} md={12}>
@@ -21,6 +37,7 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
                   <CustomInput
                     labelText="Title"
                     id="title"
+                   
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -30,6 +47,7 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
                   <CustomInput
                     labelText="First Name"
                     id="fname"
+                    inputProps={ stateObj.state.user.first}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -117,9 +135,7 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
           }
           footer={<div><Button style={{'background-color':'#333333'}} variant="contained" color="primary" >Save</Button>
           <Button style={{'background-color':'#333333'}} variant="contained" color="primary" >Cancel</Button></div>}
-
           />
-
             </ItemGrid>
       </Grid>
 
