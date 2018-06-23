@@ -13,10 +13,30 @@ export const getAllUsers=function () {
 }
 export const getUser=function (id) {
   axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
-  let fullurl=BASE_URL+'users/'+id;
+  let fullurl=BASE_URL+'user/'+id;
   let promise =axios({
     method:'get',
     url:fullurl
+  })
+  return promise;
+}
+export const createUser=function (userObj) {
+  axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
+  let fullurl=BASE_URL+'users/';
+  let promise =axios({
+    method:'POST',
+    url:fullurl,
+    data: userObj
+  })
+  return promise;
+}
+export const updateUser=function (userObj) {
+  axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
+  let fullurl=BASE_URL+'users/';
+  let promise =axios({
+    method:'PUT',
+    url:fullurl,
+    data: userObj
   })
   return promise;
 }
@@ -25,8 +45,8 @@ export const getUser=function (id) {
 export const login=function () {
   //axios.defaults.headers.common['authorization'] = token;
   let userObj={
-    "username":"sudhakar",
-    "email":"sudhakar.vellanki@neevsystems.com",
+    "username":"venkat",
+    "email":"sudhakar.v@neevsystems.com",
     "password":"tech123"
     };
   let fullurl=BASE_URL+'users/login';
