@@ -18,6 +18,7 @@ import {getAllUsers} from '../../services/rosterService';
       }
       this.getUserList=this.getUserList.bind(this);
       this.editUserClick=this.editUserClick.bind(this);
+      this.addUserClick=this.addUserClick.bind(this);
     }
     getUserList(){
       var state=this;
@@ -35,6 +36,10 @@ import {getAllUsers} from '../../services/rosterService';
     let routeUrl='/home/rosterrecord/'+id;
     this.props.history.push(routeUrl);
     }
+    addUserClick(){
+      let routeUrl='/home/rosterrecord/'+0;
+      this.props.history.push(routeUrl);
+    }
 
     render() {
       let stateObj=this;
@@ -46,7 +51,7 @@ import {getAllUsers} from '../../services/rosterService';
           cardTitle="Users List"
           headerCardAction={
             <div>
-              <IconButton onClick={this.uploadFile }>
+              <IconButton onClick={this.addUserClick }>
               <PersonAdd style={{color:"#fff"}} />
 
               </IconButton>
@@ -70,11 +75,11 @@ import {getAllUsers} from '../../services/rosterService';
 
               <TableRow key={key}>
                 <TableCell component="th" scope="row">
-                 {n.first+' '+n.last}
+                 {n.firstName+' '+n.lastName}
                 </TableCell>
                 <TableCell >{n.email}</TableCell>
                 <TableCell >Customer_Standard</TableCell>
-                <TableCell >Active</TableCell>
+                <TableCell >{n.isActive?'Active':'In-Active'}</TableCell>
                 <TableCell>
               <IconButton onClick={()=>{stateObj.editUserClick(n.id)}}  > <Edit /></IconButton>
                 </TableCell>

@@ -24,7 +24,7 @@ router.get(     '/allusers',        UserController.getall);
 router.get(     '/users',            UserController.get);        // R
 
 router.get(     '/user/:id',            UserController.getuser);
-router.put(     '/users',            UserController.update);     // U
+//router.put(     '/users',            UserController.update);     // U
 
 router.put(     '/users',            UserController.updateUser);     // U
 

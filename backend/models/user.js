@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         mobile        : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
         homeMobile    : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
         passphrase    : DataTypes.STRING,
-        isAdmin       : DataTypes.BOOLEAN,
-        isActive      : DataTypes.BOOLEAN,
-        isEmployee    : DataTypes.BOOLEAN,
+        isAdmin       : {type:DataTypes.BOOLEAN,defaultValue: false},
+        isActive      : {type:DataTypes.BOOLEAN,defaultValue: true},
+        isEmployee    : {type:DataTypes.BOOLEAN,defaultValue: false},
 
         first     : DataTypes.STRING,
         last      : DataTypes.STRING,
         //email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
-        phone     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        phone     : {type: DataTypes.STRING, allowNull: true },
         password  : DataTypes.STRING,
     });
 

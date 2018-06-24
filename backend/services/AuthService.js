@@ -6,8 +6,8 @@ const getUniqueKeyFromBody = function(body){// this is so they can send in 3 opt
     if(typeof unique_key==='undefined'){
         if(typeof body.email != 'undefined'){
             unique_key = body.email
-        }else if(typeof body.phone != 'undefined'){
-            unique_key = body.phone
+        }else if(typeof body.mobile != 'undefined'){
+            unique_key = body.mobile
         }else{
             unique_key = null;
         }
@@ -69,9 +69,9 @@ const authUser = async function(userInfo){//returns token
         if(err) TE(err.message);
 
     }else if(validator.isMobilePhone(unique_key, 'any')){//checks if only phone number was sent
-        auth_info.method='phone';
+        auth_info.method='mobile';
 
-        [err, user] = await to(User.findOne({where:{phone:unique_key }}));
+        [err, user] = await to(User.findOne({where:{mobile:unique_key }}));
         if(err) TE(err.message);
 
     }else{
