@@ -82,7 +82,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
     }
     handleChange  (e)  {    
       var user = {...this.state.user}
-      user[e.target.id] = e.target.value;
+      user[e.target.name] = e.target.value;
       this.setState({user});
     };
     checkboxChangd  (e)  {    
@@ -120,6 +120,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <TextField
                   select
                   id="title"
+                  name="title"
                   label="Title"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -137,6 +138,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
                   id="firstName"
+                  name="firstName"
                   label="First Name"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -148,6 +150,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={3}>
                 <TextField
                   id="middleName"
+                  name="middleName"
                   label="Middle Name"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -159,6 +162,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={3}>
                 <TextField
                   id="lastName"
+                  name="lastName"
                   label="Last Name"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -172,6 +176,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
                   id="mobile"
+                  name="mobile"
                   label="Mobile Phone"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -183,6 +188,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
                   id="phone"
+                  name="phone"
                   label="Home Phone"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -194,6 +200,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
                   id="email"
+                  name="email"
                   label="E-Mail Id"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -208,6 +215,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
                   id="passphrase"
+                  name="passphrase"
                   label="Pass phrase"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
@@ -220,7 +228,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={6}>
                 <FormControlLabel
                     control={
-                      <Checkbox id="isAdmin" onChange={this.checkboxChangd.bind(this)}
+                      <Checkbox id="isAdmin" name="isAdmin" onChange={this.checkboxChangd.bind(this)}
                       checked={stateObj.state.user.isAdmin}     
                       required                   
                       />
@@ -231,7 +239,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={6}>
                 <FormControlLabel
                     control={
-                      <Checkbox id="isActive" onChange={this.checkboxChangd.bind(this)}
+                      <Checkbox id="isActive" name="isActive" onChange={this.checkboxChangd.bind(this)}
                       checked={stateObj.state.user.isActive}
                       required
                       />
