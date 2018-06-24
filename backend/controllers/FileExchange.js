@@ -1,20 +1,34 @@
 const multer = require('multer');
 const fs = require('fs-extra');
 var path = require('path');
+var mkdirp = require('mkdirp');
 
 const Document          = require('../models').Document;
 module.exports.uploadFiles= function (req, res) {
     var document={};
+
+    function getFileLocation(forFile,fromFile){
+        if(forFile=="GDT"){
+            return fromFile+'/in/';
+        }
+        else {
+            return forFile+'/out/';
+        }
+    }
+   
     const Storage = multer.diskStorage({
         destination: function (req, file, callback) {
+            var destPath=CONFIG.FILE_PATH+'/'+getFileLocation(req.body.fileFor,req.body.fileFrom);
+            mkdirp.sync(destPath);
+            console.log(destPath,'filePath :')
             document={
                 fileName:req.body.fileName,
                 fileFor:req.body.fileFor,
                 fileFrom:req.body.fileFrom,
                 fileDesc:req.body.fileDesc,
-                filePath: req.protocol + '://' + req.get('host')+CONFIG.FILE_PATH.substr(1,CONFIG.FILE_PATH.length) +'/'+file.originalname
+                filePath: destPath+file.originalname
             };
-            callback(null,CONFIG.FILE_PATH);
+            callback(null,destPath);
         },
         filename: function (req, file, callback) {
             callback(null,file.originalname);
@@ -70,6 +84,23 @@ const archiveFile=async function(req,res){
     }
 }
 module.exports.archiveFile = archiveFile;
+
+const fileDownlaod=async function(req,res){
+    let err,doc;
+    [err,doc]=await to(Document.findOne({where:{id:req.params.fid,isArchived:false}}));
+    let fname='',sourceFile='';
+     if((doc==undefined?null:doc)!=null){
+        fname=doc.fileName;        
+        //sourceFile= path.join(__dirname,'../',doc.filePath.replace(req.protocol + '://' + req.get('host'),''));
+        sourceFile= path.join(__dirname,'../',doc.filePath);
+        return res.download(sourceFile);// Set disposition and send it.
+    }
+     else{
+        return ReE(res, 'File Not found');;
+     }
+    }
+module.exports.downloadFile=fileDownlaod;
+
 const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let docs,err;

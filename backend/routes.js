@@ -33,6 +33,7 @@ router.delete(  '/users',            UserController.remove);     // D
 router.post('/fileupload',  FileExchangeController.uploadFiles);
 router.get('/archivefile/:id',  FileExchangeController.archiveFile);
 router.get('/alldocuments',  FileExchangeController.getall);
+router.get('/downloadFile/:fid', FileExchangeController.downloadFile);
 router.post(    '/users/login',     UserController.login);
 
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
