@@ -101,7 +101,8 @@ class FileExchange extends React.Component {
                 <TableCell>Name</TableCell>
                 <TableCell >Description</TableCell>
                 <TableCell >Uploaded On</TableCell>
-                <TableCell >Archived</TableCell>
+                <TableCell >Updated By</TableCell>
+                {/* <TableCell >Archived</TableCell> */}
                 <TableCell ></TableCell>
           </TableRow>
              </TableHead>
@@ -113,15 +114,16 @@ class FileExchange extends React.Component {
                  {n.fileName}
                 </TableCell>
                 <TableCell >{n.fileDesc}</TableCell>
-                <TableCell >{n.createdAt}</TableCell>
-                <TableCell >{n.isArchived?'Y':'N'}</TableCell>
+                <TableCell >{new Date(n.createdAt).getFullYear()+'-'+(new Date(n.createdAt).getMonth()+1)+"-"+new Date(n.createdAt).getDate()}</TableCell>
+                <TableCell >{n.fileFrom}</TableCell>
+                {/* <TableCell >{n.isArchived?'Y':'N'}</TableCell> */}
                 <TableCell>
                 <IconButton onClick={()=>{stateObj.downloadFile(n.id,n.fileName)}}>
                   <CloudDownload />
               </IconButton>
-             {n.isArchived?null:(<IconButton onClick={()=>{stateObj.archFile(n.id);}} >
+             {/* {n.isArchived?null:(<IconButton onClick={()=>{stateObj.archFile(n.id);}} >
                   <Delete />
-              </IconButton>)} 
+              </IconButton>)}  */}
                 </TableCell>
               </TableRow>
             );

@@ -23,7 +23,8 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
           email:'',
           passphrase:'',
           isAdmin:false,
-          isActive:true
+          isActive:true,
+          environment:'',
 
         }
       }
@@ -225,7 +226,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 />
                 
                 </ItemGrid>
-                <ItemGrid xs={12} sm={12} md={6}>
+                <ItemGrid xs={12} sm={12} md={3}>
                 <FormControlLabel
                     control={
                       <Checkbox id="isAdmin" name="isAdmin" onChange={this.checkboxChangd.bind(this)}
@@ -236,7 +237,23 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                     label="Is Admin"
                   />
                 </ItemGrid>
-                <ItemGrid xs={12} sm={12} md={6}>
+                <ItemGrid xs={12} sm={12} md={4}>
+                <TextField
+                  select
+                  id="environment"
+                  name="environment"
+                  label="Environment"
+                  margin="normal"
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.title}
+                  fullWidth
+                >
+                    <MenuItem value={0}>
+                      {''}
+                    </MenuItem>
+                </TextField>
+                </ItemGrid>
+                <ItemGrid xs={12} sm={12} md={3}>
                 <FormControlLabel
                     control={
                       <Checkbox id="isActive" name="isActive" onChange={this.checkboxChangd.bind(this)}
