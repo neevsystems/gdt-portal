@@ -20,6 +20,15 @@ export const archivedFile= function(fid) {
   })   
   return promise;
 };
+export const getDocument=function (id) {
+  axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
+  let fullurl=BASE_URL+'downloadFile/'+id;
+  let promise =axios({
+    method:'get',
+    url:fullurl
+  })
+  return promise;
+}
 
 export const saveDocument= function(bodyFormData){
   axios.defaults.headers.common['authorization'] = token;

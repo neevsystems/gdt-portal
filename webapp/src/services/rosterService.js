@@ -20,6 +20,7 @@ export const getUser=function (id) {
   })
   return promise;
 }
+
 export const createUser=function (userObj) {
   axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
   let fullurl=BASE_URL+'users/';

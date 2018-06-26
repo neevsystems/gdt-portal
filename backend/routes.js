@@ -30,13 +30,15 @@ router.put(     '/users',            UserController.updateUser);     // U
 
 router.delete(  '/users',            UserController.remove);     // D
 
+
 router.post('/fileupload',  FileExchangeController.uploadFiles);
 router.get('/archivefile/:id',  FileExchangeController.archiveFile);
 router.get('/alldocuments',  FileExchangeController.getall);
+router.get('/downloadFile/:fid', FileExchangeController.downloadFile);
 router.post(    '/users/login',     UserController.login);
 
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
 
-router.get(     '/allevents',passport.authenticate('jwt', {session:false}) ,         CalenderController.getall);
+router.get(     '/allevents',         CalenderController.getSNOWChangeEvents);
 
 module.exports = router;

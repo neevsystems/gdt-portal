@@ -14,7 +14,7 @@ import { withStyles, Grid, Card,
 
 import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
-import {getAllDocuments,archivedFile} from "../../services/documentsService.js";
+import {getAllDocuments,archivedFile,getDocument} from "../../services/documentsService.js";
 
 class FileExchange extends React.Component {
   constructor(props){
@@ -25,9 +25,25 @@ class FileExchange extends React.Component {
     this.uploadFile=this.uploadFile.bind(this);
     this.getAllDocs=this.getAllDocs.bind(this);
     this.archFile=this.archFile.bind(this);
+    this.downloadFile=this.downloadFile.bind(this);
   }
   uploadFile(){
     this.props.history.push('/home/uploadfiles');
+  }
+  downloadFile(fid,filename){
+    getDocument(fid).then(
+      function(resp){
+        //window.open(resp.data);
+        var element = document.createElement("a");
+        var file = new Blob([resp.data], {type: resp.headers['content-type']});
+        element.href = URL.createObjectURL(file);
+        element.download = filename;
+        element.click();
+      }
+    ).catch(function(error){
+      console.log(error)
+    })
+
   }
   getAllDocs(){
     var state=this;
@@ -85,7 +101,8 @@ class FileExchange extends React.Component {
                 <TableCell>Name</TableCell>
                 <TableCell >Description</TableCell>
                 <TableCell >Uploaded On</TableCell>
-                <TableCell >Archived</TableCell>
+                <TableCell >Updated By</TableCell>
+                {/* <TableCell >Archived</TableCell> */}
                 <TableCell ></TableCell>
           </TableRow>
              </TableHead>
@@ -97,15 +114,16 @@ class FileExchange extends React.Component {
                  {n.fileName}
                 </TableCell>
                 <TableCell >{n.fileDesc}</TableCell>
-                <TableCell >{n.createdAt}</TableCell>
-                <TableCell >{n.isArchived?'Y':'N'}</TableCell>
+                <TableCell >{new Date(n.createdAt).getFullYear()+'-'+(new Date(n.createdAt).getMonth()+1)+"-"+new Date(n.createdAt).getDate()}</TableCell>
+                <TableCell >{n.fileFrom}</TableCell>
+                {/* <TableCell >{n.isArchived?'Y':'N'}</TableCell> */}
                 <TableCell>
-                <IconButton onClick={()=>{window.open(n.filePath);}}>
+                <IconButton onClick={()=>{stateObj.downloadFile(n.id,n.fileName)}}>
                   <CloudDownload />
               </IconButton>
-             {n.isArchived?null:(<IconButton onClick={()=>{stateObj.archFile(n.id);}} >
+             {/* {n.isArchived?null:(<IconButton onClick={()=>{stateObj.archFile(n.id);}} >
                   <Delete />
-              </IconButton>)} 
+              </IconButton>)}  */}
                 </TableCell>
               </TableRow>
             );

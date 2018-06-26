@@ -17,3 +17,5 @@ var auth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
     if(err) TE('user already exists with that phone number');
     return output;
     }
+
+    module.exports.getChangeEvents=getChangeEvents;

@@ -26,7 +26,7 @@ const dashboardRoutes = [
     navbarName: "Asset Manager",
     icon: Devices,
     isLauncher: true,
-    url: "http://www.google.com",
+    url: "https://gdtdev.service-now.com/cmdb_ci_list.do",
   },
   {
     path: "/home/monitoring",
@@ -42,7 +42,7 @@ const dashboardRoutes = [
     navbarName: "Service Desk",
     icon: Dashboard,
     isLauncher: true,
-    url: "http://www.google.com",
+    url: "https://gdtdev.service-now.com/incident_list.do",
   },
   {
     path: "/home/calender",
@@ -88,14 +88,6 @@ const dashboardRoutes = [
     sidebarName: "Knowledge center",
     navbarName: "Knowledge center",
     icon: LiveHelp,
-    isLauncher: true,
-    url: "http://www.google.com",
-  },
-  {
-    path: "/home/portalDoc",
-    sidebarName: "Portal Training Doc",
-    navbarName: "Portal Training Doc",
-    icon: Help,
     isLauncher: true,
     url: "http://www.google.com",
   },
