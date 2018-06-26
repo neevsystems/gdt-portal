@@ -1,21 +1,75 @@
+var ldap = require('ldapjs');
+var ssha = require('node-ssha256');
+var client = ldap.createClient({
+  url: 'ldap://c1dc01.gdt.ms'
+});
 
-var rp = require('request-promise');
-var querystring = require("querystring");
-const getChangeEvents = async function(){
-    var username = 'Rest.Guest';
-var password = 'gdt@1234';
-const company = querystring.escape('General Datatech LP');
-var auth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
-    const options = {
-        uri: `https://gdtdev.service-now.com/api/now/table/change_request?sysparm_query=company.name%3D${company}&sysparm_display_value=true&sysparm_display_value=true&sysparm_fields=work_start%2Creason%2Cwork_end%2Ctype%2Cshort_description%2Cstart_date%2Cend_date%2Cnumber`,
-        headers: {
-            'Authorization': auth
-        },
-        json: true // Automatically parses the JSON string in the response
+  client.bind('SVC_QTSPortalLDAP@GDT', 'JiD6T79lLuS$yvv!JWnA4D$2', function (err) {
+   if(!err){
+    var opts = {
+      filter: '(objectclass=user)',
+      scope: 'sub',
+      attributes: ['objectGUID','mail']
     };
-    [err, output] = await to( rp(options));
-    if(err) TE('user already exists with that phone number');
-    return output;
-    }
+    client.search('OU=QTS Customers,DC=gdt,DC=ms', opts, function (err, search) {
+      search.on('searchEntry', function (entry) {
+        var user = entry.object;
+        console.log(user.mail);
+      });
+      search.on('end', function(result) {
 
-    module.exports.getChangeEvents=getChangeEvents;
+        client.unbind(function(err) {
+            process.exit();
+          });
+      });
+    });
+
+  }
+  else{
+    console.log(err);
+  }
+  })
+
+  client.bind('SVC_QTSPortalLDAP@GDT', 'JiD6T79lLuS$yvv!JWnA4D$2', function (err) {
+    if(!err){
+    var entry = {
+      objectClass: ['user','organizationalPerson','person','top'],
+      objectCategory: 'CN=Person,CN=Schema,CN=Configuration,DC=gdt,DC=ms',
+      mail: 'James3JJordan@teleworm.us',
+      givenName: 'James3',
+      sn: 'Jordan',
+      telephoneNumber: 'Crystal Coms',
+      };
+      client.add('CN=JamesNew1 J. Jordan,OU=Crystal Coms,OU=QTS Customers,DC=gdt,DC=ms', entry, function(err) {
+        if(err) console.log('Error',err);
+        else console.log('Added');
+        client.unbind(function(err) {
+          process.exit();
+        });
+      });
+    }
+  });
+
+
+  client.bind('SVC_QTSPortalLDAP@GDT', 'JiD6T79lLuS$yvv!JWnA4D$2', function (err) {
+    if(!err){
+      var change = new ldap.Change({
+        operation: 'replace',
+        modification: {
+          telephoneNumber: 'NEW',
+        }
+      });
+
+      client.modify('CN=JamesNew1 J. Jordan,OU=Crystal Coms,OU=QTS Customers,DC=gdt,DC=ms', change, function(err) {
+        if(err) console.log('Error',err);
+        else console.log('changed');
+        client.unbind(function(err) {
+          process.exit();
+        });
+      });
+
+
+    }
+  });
+
+
