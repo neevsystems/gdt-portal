@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Menu } from "@material-ui/icons";
 import {
@@ -10,6 +10,7 @@ import {
   Button
 } from "material-ui";
 import cx from "classnames";
+import {HeaderLinks,CustomerDropDown } from "components";
 
 import headerStyle from "assets/jss/material-dashboard-react/headerStyle.jsx";
 
@@ -17,12 +18,29 @@ function Header({ ...props }) {
   function makeBrand() {
     var name;
     props.routes.map((prop, key) => {
-      if (prop.path === props.location.pathname) {
+      if (matchUrl(prop.path , props.location.pathname)) {
+      
         name = prop.navbarName;
       }
       return null;
     });
     return name;
+  }
+  function matchUrl(propPath,locPath){
+    let slashCount=0;
+    let propArray= ((propPath.split(':')[0]).substr(1,(propPath.split(':')[0]).length-2)).split('/');
+    let locArray=(locPath.substr(1,locPath.length-2).split('/'));
+    let matchCount=0;
+    propArray.forEach(function(item,key){
+      if(item==locArray[key]){
+        matchCount=matchCount+1;
+      }
+    });
+
+    if(propArray.length==matchCount)
+    return true;
+    else
+    return false;
   }
   const { classes, color } = props;
   const appBarClasses = cx({
@@ -38,7 +56,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-        {/* <HeaderLinks />  */}
+         <CustomerDropDown />  
         </Hidden>
         <Hidden mdUp>
           <IconButton
