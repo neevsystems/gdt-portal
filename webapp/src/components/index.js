@@ -39,6 +39,7 @@ import ItemGrid from "./Grid/ItemGrid.jsx";
 
 import Header from "./Header/Header.jsx";
 import HeaderLinks from "./Header/HeaderLinks.jsx";
+import CustomerDropDown from "./Header/CustomerDropDown.jsx";
 
 // ##############################
 // // // Sidebar
@@ -99,6 +100,7 @@ export {
   // Header
   Header,
   HeaderLinks,
+  CustomerDropDown,
   // Sidebar
   Sidebar,
   //Snackbar

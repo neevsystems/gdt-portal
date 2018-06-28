@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Menu } from "@material-ui/icons";
 import {
@@ -10,6 +10,7 @@ import {
   Button
 } from "material-ui";
 import cx from "classnames";
+import {HeaderLinks,CustomerDropDown } from "components";
 
 import headerStyle from "assets/jss/material-dashboard-react/headerStyle.jsx";
 
@@ -55,7 +56,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-        {/* <HeaderLinks />  */}
+         <CustomerDropDown />  
         </Hidden>
         <Hidden mdUp>
           <IconButton
