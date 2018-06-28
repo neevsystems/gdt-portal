@@ -52,7 +52,7 @@ class CustomerDropDown extends React.Component {
             displayEmpty
             name="Customers" >
             {objState.state.customers.map(function(item,key) {
-            return <MenuItem value={item.id}>{item.customerName}</MenuItem>
+            return <MenuItem key={key} value={item.id}>{item.customerName}</MenuItem>
             })}
           </Select>
           
