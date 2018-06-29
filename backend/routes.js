@@ -6,6 +6,7 @@ const UserController 	= require('./controllers/UserController');
 const HomeController 	= require('./controllers/HomeController');
 const FileExchangeController=require('./controllers/FileExchange');
 const CalenderController=require('./controllers/CalenderController');
+const CustomerController=require('./controllers/CustomerController');
 
 const passport      	= require('passport');
 const path              = require('path');
@@ -40,5 +41,8 @@ router.post(    '/users/login',     UserController.login);
 router.get('/dash', passport.authenticate('jwt', {session:false}),HomeController.Dashboard)
 
 router.get(     '/allevents',         CalenderController.getSNOWChangeEvents);
+router.get(     '/allcustomers',         CustomerController.getall);
+
+
 
 module.exports = router;
