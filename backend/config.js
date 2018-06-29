@@ -25,4 +25,8 @@ CONFIG.ldapURL   = process.env.LDAP_URL
 CONFIG.ldapUserName       = process.env.LDAP_USERNAME
 CONFIG.ldpaPassword       = process.env.LDAP_PASSWORD
 
+CONFIG.SnowURL   = process.env.SNOW_URL
+CONFIG.SnowUserName       = process.env.SNOW_USERNAME
+CONFIG.SnowPassword       = process.env.SNOW_PASSWORD
+
 CONFIG.logRoot     = process.env.LOG_ROOT || 'D://logs'
