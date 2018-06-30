@@ -10,6 +10,8 @@ const morgan 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport      = require('passport');
 const path          = require('path');
+const SamlStrategy  = require('passport-saml').Strategy;
+const fs            = require('fs');
 const routes        = require('./routes');
 const app           = express();
 
@@ -40,7 +42,7 @@ models.sequelize.authenticate().then(() => {
 });
 if(CONFIG.app==='dev'){
 
-    models.sequelize.sync();//creates table if they do not already exist
+   models.sequelize.sync();//creates table if they do not already exist
    // models.sequelize.sync({ force: true });//deletes all tables then recreates them useful for testing and development purposes
 
 }
@@ -58,6 +60,30 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+app.get('/SSO/Metadata',
+function(req, res) {
+    const ss = new SamlStrategy(
+        {
+          callbackUrl: '/login/callback',
+          entryPoint: CONFIG.entryPoint,
+          issuer: CONFIG.issuer,
+          cert: fs.readFileSync(path.join(__dirname, '../certificates/SAML.cert'), 'utf-8'),
+          },
+        async function(profile, done) {
+            let err, user;
+            [err, user] = await to(authService.authSSOUser(profile.nameID));
+            if(err) return done(err, false);
+            if(user) {
+                return done(null, user);
+            }else{
+                return done(null, false);
+            }
+        }
+      );
+res.type('application/xml');
+res.status(200).send(ss.generateServiceProviderMetadata());
+}
+);
 
 app.post('/login/callback',function  (req, res, next) {
 
