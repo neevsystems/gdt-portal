@@ -10,7 +10,7 @@ const morgan 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport      = require('passport');
 const path          = require('path');
-const SamlStrategy  = require('passport-saml').Strategy;
+const samlStrategy  = require('./middleware/Saml');
 const fs            = require('fs');
 const routes        = require('./routes');
 const app           = express();
@@ -62,26 +62,8 @@ app.use(function (req, res, next) {
 });
 app.get('/SSO/Metadata',
 function(req, res) {
-    const ss = new SamlStrategy(
-        {
-          callbackUrl: '/login/callback',
-          entryPoint: CONFIG.entryPoint,
-          issuer: CONFIG.issuer,
-          cert: fs.readFileSync(path.join(__dirname, '../certificates/SAML.cert'), 'utf-8'),
-          },
-        async function(profile, done) {
-            let err, user;
-            [err, user] = await to(authService.authSSOUser(profile.nameID));
-            if(err) return done(err, false);
-            if(user) {
-                return done(null, user);
-            }else{
-                return done(null, false);
-            }
-        }
-      );
 res.type('application/xml');
-res.status(200).send(ss.generateServiceProviderMetadata());
+res.status(200).send(samlStrategy.generateServiceProviderMetadata());
 }
 );
 
@@ -89,6 +71,7 @@ app.post('/login/callback',function  (req, res, next) {
 
   passport.authenticate('saml', {session: false}, (err, user, info) => {
       if (err || !user) {
+        console.log(err);
           return res.status(400).json({
               message: info ? info.message : 'Login failed',
               user   : user
@@ -97,6 +80,7 @@ app.post('/login/callback',function  (req, res, next) {
 
       req.login(user, {session: false}, (err) => {
           if (err) {
+              console.log(err);
               res.send(err);
           }
 
@@ -111,6 +95,32 @@ app.post('/login/callback',function  (req, res, next) {
 }
 );
 
+app.post('/logout/callback',function(req, res){
+    console.log('/logout/callback');
+    req.logout();
+    res.redirect('/app');
+}
+);
+app.get('/api/logout',passport.authenticate('jwt', {session:false})    ,function(req,res){
+    console.log('*******Redirect**********',req.user);
+    req.user = {};
+    req.user.nameID = req.user.email;
+    req.user.nameIDFormat = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress';
+    console.log('Redirect');
+
+    samlStrategy.logout(req, function(err, request){
+        if(!err){
+            //redirect to the IdP Logout URL
+
+            return ReS(res, {path:request }, 201 );
+
+        }else{
+            return ReE(res,'Unable to logout');
+        }
+    });
+
+
+});
 app.get('/login',
   passport.authenticate('saml', { failureRedirect: '/app', failureFlash: true }),
   function(req, res) {
@@ -119,8 +129,8 @@ app.get('/login',
 );
 
 app.use('/api', routes);
-app.use('/documents', express.static(__dirname + '/documents'));
-app.use('/documents/archived', express.static(__dirname + '/documents/archived'));
+//app.use('/documents', express.static(__dirname + '/documents'));
+//app.use('/documents/archived', express.static(__dirname + '/documents/archived'));
 app.use('/app', express.static(path.join(__dirname, '../webapp/build/')));
 
 app.use('/ServerError', express.static(path.join(__dirname, './pages/ServerError.html')));

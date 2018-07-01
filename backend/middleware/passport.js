@@ -1,8 +1,6 @@
 const JwtStrategy   = require('passport-jwt').Strategy;
 const ExtractJwt    = require('passport-jwt').ExtractJwt;
-const SamlStrategy  = require('passport-saml').Strategy;
-const fs            = require('fs');
-const path          = require('path');
+const samlStrategy  = require('./Saml');
 const User          = require('../models').User;
 const authService   = require('./../services/AuthService');
 module.exports = function(passport){
@@ -18,24 +16,7 @@ module.exports = function(passport){
         done(null, user);
       });
 
-    passport.use(new SamlStrategy(
-        {
-          path: '/login/callback',
-          entryPoint: CONFIG.entryPoint,
-          issuer: CONFIG.issuer,
-          cert: fs.readFileSync(path.join(__dirname, '../../certificates/SAML.cert'), 'utf-8')
-        },
-        async function(profile, done) {
-            let err, user;
-            [err, user] = await to(authService.authSSOUser(profile.nameID));
-            if(err) return done(err, false);
-            if(user) {
-                return done(null, user);
-            }else{
-                return done(null, false);
-            }
-        }
-      ));
+    passport.use(samlStrategy);
 
     passport.use(new JwtStrategy(opts, async function(jwt_payload, done){
 

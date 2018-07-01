@@ -4,6 +4,7 @@ import Calender from "views/Calender/Calender.jsx";
 import LandingView from "views/LandingView/LandingView.jsx";
 import RosterRecord from "views/Roster/RosterRecord.jsx";
 import UploadFiles from "views/FileExchange/UploadFile";
+import RedirectToLogout from "./RedirectToLogout"
 import SSOHandler from "./SsoHandler"
 import {
   Dashboard,
@@ -76,6 +77,14 @@ const dashboardRoutes = [
     component: RosterRecord
   },
   {
+    path: "/home/logout",
+    sidebarName: "logout",
+    navbarName: "logout",
+    hide:false,
+    icon: Person,
+    component: RedirectToLogout
+  },
+  {
     path: "/home/uploadfiles",
     sidebarName: "Upload Files",
     navbarName: "UploadFiles",
@@ -92,7 +101,8 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
-  { redirect: true, path: "/", to: "/home/calender", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/app", navbarName: "Redirect" }
+
 ];
 
 export default dashboardRoutes;
