@@ -26,7 +26,7 @@ const dashboardRoutes = [
     navbarName: "Asset Manager",
     icon: Devices,
     isLauncher: true,
-    url: "https://gdtdev.service-now.com/cmdb_ci_list.do",
+    url: "https://gdtdtest.service-now.com/cmdb_ci_list.do",
   },
   {
     path: "/home/monitoring",
@@ -42,7 +42,7 @@ const dashboardRoutes = [
     navbarName: "Service Desk",
     icon: Dashboard,
     isLauncher: true,
-    url: "https://gdtdev.service-now.com/incident_list.do",
+    url: "https://gdtdtest.service-now.com/incident_list.do",
   },
   {
     path: "/home/calender",
