@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "material-ui";
+import { Grid,Card,CardContent } from "material-ui";
 import {
     ItemGrid
   } from "components";
@@ -35,7 +35,8 @@ class Calender extends React.Component {
         return (
             <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
-         
+        <Card>
+        <CardContent>
             <FullCalendar
                  id = "cal"
              header = {{
@@ -49,7 +50,8 @@ class Calender extends React.Component {
             eventLimit= {true} // allow "more" link when too many events
             events = {this.state.events}	
         />
-          
+        </CardContent>
+          </Card>
           </ItemGrid>
           </Grid>
         );

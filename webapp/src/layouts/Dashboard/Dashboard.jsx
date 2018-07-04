@@ -48,6 +48,7 @@ class App extends React.Component {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
   }
+  
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
