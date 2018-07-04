@@ -34,7 +34,7 @@ const dashboardRoutes = [
     navbarName: "Monitoring",
     icon: TrackChanges,
     isLauncher: true,
-    url: "http://www.google.com",
+    url: "https://demo.macaw.io",
   },
   {
     path: "/home/servicedesk",

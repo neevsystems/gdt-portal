@@ -15,7 +15,7 @@ import { withStyles, Grid, Card,
 import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 import {getAllDocuments,archivedFile,getDocument} from "../../services/documentsService.js";
-
+import { connect } from 'react-redux';
 class FileExchange extends React.Component {
   constructor(props){
     super(props);
@@ -110,6 +110,7 @@ class FileExchange extends React.Component {
              {this.state.files.map(function(n,key) {
             return (
               <TableRow key={key}>
+              
                 <TableCell component="th" scope="row">
                  {n.fileName}
                 </TableCell>
@@ -142,4 +143,11 @@ class FileExchange extends React.Component {
     );
   }
 }
-export default withStyles(dashboardStyle)(FileExchange);
+
+const mapStateToProps = (state) => {
+  return {
+      selectedCustomer: state
+  }
+}
+export default connect(mapStateToProps)(withStyles(dashboardStyle)(FileExchange));
+

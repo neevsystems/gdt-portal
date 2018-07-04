@@ -21,8 +21,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       : <Redirect to='/login' />
   )} />)
 }
-const switchRoutes = (
-  <Switch>
+const switchRoutes =(rest)=>{ 
+ return <Switch>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key}  />;
@@ -33,7 +33,7 @@ const switchRoutes = (
     }
     })}
   </Switch>
-);
+};
 
 class App extends React.Component {
   state = {
@@ -42,15 +42,13 @@ class App extends React.Component {
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
-  getRoute() {
-    return this.props.location.pathname !== "/maps";
-  }
   componentDidMount() {
     if(navigator.platform.indexOf('Win') > -1){
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
   }
+  
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
@@ -77,14 +75,12 @@ class App extends React.Component {
             {...rest}
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-          {this.getRoute() ? (
+          
             <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
+              <div className={classes.container}>{switchRoutes({...rest})}</div>
             </div>
-          ) : (
-            <div className={classes.map}>{switchRoutes}</div>
-          )}
-          {this.getRoute() ? <Footer /> : null}
+           
+           <Footer /> 
         </div>
       </div>
     );

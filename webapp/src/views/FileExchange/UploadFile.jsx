@@ -6,7 +6,7 @@ import {
 import { RegularCard, ItemGrid, CustomInput, Button } from "components";
 import { Edit, Delete, CloudUpload, AttachFile } from "@material-ui/icons";
 import {saveDocument} from "../../services/documentsService.js";
-
+import { connect } from 'react-redux';
 class UploadFiles extends React.Component {
   constructor(props) {
     super(props);
@@ -34,10 +34,11 @@ class UploadFiles extends React.Component {
     if(this.myInput.files.length>0){
     const formData = new FormData();    
     formData.append('fileName',this.myInput.files[0].name);
-    formData.append('fileFor','customer1');
+    formData.append('fileFor', state.props.selectedCustomer);
     formData.append('fileFrom','GDT');
     formData.append('fileDesc',state.state.filedesc);
     formData.append('files',this.myInput.files[0]);
+    formData.append('createdBy','GDT');
     saveDocument(formData).then(function (response) {
      alert("File uploaded sucessfully!.");
      state.props.history.push('/home/fileexchange');
@@ -110,4 +111,9 @@ class UploadFiles extends React.Component {
     </div>);
   }
 }
-export default UploadFiles;
+const mapStateToProps = (state) => {
+  return {
+      selectedCustomer: state
+  }
+}
+export default connect(mapStateToProps)(UploadFiles) ;
