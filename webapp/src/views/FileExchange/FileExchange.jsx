@@ -70,9 +70,12 @@ class FileExchange extends React.Component {
     }
   }
   componentDidMount(){
-    this.getAllDocs(this.props.selectedCustomer,'GDT');
+    let cid=(this.props.selectedCustomer)==''?0:(this.props.selectedCustomer||0);
+    this.getAllDocs(cid,'GDT');
   }
-  componentDidUpdate(){
+  
+  componentDidUpdate( prevProps, prevState){
+    if(prevProps.selectedCustomer!=this.props.selectedCustomer)
     this.getAllDocs(this.props.selectedCustomer,'GDT');
   }
   
