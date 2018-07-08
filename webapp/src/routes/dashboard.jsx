@@ -26,7 +26,7 @@ const dashboardRoutes = [
     navbarName: "Asset Manager",
     icon: Devices,
     isLauncher: true,
-    url: "https://gdtdtest.service-now.com/cmdb_ci_list.do",
+    url: "https://172.16.28.220",
   },
   {
     path: "/home/monitoring",
@@ -49,7 +49,8 @@ const dashboardRoutes = [
     sidebarName: "Calender",
     navbarName: "Calender",
     icon: Schedule,
-    component: Calender
+    isLauncher:true,
+    url: "https://gdtdtest.service-now.com/sys_report_display.do?sysparm_report_id=112b30c7db0797006dcf38fbfc9619a7",
   },
 
   {

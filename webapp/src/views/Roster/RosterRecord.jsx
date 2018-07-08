@@ -1,5 +1,6 @@
 import React from "react";
-import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "material-ui";
+import { Grid,TextField ,Checkbox,FormControlLabel,
+  FormControl,MenuItem,Select,Chip,InputLabel,Input,MenuProps} from "material-ui";
   import {  RegularCard, ItemGrid,Button} from "components";
   import {  Edit,Delete, Save} from "@material-ui/icons";
   import {getUser,createUser,updateUser} from '../../services/rosterService';
@@ -24,18 +25,28 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
           passphrase:'',
           isAdmin:false,
           isActive:true,
-          environment:'',
+          environment:''
 
-        }
+        },
+        name:[],
+        domains:[{id:1,domainName:'domain1'},{id:2,domainName:'domain2'}],
+        selectedDomainVal:0,
       }
       this.getUserById=this.getUserById.bind(this);
       this.saveUser=this.saveUser.bind(this);
     }
+    handleChange = event => {
+      this.setState({ name: event.target.value });
+    };
     
     componentWillMount(){
       let id=parseInt(this.props.match.params.uid ||0);
       if(id>0)
       this.getUserById(id);
+    }
+    handleDomainChange(event){
+      this.setState({selectedDomainVal:event.target.value});
+      //this.setSelectedCustomer(event.target.value);
     }
     getUserById(id){
       let state=this;      
@@ -240,6 +251,48 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
                   select
+                  id="domain"
+                  name="domain"
+                  label="Domain"
+                  margin="normal"
+                  onChange={this.handleDomainChange.bind(this)}
+                  value= {stateObj.state.selectedDomainVal}
+                  fullWidth
+                >
+                    {stateObj.state.domains.map(function(item,key) {
+                  return <MenuItem key={key} value={item.id}>{item.domainName}</MenuItem>
+                  })}
+                </TextField>
+
+               
+                </ItemGrid>
+
+                <ItemGrid xs={12} sm={12} md={4}>
+                <FormControl fullWidth >
+          <InputLabel htmlFor="select-multiple-chip">Companies</InputLabel>
+          <Select
+            fullWidth
+            multiple
+            value={this.state.name}
+            onChange={this.handleChange}
+            input={<Input id="select-multiple-chip" />}
+            renderValue={selected => (
+              <div >
+                {selected.map(value => <Chip key={value} label={value} />)}
+              </div>
+            )}
+          >
+          <MenuItem value="1">Company1</MenuItem>
+          <MenuItem value="2">Company2</MenuItem>
+          <MenuItem value="3">Company3</MenuItem>
+          <MenuItem value="4">Company4</MenuItem>
+          </Select>
+        </FormControl>
+
+
+
+                {/* <TextField
+                  select
                   id="environment"
                   name="environment"
                   label="Environment"
@@ -251,8 +304,10 @@ import { Grid,TextField ,Checkbox,FormControlLabel,FormControl,MenuItem} from "m
                     <MenuItem value={0}>
                       {''}
                     </MenuItem>
-                </TextField>
+                </TextField> */}
                 </ItemGrid>
+                </Grid>
+                <Grid>
                 <ItemGrid xs={12} sm={12} md={3}>
                 <FormControlLabel
                     control={

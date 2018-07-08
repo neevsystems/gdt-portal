@@ -13,8 +13,8 @@ class CustomerDropDown extends React.Component {
   constructor(prop){
     super(prop);
     this.state={
-      customers:[],
-      selectedCustomerVal:0
+      customers:[],      
+      selectedCustomerVal:0,
     }
 
     this.getCustomers=this.getCustomers.bind(this);
@@ -53,7 +53,7 @@ class CustomerDropDown extends React.Component {
     this.setState({selectedCustomerVal:event.target.value});
     this.setSelectedCustomer(event.target.value);
   }
-
+ 
   componentWillMount(){
     this.getCustomers();
   }
@@ -65,6 +65,7 @@ class CustomerDropDown extends React.Component {
     return (
 
       <div>
+        
         <FormControl style={{paddingRight: "20px", width:"150px"}}>
           <Select
             onChange={objState.handleChange.bind(this)}
@@ -76,8 +77,6 @@ class CustomerDropDown extends React.Component {
             })}
           </Select>
         </FormControl>
-       
-
          <Manager style={{ display: "inline-block" }}>
           <Target>
             <Button variant="fab" mini

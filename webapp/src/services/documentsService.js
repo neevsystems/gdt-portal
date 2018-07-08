@@ -2,9 +2,9 @@ import axios from 'axios';
 import {BASE_URL} from '../util/constants';
 var token=sessionStorage.getItem('token');
 
-export const getAllDocuments= function() {
+export const getAllDocuments= function(ffor,ffrom) {
   axios.defaults.headers.common['authorization'] = token;
-  let fullurl=BASE_URL+'alldocuments';
+  let fullurl=BASE_URL+'alldocumentsbyuser/'+ffor+'/'+ffrom;
   let promise =axios({
     method:'get',
     url:fullurl
