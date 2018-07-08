@@ -104,10 +104,8 @@ module.exports.downloadFile=fileDownlaod;
 const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let docs,err;
-    let fFor='1',fFrom='GDT';
-    [err, docs] = await to(Document.findAll(
-        {fileFor:fFor},{fileFrom:fFrom}
-        ));
+   
+    [err, docs] = await to(Document.findAll());
     if(err)
         return ReE(res, err, 422);
     else
