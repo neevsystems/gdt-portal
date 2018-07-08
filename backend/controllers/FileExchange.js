@@ -104,10 +104,30 @@ module.exports.downloadFile=fileDownlaod;
 const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let docs,err;
-    [err, docs] = await to(Document.findAll());
+    let fFor='1',fFrom='GDT';
+    [err, docs] = await to(Document.findAll(
+        {fileFor:fFor},{fileFrom:fFrom}
+        ));
     if(err)
         return ReE(res, err, 422);
     else
         return ReS(res, {documents:docs}, 200);
 }
 module.exports.getall = getall;
+const getallbyuser = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let docs,err;
+    let fFor=req.params.ffor,fFrom=req.params.ffrom;
+    [err, docs] = await to(Document.findAll(
+        {
+            where:{
+                fileFor:fFor,
+                fileFrom:fFrom
+            }        
+        }));
+    if(err)
+        return ReE(res, err, 422);
+    else
+        return ReS(res, {documents:docs}, 200);
+}
+module.exports.getallbyuser = getallbyuser;

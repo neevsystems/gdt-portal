@@ -5,11 +5,8 @@ import { withStyles, Grid, Card,
   CardHeader,
   IconButton,Table, TableHead, TableRow,TableCell, TableBody } from "material-ui";
   import {
-    AttachFile,
     CloudDownload,
     CloudUpload,
-    Delete,
-    InsertDriveFile
   } from "@material-ui/icons";
 
 import {ItemGrid,RegularCard} from "components";
@@ -45,9 +42,9 @@ class FileExchange extends React.Component {
     })
 
   }
-  getAllDocs(){
+  getAllDocs(fFor,fFrom){
     var state=this;
-    getAllDocuments().then(function (response) {
+    getAllDocuments(fFor,fFrom).then(function (response) {
       console.log(response); 
       state.setState({files:response.data.documents});
     })
@@ -63,7 +60,7 @@ class FileExchange extends React.Component {
         if(resp.data.success)
         {
           alert("File Archived Successfully.");
-          this.getAllDocs();
+          this.getAllDocs(this.props.selectedCustomer,'GDT');
         }
         else
         alert("Archive File Failed. Contact Administrator");
@@ -72,8 +69,11 @@ class FileExchange extends React.Component {
       })
     }
   }
-  componentWillMount(){
-    this.getAllDocs();
+  componentDidMount(){
+    this.getAllDocs(this.props.selectedCustomer,'GDT');
+  }
+  componentDidUpdate(){
+    this.getAllDocs(this.props.selectedCustomer,'GDT');
   }
   
   render() {
@@ -89,12 +89,10 @@ class FileExchange extends React.Component {
               <div>
                 <IconButton onClick={this.uploadFile }>
                 <CloudUpload style={{color:"#fff"}} />
-                        
                 </IconButton>             
               </div>
             }
-          content={
-      
+          content={      
            <Table>
              <TableHead>
              <TableRow>
