@@ -1,4 +1,4 @@
-const customerReducer = (state = [], action) => {
+const customerReducer = (state = '', action) => {
     switch(action.type) {
       case 'SELECT_CUST':
         return state=action.data;
