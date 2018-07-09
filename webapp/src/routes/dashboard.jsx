@@ -4,7 +4,8 @@ import Calender from "views/Calender/Calender.jsx";
 import LandingView from "views/LandingView/LandingView.jsx";
 import RosterRecord from "views/Roster/RosterRecord.jsx";
 import UploadFiles from "views/FileExchange/UploadFile";
-import SSOHandler from "./SsoHandler"
+import DashboardPage from 'views/Dashboard/Dashboard.jsx';
+import SSOHandler from "./SsoHandler";
 import {
   Dashboard,
   Person,
@@ -19,7 +20,14 @@ import {
 } from "@material-ui/icons";
 
 const dashboardRoutes = [
-
+  {
+    path: "/home/dashboard",
+    sidebarName: "Dashboard",
+    navbarName: "Dashboard",
+    hide:true,
+    icon: Dashboard,
+    component: DashboardPage
+  },
   {
     path: "/home/assetmanager",
     sidebarName: "Asset Manager",
@@ -93,7 +101,7 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
-  { redirect: true, path: "/", to: "/home/calender", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/home/dashboard", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

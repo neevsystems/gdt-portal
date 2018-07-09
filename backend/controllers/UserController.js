@@ -1,5 +1,6 @@
 const User          = require('../models').User;
 const authService   = require('./../services/AuthService');
+const ldapService =require('./../services/LdapService');
 
 const createUser =  async function(req, res){
     const userInfo = req.body;
@@ -116,3 +117,10 @@ const login = async function(req, res){
     return ReS(res, {token:user.getJWT(), user:user.toWeb()});
 }
 module.exports.login = login;
+
+// ldap functionality
+const addldapUser= async function (user){
+    
+   await ldapService.add();
+}
+// ldap
