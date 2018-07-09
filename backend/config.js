@@ -25,8 +25,12 @@ CONFIG.ldapURL   = process.env.LDAP_URL
 CONFIG.ldapUserName       = process.env.LDAP_USERNAME
 CONFIG.ldpaPassword       = process.env.LDAP_PASSWORD
 
-CONFIG.SnowURL   = process.env.SNOW_URL
-CONFIG.SnowUserName       = process.env.SNOW_USERNAME
-CONFIG.SnowPassword       = process.env.SNOW_PASSWORD
+CONFIG.SnowURL            = process.env.SNOW_URL||'https://gdtdev.service-now.com'
+CONFIG.SnowUserName       = process.env.SNOW_USERNAME||'Rest_Guest'
+CONFIG.SnowPassword       = process.env.SNOW_PASSWORD||'Gdt@123!'
+
+CONFIG.SERVICE_AC_URL            =process.env.SERVICE_AC_URL||'https://gdtdtest.service-now.com'
+CONFIG.SERVICE_AC_USERNAME       = process.env.SERVICE_AC_USERNAME ||'Rest_Guest'
+CONFIG.SERVICE_AC_PASSWORD       = process.env.SERVICE_AC_PASSWORD||'Gdt@123!'
 
 CONFIG.logRoot     = process.env.LOG_ROOT || 'D://logs'
