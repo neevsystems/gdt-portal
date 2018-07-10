@@ -1,13 +1,12 @@
 import React from "react";
 // react plugin for creating charts
-import {Link} from 'react-router-dom';
 import { withStyles, Grid, Card,
   CardContent,
   CardHeader,
-  IconButton,AppBar,Tabs,Tab,Badge, ListItem,List} from "material-ui";
+  IconButton,AppBar,Tabs,Tab,Badge, ListItem,List,Icon} from "material-ui";
 import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
-
+import {dashboardLinks} from '../../util/constants';
 import {getOpenTickets,getResolvedTickets} from "../../services/dashboardService";
 
 class Dashboard extends React.Component {
@@ -69,6 +68,9 @@ let stateObj=this;
           content={ 
             <div>
               <Grid container>
+              
+              <a href={dashboardLinks.create_instance}  target='_blank'><Icon>+</Icon> Create New Incident</a>
+              
               <AppBar position="static" >
               <Tabs value={stateObj.state.tabVal} onChange={this.handleChange}>
               <Tab
@@ -112,18 +114,15 @@ let stateObj=this;
 
          <ItemGrid xs={12} sm={12} md={6}>
       <RegularCard
-          cardTitle="Submit a Request"
-          
-          content={<div>
-             <List>
-               <ListItem >
-               <a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=5c2aebefdb8bd7006dcf38fbfc96196d' target='_blank'>DNS Change</a></ListItem>
-               <ListItem><a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=ffa750c3db87d700097b3a0f9d961959'  target='_blank'>Firewall Rule Change</a></ListItem>
-               <ListItem><a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=c2f0a073db4fd7006dcf38fbfc9619eb'  target='_blank'>Temp Access Request</a></ListItem>
-               <ListItem><a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=8697f3e7dbcbd7006dcf38fbfc9619a6'  target='_blank'>Make Other Requests</a></ListItem>
-             </List>
-          </div>}
-          />
+          cardTitle="Submit a Request"          
+          content={              
+                <List>
+                  <ListItem><a href={dashboardLinks.dns_change}  target='_blank'>DNS Change</a></ListItem>
+                  <ListItem><a href={dashboardLinks.firewall_role_change}  target='_blank'>Firewall Rule Change</a></ListItem>
+                  <ListItem><a href={dashboardLinks.temp_access_req}  target='_blank'>Temp Access Request</a></ListItem>
+                  <ListItem><a href={dashboardLinks.make_other_req}  target='_blank'>Make Other Requests</a></ListItem>
+                </List>              
+          } />
 
       </ItemGrid>
         </Grid>
