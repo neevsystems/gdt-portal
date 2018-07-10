@@ -1,53 +1,33 @@
 const ldapClient = require("promised-ldap");
 const ldap = require("ldapjs");
+const object_Class=["user", "organizationalPerson", "person", "top"];
+const obeject_Category="CN=Person,CN=Schema,CN=Configuration,DC=gdt,DC=ms";
+
 const getClient = async function(){
-  var client = new ldapClient({ url: CONFIG.ldapURL });
-  await client.bind(ldapUserName, ldpaPassword);
-  return client;
+    var client = new ldapClient({ url: CONFIG.ldapURL });
+    await client.bind(CONFIG.ldapUserName, CONFIG.ldpaPassword);
+    return client;
 }
-const search = async function() {
-  var client = await getClient();
-   var opts = {
-    filter: "(objectclass=user)",
-    scope: "sub",
-    attributes: ["objectGUID", "mail"]
-  };
-  result = await client.search("OU=QTS Customers,DC=gdt,DC=ms", opts);
-  await client.unbind();
-  console.log(result.entries);
-};
-module.exports.search = search;
-const add = async function() {
-  var client = await getClient();
-  var entry = {
-    objectClass: ["user", "organizationalPerson", "person", "top"],
-    objectCategory: "CN=Person,CN=Schema,CN=Configuration,DC=gdt,DC=ms",
-    mail: "James4JJordan@teleworm.us",
-    givenName: "James4",
-    sn: "Jordan",
-    telephoneNumber: "Crystal Coms"
-  };
-  await client.add(
-    "CN=JamesNew1 J. Jordan,OU=Crystal Coms,OU=QTS Customers,DC=gdt,DC=ms",
-    entry
-  );
-  await client.unbind();
-};
-module.exports.add = add;
-const update = async function() {
-  var client = await getClient();
-  var change = new ldap.Change({
-    operation: "replace",
-    modification: {
-      telephoneNumber: "NEW"
+const add = async function(userobj) {
+    var client = await getClient();
+    var entry = {
+      objectClass: object_Class,
+      objectCategory: obeject_Category,
+      mail: userobj.email,//"James4JJordan@teleworm.us",
+      givenName: "James4",
+      sn: userobj.lastName,//"Jordan",
+      telephoneNumber:userobj.businessPhone// "Crystal Coms"
+    };
+    var fullName=userobj.firstName+' '+userobj.middleName+' '+userobj.lastName;
+    var err,obj
+    [err,obj]=await to(client.add(
+        fullName+",OU=Crystal Coms,OU=QTS Customers,DC=gdt,DC=ms",
+        entry
+    )) ;
+    if(err){
+        return false;
     }
-  });
-
-  await client.modify(
-    "CN=JamesNew4 J. Jordan,OU=Crystal Coms,OU=QTS Customers,DC=gdt,DC=ms",
-    change
-  );
-  await client.unbind();
-};
-module.exports.update = update;
-
+    await client.unbind();
+    return true;
+  };
+  module.exports.add = add;

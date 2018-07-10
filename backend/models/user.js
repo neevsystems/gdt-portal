@@ -9,19 +9,20 @@ module.exports = (sequelize, DataTypes) => {
         firstName     : DataTypes.STRING,
         middleName    : DataTypes.STRING,
         lastName      : DataTypes.STRING,
-        email         : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
-        mobile        : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
-        homeMobile    : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        userName      : DataTypes.STRING,
         passphrase    : DataTypes.STRING,
-        isAdmin       : {type:DataTypes.BOOLEAN,defaultValue: false},
-        isActive      : {type:DataTypes.BOOLEAN,defaultValue: true},
-        isEmployee    : {type:DataTypes.BOOLEAN,defaultValue: false},
-
-        first     : DataTypes.STRING,
-        last      : DataTypes.STRING,
-        //email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
-        phone     : {type: DataTypes.STRING, allowNull: true },
-        password  : DataTypes.STRING,
+        password      : DataTypes.STRING,
+        userStatus    : {type:DataTypes.BOOLEAN,defaultValue: true},
+        email         : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
+        businessPhone : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        mobilePhone      : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        homeMobile    : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        emailNotifications: {type:DataTypes.BOOLEAN,defaultValue: false},
+        ticketRequester:{type:DataTypes.BOOLEAN,defaultValue: false},
+        notifierOnly :{type:DataTypes.BOOLEAN,defaultValue: false},       
+        roles    : DataTypes.STRING,
+        domain:DataTypes.STRING,
+        envronment:DataTypes.STRING       
     });
 
      /* Model.associate = function(models){

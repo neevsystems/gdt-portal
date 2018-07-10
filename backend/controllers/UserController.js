@@ -1,16 +1,21 @@
 const User          = require('../models').User;
 const authService   = require('./../services/AuthService');
-const ldapService =require('./../services/LdapService');
+const ldapService =require('../services/LdapService');
 
 const createUser =  async function(req, res){
     const userInfo = req.body;
     userInfo.isEmployee = false;
-
-    [err, user] = await to(User.create(userInfo));
-    if(err) { console.log(err);
-        return ReE(res,'Unable to Create user');
+    
+    if(ldapService.add(userInfo)){
+        [err, user] = await to(User.create(userInfo));
+            if(err) { console.log(err);
+                return ReE(res,'Unable to Create user');
+            }
+        return ReS(res, {message:'Successfully created new user.',user:user.toJSON()}, 201);
     }
-    return ReS(res, {message:'Successfully created new user.',user:user.toJSON()}, 201);
+    else{
+        return ReE(res,'Unable to Create user');
+    }   
 
 }
 module.exports.createUser = createUser;
