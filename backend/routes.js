@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post(    '/users',           UserController.createUser);
+router.post(    '/user',           UserController.createUser);
 router.get(     '/allusers',        UserController.getall);
 // passport.authenticate('jwt', {session:false})                                            // C
 router.get(     '/users',            UserController.get);        // R
@@ -29,10 +29,9 @@ router.get(     '/user/:id',            UserController.getuser);
 //router.put(     '/users',            UserController.update);     // U
 
 router.put(     '/users',            UserController.updateUser);     // U
-
 router.delete(  '/users',            UserController.remove);     // D
-
-
+router.get('/getdomains/:eid',UserController.getDomainsByUser)
+router.get('/getcompanies/:sysid/:eid',UserController.getCompanies)
 router.post('/fileupload',  FileExchangeController.uploadFiles);
 router.get('/archivefile/:id',  FileExchangeController.archiveFile);
 router.get('/alldocuments',  FileExchangeController.getall);

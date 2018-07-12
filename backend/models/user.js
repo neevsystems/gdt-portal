@@ -14,15 +14,16 @@ module.exports = (sequelize, DataTypes) => {
         password      : DataTypes.STRING,
         userStatus    : {type:DataTypes.BOOLEAN,defaultValue: true},
         email         : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email id invalid."} }},
-        businessPhone : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
-        mobilePhone      : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
-        homeMobile    : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        businessPhone : {type: DataTypes.STRING, allowNull: true, unique: true },
+        mobilePhone      : {type: DataTypes.STRING, allowNull: true, unique: true },
+        homeMobile    : {type: DataTypes.STRING, allowNull: true, unique: true},
         emailNotifications: {type:DataTypes.BOOLEAN,defaultValue: false},
         ticketRequester:{type:DataTypes.BOOLEAN,defaultValue: false},
         notifierOnly :{type:DataTypes.BOOLEAN,defaultValue: false},       
         roles    : DataTypes.STRING,
         domain:DataTypes.STRING,
-        envronment:DataTypes.STRING       
+        envronment:DataTypes.STRING    ,
+        userType: DataTypes.STRING  
     });
 
      /* Model.associate = function(models){

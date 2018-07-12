@@ -1,12 +1,10 @@
 const User          = require('../models').User;
 const authService   = require('./../services/AuthService');
 const ldapService =require('../services/LdapService');
-
+const ServiceAcService =require('../services/ServiceAcService');
 const createUser =  async function(req, res){
     const userInfo = req.body;
-    userInfo.isEmployee = false;
-    
-    if(ldapService.add(userInfo)){
+    if(await ldapService.addLdapUser(userInfo)){
         [err, user] = await to(User.create(userInfo));
             if(err) { console.log(err);
                 return ReE(res,'Unable to Create user');
@@ -22,14 +20,17 @@ module.exports.createUser = createUser;
 const updateUser =  async function(req, res){
 
     const userInfo = req.body;
-    userInfo.isEmployee = false;
      if(userInfo.id){
         [err, user] = await to(User.findById(userInfo.id));
         if(err || !user) return ReE(res,'Unable to find user');
-
-        [err, user] = await to(user.update(userInfo));
-        if(err) return ReE(res,'Unable to Update user');
-        return ReS(res, {message:'Successfully updated new user.', user:user.toJSON()}, 201);
+        if(await ldapService.update(userInfo)){
+            [err, resuser] = await to(user.update(userInfo));
+            if(err) return ReE(res,'Unable to Update user');
+            return ReS(res, {message:'Successfully updated new user.', user:resuser.toJSON()}, 201);
+        }
+        else{
+            return ReE(res,'Unable to Update user');
+        }
     }else{
         ReE(res,'can not update user without ID');
     }
@@ -123,9 +124,27 @@ const login = async function(req, res){
 }
 module.exports.login = login;
 
-// ldap functionality
-const addldapUser= async function (user){
-    
-   await ldapService.add();
+const getDomainsByUser = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+   let email= req.params.eid;
+    let domains,err;
+    [err, domains] = await to(ServiceAcService.getDomainsByUser(email));
+    if(err)
+        return ReE(res, err, 422);
+    else
+        return ReS(res, domains, 200);
 }
-// ldap
+module.exports.getDomainsByUser = getDomainsByUser;
+
+const getCompanies= async function(req,res){
+    res.setHeader('Content-Type', 'application/json');
+    let sysid= req.params.sysid;
+    let email=req.params.eid;
+     let companies,err;
+     [err, companies] = await to(ServiceAcService.getCompanies(sysid,email));
+     if(err)
+         return ReE(res, err, 422);
+     else
+         return ReS(res, companies, 200);
+}
+module.exports.getCompanies=getCompanies;
