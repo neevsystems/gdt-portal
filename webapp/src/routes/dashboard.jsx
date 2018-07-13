@@ -22,10 +22,10 @@ import {
 const dashboardRoutes = [
   {
     path: "/home/dashboard",
-    sidebarName: "Dashboard",
+    sidebarName: "Home",
     navbarName: "Dashboard",
-    hide:true,
-    icon: Dashboard,
+    // hide:true,
+    icon: Home,
     component: DashboardPage
   },
   {
