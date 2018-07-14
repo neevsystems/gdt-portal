@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         ticketRequester:{type:DataTypes.BOOLEAN,defaultValue: false},
         notifierOnly :{type:DataTypes.BOOLEAN,defaultValue: false},       
         roles    : DataTypes.STRING,
-        domain:DataTypes.STRING,
-        envronment:DataTypes.STRING    ,
+        company:DataTypes.STRING,
+        envronment:DataTypes.STRING,
         userType: DataTypes.STRING  
     });
 

@@ -3,7 +3,7 @@ import React from "react";
 import { withStyles, Grid, Card,
   CardContent,
   CardHeader,
-  IconButton,Table, TableHead, TableRow,TableCell, TableBody } from "material-ui";
+  IconButton,Table, TableHead, TableRow,TableCell, TableBody,Select,MenuItem } from "material-ui";
   import {
     CloudDownload,
     CloudUpload,
@@ -12,17 +12,22 @@ import { withStyles, Grid, Card,
 import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 import {getAllDocuments,archivedFile,getDocument} from "../../services/documentsService.js";
-import { connect } from 'react-redux';
+import {getAllCustomers} from "../../services/customerService.js";
+//import { connect } from 'react-redux';
+const loginUsrCompany='GDT';
 class FileExchange extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      files:[]
+      files:[],
+      selectedCustomer:0,
+      customers:[]
     }
     this.uploadFile=this.uploadFile.bind(this);
     this.getAllDocs=this.getAllDocs.bind(this);
     this.archFile=this.archFile.bind(this);
     this.downloadFile=this.downloadFile.bind(this);
+    this.getCustomers=this.getCustomers.bind(this);
   }
   uploadFile(){
     this.props.history.push('/home/uploadfiles');
@@ -60,7 +65,7 @@ class FileExchange extends React.Component {
         if(resp.data.success)
         {
           alert("File Archived Successfully.");
-          this.getAllDocs(this.props.selectedCustomer,'GDT');
+          this.getAllDocs(this.state.selectedCustomer,'GDT');
         }
         else
         alert("Archive File Failed. Contact Administrator");
@@ -69,14 +74,30 @@ class FileExchange extends React.Component {
       })
     }
   }
-  componentDidMount(){
-    let cid=(this.props.selectedCustomer)==''?0:(this.props.selectedCustomer||0);
-    this.getAllDocs(cid,'GDT');
+  componentWillMount(){
+    this.getCustomers();
+    let cid=(this.state.selectedCustomer)==''?0:(this.state.selectedCustomer||0);
+    this.getAllDocs(cid,loginUsrCompany);
   }
   
-  componentDidUpdate( prevProps, prevState){
-    if(prevProps.selectedCustomer!=this.props.selectedCustomer)
-    this.getAllDocs(this.props.selectedCustomer,'GDT');
+  
+  onCustomerChange(event){
+    this.setState({selectedCustomer:event.target.value}); 
+    let cid=(event.target.value)==''?0:(event.target.value||0); 
+    this.getAllDocs(cid,loginUsrCompany); 
+  }
+
+  getCustomers(){
+    let stateObj=this;
+    getAllCustomers().then(function(resp){
+      stateObj.setState({customers:resp.data.customers});
+      if(stateObj.state.customers.length>0){
+        //stateObj.setState({selectedCustomer:stateObj.state.customers[0].id});
+      }
+
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
   
   render() {
@@ -90,9 +111,21 @@ class FileExchange extends React.Component {
           cardTitle="File List"
           headerCardAction={
               <div>
+                 <Select style={{'color': 'white',   'min-width': '150px'}}
+                  onChange={stateObj.onCustomerChange.bind(this)}
+                  value= {stateObj.state.selectedCustomer}
+                  displayEmpty
+                  name="Customers" >
+                  {stateObj.state.customers.map(function(item,key) {
+                  return <MenuItem key={key} value={item.id}>{item.customerName}</MenuItem>
+                  })}
+               </Select> 
+
                 <IconButton onClick={this.uploadFile }>
                 <CloudUpload style={{color:"#fff"}} />
-                </IconButton>             
+                </IconButton> 
+
+                           
               </div>
             }
           content={      
@@ -146,10 +179,6 @@ class FileExchange extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-      selectedCustomer: state
-  }
-}
-export default connect(mapStateToProps)(withStyles(dashboardStyle)(FileExchange));
+
+export default withStyles(dashboardStyle)(FileExchange);
 

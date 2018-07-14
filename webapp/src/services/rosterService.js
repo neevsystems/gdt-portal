@@ -21,9 +21,9 @@ export const getUser=function (id) {
   return promise;
 }
 
-export const getDomains=function (eid) {
+export const getEnvronments=function (sysid) {
   axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
-  let fullurl=BASE_URL+'getdomains/'+eid;
+  let fullurl=BASE_URL+'getenvronments/'+sysid;
   let promise =axios({
     method:'get',
     url:fullurl
@@ -31,9 +31,9 @@ export const getDomains=function (eid) {
   return promise;
 }
 
-export const getCompanies=function (sysid,eid) {
+export const getCompanies=function (eid) {
   axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
-  let fullurl=BASE_URL+'getcompanies/'+sysid+'/'+eid;
+  let fullurl=BASE_URL+'getcompanies/'+eid;
   let promise =axios({
     method:'get',
     url:fullurl

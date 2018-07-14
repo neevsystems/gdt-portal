@@ -3,7 +3,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,
   FormControl,MenuItem,Select,Chip,InputLabel,Input,MenuProps} from "material-ui";
 import {  RegularCard, ItemGrid,Button} from "components";
 import {  Edit,Delete, Save} from "@material-ui/icons";
-import {getUser,createUser,updateUser,getDomains,getCompanies} from '../../services/rosterService';
+import {getUser,createUser,updateUser,getEnvronments,getCompanies} from '../../services/rosterService';
 const title = [
     { value: 'Mr.', label: 'Mr.'},
     { value: 'Mrs.', label: 'Mrs.'},
@@ -31,20 +31,23 @@ class RosterRecord extends React.Component {
           ticketRequester:'', 
           notifierOnly:'', 
           roles:'', 
-          domain:'', 
+          company:'', 
           envronment:'',
           envronmentArray:[],
-          userType: ''
+          userType: '',
+          domainName:''
         },
         companies:[],
         domains:[],
+        userTypesArray:[{value:'Customer_Standard',text:'Customer_Standard'},],
         rolesList:[{value:'Admin',roleName:'Admin'},{value:'Employee',roleName:'Employee'}],
         
         selectedDomainVal:0,
       }
       this.getUserById=this.getUserById.bind(this);
-      this.getDomainList=this.getDomainList.bind(this);
+      this.getEnvronments=this.getEnvronments.bind(this);
       this.getCompanies=this.getCompanies.bind(this);
+
       this.saveUser=this.saveUser.bind(this);
     
     }
@@ -54,7 +57,7 @@ class RosterRecord extends React.Component {
     
     componentDidMount(){
       let id=parseInt(this.props.match.params.uid ||0);
-      this.getDomainList('EdithJTowle@jourrapide.com');
+      this.getCompanies('ashok.kumar@neevsystems.com');
      
       if(id>0){
         this.getUserById(id);
@@ -69,17 +72,17 @@ class RosterRecord extends React.Component {
         console.log(error);
       });
     }
-    getDomainList(eid){
+    getCompanies(eid){
       let state=this;      
-      getDomains(eid).then((resp)=>{
-        state.setState({domains:resp.data.result});
+      getCompanies(eid).then((resp)=>{
+        state.setState({companies:resp.data.result});
       }).catch(function(error){
         console.log(error);
       });
     }
-    getCompanies(sysid,eid){
+    getEnvronments(sysid,eid){
       let state=this;      
-      getCompanies(sysid,eid).then((resp)=>{
+      getEnvronments(sysid,eid).then((resp)=>{
         state.setState({companies:resp.data.result});
       }).catch(function(error){
         console.log(error);
@@ -89,6 +92,7 @@ class RosterRecord extends React.Component {
       let state=this;
       let user=JSON.parse( JSON.stringify( state.state.user ) );
       user.envronment=state.state.user.envronmentArray.join(',');
+      
       if(state.state.user.id<=0){        
       createUser(user).then((resp)=>{
         if(resp.data.success){
@@ -127,8 +131,9 @@ class RosterRecord extends React.Component {
       var user = {...this.state.user}
       user[e.target.name] = e.target.value;
       this.setState({user});
-      if(e.target.name=='domain'){
-        this.getCompanies(e.target.value,'EdithJTowle@jourrapide.com')
+      if(e.target.name=='company'){
+       // this.state.domainName=e.target.text
+        this.getEnvronments(e.target.value)
       }
     };
     checkboxChangd  (e)  {    
@@ -281,20 +286,8 @@ class RosterRecord extends React.Component {
                   required
                 />
                 
-                </ItemGrid>               
-                <ItemGrid xs={12} sm={12} md={4}>
-                <TextField
-                  id="passphrase"
-                  name="passphrase"
-                  label="Pass phrase"
-                  margin="normal"
-                  type='password'
-                  onChange={this.handleChange.bind(this)}
-                  value= {stateObj.state.user.passphrase}
-                  fullWidth
-                  required
-                />               
-                </ItemGrid>*/}  
+                </ItemGrid> */}              
+                 
                 
                 
                 <ItemGrid xs={12} sm={12} md={3}>
@@ -341,8 +334,22 @@ class RosterRecord extends React.Component {
                     label="User Status"
                   />
                 </ItemGrid>
-                <ItemGrid xs={12} sm={12} md={4}>
+                <ItemGrid xs={12} sm={12} md={3}>
                 <TextField
+                  id="passphrase"
+                  name="passphrase"
+                  label="Pass phrase"
+                  margin="normal"
+                  type='password'
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.passphrase}
+                  fullWidth
+                  required
+                />               
+                </ItemGrid> 
+                <ItemGrid xs={12} sm={12} md={3}>
+                <TextField
+                  select
                   id="userType"
                   name="userType"
                   label="User Type"
@@ -350,9 +357,11 @@ class RosterRecord extends React.Component {
                   onChange={this.handleChange.bind(this)}
                   value= {stateObj.state.user.userType}
                   fullWidth
-                  required
-                />
-                
+                >
+                    {stateObj.state.userTypesArray.map(function(item,key) {
+                  return <MenuItem key={key} value={item.value}>{item.text}</MenuItem>
+                  })}
+                </TextField>
                 </ItemGrid>
 
                 <ItemGrid xs={12} sm={12} md={3}>
@@ -372,19 +381,19 @@ class RosterRecord extends React.Component {
                 </TextField>
 
                 </ItemGrid>
-                <ItemGrid xs={12} sm={12} md={4}>
+                <ItemGrid xs={12} sm={12} md={3}>
                 <TextField
                   select
-                  id="domain"
-                  name="domain"
-                  label="Domain"
+                  id="company"
+                  name="company"
+                  label="Company"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
-                  value= {stateObj.state.user.domain}
+                  value= {stateObj.state.user.company}
                   fullWidth
-                >
-                    {stateObj.state.domains.map(function(item,key) {
-                  return <MenuItem key={key} value={item['sys_domain.sys_id']}>{item['sys_domain.name']}</MenuItem>
+                > 
+                    {stateObj.state.companies.map(function(item,key) {
+                  return <MenuItem key={key} value={item['company.sys_id']}>{item['company.name']}</MenuItem>
                   })}
                 </TextField>
 
@@ -411,10 +420,10 @@ class RosterRecord extends React.Component {
             {stateObj.state.companies.map(item => (
               <MenuItem
                 
-                value={item['company.sys_id']}
+                value={item['sys_id']}
                 
               >
-                {item['company.name']}
+                {item['u_name']}
               </MenuItem>
             ))}
           </Select>

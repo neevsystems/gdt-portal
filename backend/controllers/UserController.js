@@ -124,24 +124,23 @@ const login = async function(req, res){
 }
 module.exports.login = login;
 
-const getDomainsByUser = async function(req, res){
+const getEnvronments = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-   let email= req.params.eid;
+   let email= req.params.sysid;
     let domains,err;
-    [err, domains] = await to(ServiceAcService.getDomainsByUser(email));
+    [err, domains] = await to(ServiceAcService.getEnvronments(email));
     if(err)
         return ReE(res, err, 422);
     else
         return ReS(res, domains, 200);
 }
-module.exports.getDomainsByUser = getDomainsByUser;
+module.exports.getEnvronments = getEnvronments;
 
 const getCompanies= async function(req,res){
     res.setHeader('Content-Type', 'application/json');
-    let sysid= req.params.sysid;
-    let email=req.params.eid;
+   let email=req.params.eid;
      let companies,err;
-     [err, companies] = await to(ServiceAcService.getCompanies(sysid,email));
+     [err, companies] = await to(ServiceAcService.getCompanies(email));
      if(err)
          return ReE(res, err, 422);
      else

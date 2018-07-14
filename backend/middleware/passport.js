@@ -1,6 +1,6 @@
 const JwtStrategy   = require('passport-jwt').Strategy;
 const ExtractJwt    = require('passport-jwt').ExtractJwt;
-const SamlStrategy  = require('passport-saml').Strategy;
+const SamlStrategy  = require('passport-saml').Strategy;;
 const fs            = require('fs');
 const path          = require('path');
 const User          = require('../models').User;
@@ -17,6 +17,8 @@ module.exports = function(passport){
       passport.deserializeUser(function(user, done) {
         done(null, user);
       });
+
+      passport.use(SamlStrategy);
 
     passport.use(new SamlStrategy(
         {

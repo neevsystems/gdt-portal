@@ -1,21 +1,31 @@
 import React from "react";
 import {
   Grid, Table, TableHead, TableRow, TableCell, TableBody,TextField,Input,InputAdornment,
-  TableFooter, TablePagination, IconButton, InputLabel, Checkbox, FormControlLabel
+  TableFooter, TablePagination, IconButton, InputLabel, Checkbox, FormControlLabel,Select,MenuItem
 } from "material-ui";
 import { RegularCard, ItemGrid, CustomInput, Button } from "components";
 import { Edit, Delete, CloudUpload, AttachFile } from "@material-ui/icons";
 import {saveDocument} from "../../services/documentsService.js";
-import { connect } from 'react-redux';
+import {getAllCustomers} from "../../services/customerService.js";
+//import { connect } from 'react-redux';
+const loginUsrCompany='GDT';
 class UploadFiles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0, filename: '',filedesc:''
+      value: 0,
+       filename: '',
+       filedesc:'',
+       customers:[],
+       selectedCustomer:0
     };
     this.handleChange = this.handleChange.bind(this);
     this.documentOnsubmit=this.documentOnsubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.getCustomers=this.getCustomers.bind(this);
+  }
+  componentWillMount(){
+    this.getCustomers();
   }
   handleChange = (event, value) => {
     this.setState({ value });
@@ -24,7 +34,22 @@ class UploadFiles extends React.Component {
   handleTextChange=(event)=>{
     this.setState({filedesc: event.target.value});
   }
+  getCustomers(){
+    let stateObj=this;
+    getAllCustomers().then(function(resp){
+      stateObj.setState({customers:resp.data.customers});
+      if(stateObj.state.customers.length>0){
+        stateObj.setState({selectedCustomerVal:stateObj.state.customers[0].id});
+        stateObj.setSelectedCustomer(stateObj.state.customers[0].id);
+      }
 
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+  onCustomerChange(event){
+    this.setState({selectedCustomer:event.target.value}); 
+  }
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
@@ -34,11 +59,11 @@ class UploadFiles extends React.Component {
     if(this.myInput.files.length>0){
     const formData = new FormData();    
     formData.append('fileName',this.myInput.files[0].name);
-    formData.append('fileFor', state.props.selectedCustomer);
-    formData.append('fileFrom','GDT');
+    formData.append('fileFor', state.state.selectedCustomer);
+    formData.append('fileFrom',loginUsrCompany);
     formData.append('fileDesc',state.state.filedesc);
     formData.append('files',this.myInput.files[0]);
-    formData.append('createdBy','GDT');
+    formData.append('createdBy',loginUsrCompany);
     saveDocument(formData).then(function (response) {
      alert("File uploaded sucessfully!.");
      state.props.history.push('/home/fileexchange');
@@ -84,6 +109,25 @@ class UploadFiles extends React.Component {
                     </ItemGrid>
                 </Grid>
                 <Grid container>
+                <ItemGrid  xs={12} sm={12} md={4}>
+                <TextField
+                  select
+                  id="Custoemrs"
+                  name="Custoemrs"
+                  label="Custoemrs"
+                  margin="normal"
+                  onChange={state.onCustomerChange.bind(this)}
+                  value= {state.state.selectedCustomer}
+                  fullWidth
+                >                
+                  {state.state.customers.map(function(item,key) {
+                  return <MenuItem key={key} value={item.id}>{item.customerName}</MenuItem>
+                  })}
+               </TextField>
+               </ItemGrid>
+
+                </Grid>
+                <Grid container>
                   <ItemGrid xs={12} sm={12} md={8}>
                   <TextField fullWidth
                       id="fileDesc"
@@ -111,9 +155,5 @@ class UploadFiles extends React.Component {
     </div>);
   }
 }
-const mapStateToProps = (state) => {
-  return {
-      selectedCustomer: state
-  }
-}
-export default connect(mapStateToProps)(UploadFiles) ;
+
+export default UploadFiles ;

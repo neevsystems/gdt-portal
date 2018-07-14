@@ -18,7 +18,7 @@ class CustomerDropDown extends React.Component {
     }
 
     this.getCustomers=this.getCustomers.bind(this);
-    this.setSelectedCustomer=this.setSelectedCustomer.bind(this);
+    //this.setSelectedCustomer=this.setSelectedCustomer.bind(this);
   }
   state = {
     open: false
@@ -43,19 +43,19 @@ class CustomerDropDown extends React.Component {
       console.log(error);
     });
   }
-  setSelectedCustomer(cid){
+  /* setSelectedCustomer(cid){
     this.props.dispatch({
       type:'SELECT_CUST',
-     data: cid});
+     data: cid}); 
   
-  }
+  }*/
   handleChange(event){
     this.setState({selectedCustomerVal:event.target.value});
-    this.setSelectedCustomer(event.target.value);
+   // this.setSelectedCustomer(event.target.value);
   }
  
   componentWillMount(){
-    this.getCustomers();
+   // this.getCustomers();
   }
  
   render() {
@@ -66,7 +66,7 @@ class CustomerDropDown extends React.Component {
 
       <div>
         
-        <FormControl style={{paddingRight: "20px", width:"150px"}}>
+       {/*  <FormControl style={{paddingRight: "20px", width:"150px"}}>
           <Select
             onChange={objState.handleChange.bind(this)}
             value= {objState.state.selectedCustomerVal}
@@ -76,8 +76,9 @@ class CustomerDropDown extends React.Component {
             return <MenuItem key={key} value={item.id}>{item.customerName}</MenuItem>
             })}
           </Select>
-        </FormControl>
-         <Manager style={{ display: "inline-block" }}>
+        </FormControl> 
+         <Manager style={{ display: "inline-block" }}>*/}
+        <Manager >
           <Target>
             <Button variant="fab" mini
                            
@@ -128,4 +129,4 @@ class CustomerDropDown extends React.Component {
   }
 }
 
-export default connect()(withStyles(headerLinksStyle)(CustomerDropDown));
+export default withStyles(headerLinksStyle)(CustomerDropDown);
