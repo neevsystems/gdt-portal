@@ -118,19 +118,20 @@ class CustomPaginationActionsTable extends React.Component {
 
     this.state = {
       data: [
-        createData('Cupcake', 305, 3.7),
-        createData('Donut', 452, 25.0),
-        createData('Eclair', 262, 16.0),
-        createData('Frozen yoghurt', 159, 6.0),
-        createData('Gingerbread', 356, 16.0),
-        createData('Honeycomb', 408, 3.2),
-        createData('Ice cream sandwich', 237, 9.0),
-        createData('Jelly Bean', 375, 0.0),
-        createData('KitKat', 518, 26.0),
-        createData('Lollipop', 392, 0.2),
-        createData('Marshmallow', 318, 0),
-        createData('Nougat', 360, 19.0),
-        createData('Oreo', 437, 18.0),
+        // createData('Cupcake', 305, 3.7),
+        // createData('Donut', 452, 25.0),
+        // createData('Eclair', 262, 16.0),
+        // createData('Frozen yoghurt', 159, 6.0),
+        // createData('Gingerbread', 356, 16.0),
+        // createData('Honeycomb', 408, 3.2),
+        // createData('Ice cream sandwich', 237, 9.0),
+        // createData('Jelly Bean', 375, 0.0),
+        // createData('KitKat', 518, 26.0),
+        // createData('Lollipop', 392, 0.2),
+        // createData('Marshmallow', 318, 0),
+        // createData('Nougat', 360, 19.0),
+        // createData('Oreo', 437, 18.0),
+       this.props.TabData
       ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
       page: 0,
       rowsPerPage: 5,
@@ -149,20 +150,40 @@ class CustomPaginationActionsTable extends React.Component {
     const { classes } = this.props;
     const { data, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    // const number = this.props.TabData[0].number;
+    // const short_description = this.props.TabData[0].short_description;
+    const number = []
+    const short_description = []
+    // let result = this.props.TabData.map(data => data.number, data.short_description,data.caused_by);
+    let result = this.props.TabData.map(data => {
+      return {
+      "number" : data.number, 
+      "short_description" : data.short_description
+      }
+      });
+    console.log("RESULT DATA-----> "+result);
+    console.log("data number "+data.number);
+    console.log("number and desciption "+result.number);
+    console.log("desc"+result.short_description);
+
 
     return (
+      
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableBody>
+          
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                 return (
                   <TableRow key={n.id}>
-                    <TableCell component="th" scope="row">
+                    {/* <TableCell component="th" scope="row">
                       {n.name}
                     </TableCell>
                     <TableCell numeric>{n.calories}</TableCell>
-                    <TableCell numeric>{n.fat}</TableCell>
+                    <TableCell numeric>{n.fat}</TableCell> */}
+                     <TableCell numeric>{number}</TableCell>
+                     <TableCell numeric>{short_description}</TableCell>
                   </TableRow>
                 );
               })}
@@ -193,7 +214,7 @@ class CustomPaginationActionsTable extends React.Component {
 }
 
 CustomPaginationActionsTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired, 
 };
 
 export default withStyles(styles)(CustomPaginationActionsTable);

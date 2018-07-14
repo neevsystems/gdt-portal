@@ -1,14 +1,16 @@
 import React from "react";
 // react plugin for creating charts
+
 import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
+
 import { withStyles, Grid, Card,
   CardContent,
   CardHeader,
-  IconButton,AppBar,Tabs,Tab,Badge, ListItem,List} from "material-ui";
+  IconButton,AppBar,Tabs,Tab,Badge, ListItem,List,Icon} from "material-ui";
 import {ItemGrid,RegularCard} from "components";
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
-
+import {dashboardLinks} from '../../util/constants';
 import {getOpenTickets,getResolvedTickets} from "../../services/dashboardService";
 import Pagination from "../Dashboard/Pagination";
 import Typography from '@material-ui/core/Typography';
@@ -52,7 +54,9 @@ class Dashboard extends React.Component {
       function(resp){
         stateObj.setState({openTickets:resp.data.openTickets.result});
         stateObj.setState({openTicketCount:resp.data.openTickets.result.length});
-        console.log("RESULT 1: "+stateObj.state.openTicketCount);
+        console.log("RESULT 1: ----"+stateObj.state.openTicketCount);
+        console.log("RESULT er: -----"+stateObj.state.openTickets);
+
       }).catch(function(error){
         console.log(error)
       })
@@ -66,7 +70,7 @@ class Dashboard extends React.Component {
         console.log("RESULT 2: "+stateObj.state.resolvTickets);
         stateObj.setState({resolveTicketCount:resp.data.resTickets.result.length});
         console.log("RESULT 3: "+stateObj.state.resolveTicketCount);
-      
+        
       }).catch(function(error){
         console.log(error)
       })
@@ -86,7 +90,8 @@ const divStyle = {
   top: '-6px !important',
   right: '-28px !important'
 };
-const { value } = this.state;
+//const { value } = this.state;
+const { tabVal } = this.state
     return (
       <div>
       
@@ -97,8 +102,12 @@ const { value } = this.state;
           content={ 
             <div>
               <Grid container>
+              
+              <a href={dashboardLinks.create_instance}  target='_blank'><Icon>+</Icon> Create New Incident</a>
+              
               <AppBar position="static" >
-              <Tabs value={stateObj.state.tabVal} onChange={this.handleChange}>
+              {/* <Tabs value={stateObj.state.tabVal} onChange={this.handleChange}> */}
+              <Tabs value={tabVal} onChange={this.handleChange}>
               <Tab value="open"
                 label={
                   <Badge  color="secondary" badgeContent={stateObj.state.openTicketCount}>
@@ -132,8 +141,10 @@ const { value } = this.state;
         </Tabs>
     
       </AppBar>  
-        {value === 'open' && <TabContainer>1212</TabContainer>}
-        {value === 'resolved' && <TabContainer>asdasd</TabContainer>}
+      {/* <Pagination /> */}
+      {console.log("result dashboard resolvTickets"+this.state.resolvTickets)}
+        {tabVal === 'open' && <TabContainer><Pagination TabData={this.state.openTickets}/> </TabContainer>}
+    {tabVal === 'resolved' && <TabContainer><Pagination TabData={this.state.resolvTickets}/> </TabContainer>}
 
                   </Grid> 
 
@@ -144,18 +155,17 @@ const { value } = this.state;
 
          <ItemGrid xs={12} sm={12} md={6}>
       <RegularCard
-          cardTitle="Submit a Request"
-          
-          content={<div>
-             <List>
-               <ListItem >
-               <a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=5c2aebefdb8bd7006dcf38fbfc96196d' target='_blank'>DNS Change</a></ListItem>
-               <ListItem><a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=ffa750c3db87d700097b3a0f9d961959'  target='_blank'>Firewall Rule Change</a></ListItem>
-               <ListItem><a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=c2f0a073db4fd7006dcf38fbfc9619eb'  target='_blank'>Request Temporary Access</a></ListItem>
-               <ListItem><a href='https://gdtdtest.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=8697f3e7dbcbd7006dcf38fbfc9619a6'  target='_blank'>Make Other Requests</a></ListItem>
-             </List>
-          </div>}
-          />
+
+          cardTitle="Submit a Request"          
+          content={              
+                <List>
+                  <ListItem><a href={dashboardLinks.dns_change}  target='_blank'>DNS Change</a></ListItem>
+                  <ListItem><a href={dashboardLinks.firewall_role_change}  target='_blank'>Firewall Rule Change</a></ListItem>
+                  <ListItem><a href={dashboardLinks.temp_access_req}  target='_blank'>Temp Access Request</a></ListItem>
+                  <ListItem><a href={dashboardLinks.make_other_req}  target='_blank'>Make Other Requests</a></ListItem>
+                </List>              
+          } />
+
 
       </ItemGrid>
         </Grid>

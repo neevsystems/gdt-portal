@@ -1,65 +1,96 @@
 import React from "react";
 import { Grid,TextField ,Checkbox,FormControlLabel,
   FormControl,MenuItem,Select,Chip,InputLabel,Input,MenuProps} from "material-ui";
-  import {  RegularCard, ItemGrid,Button} from "components";
-  import {  Edit,Delete, Save} from "@material-ui/icons";
-  import {getUser,createUser,updateUser} from '../../services/rosterService';
-  const title = [
+import {  RegularCard, ItemGrid,Button} from "components";
+import {  Edit,Delete, Save} from "@material-ui/icons";
+import {getUser,createUser,updateUser,getDomains,getCompanies} from '../../services/rosterService';
+const title = [
     { value: 'Mr.', label: 'Mr.'},
     { value: 'Mrs.', label: 'Mrs.'},
     { value: 'Miss.', label: 'Miss.'}
   ];
- class RosterRecord extends React.Component {
+class RosterRecord extends React.Component {
     constructor(props){
       super(props);
       this.state={
         user:{
           id:0,
           title:'',
-          firstName:'',
-          middleName:'',
-          lastName:'',
-          mobile:'',
-          phone:'',
-          email:'',
-          passphrase:'',
-          isAdmin:false,
-          isActive:true,
-          environment:''
-
+          firstName:'', 
+          middleName:'', 
+          lastName:'', 
+          userName:'', 
+          passphrase:'', 
+          password:'', 
+          userStatus:'', 
+          email:'', 
+          businessPhone:'', 
+          mobilePhone:'', 
+          homeMobile:'', 
+          emailNotifications:'', 
+          ticketRequester:'', 
+          notifierOnly:'', 
+          roles:'', 
+          domain:'', 
+          envronment:'',
+          envronmentArray:[],
+          userType: ''
         },
-        name:[],
-        domains:[{id:1,domainName:'domain1'},{id:2,domainName:'domain2'}],
+        companies:[],
+        domains:[],
+        rolesList:[{value:'Admin',roleName:'Admin'},{value:'Employee',roleName:'Employee'}],
+        
         selectedDomainVal:0,
       }
       this.getUserById=this.getUserById.bind(this);
+      this.getDomainList=this.getDomainList.bind(this);
+      this.getCompanies=this.getCompanies.bind(this);
       this.saveUser=this.saveUser.bind(this);
-    }
-    handleChange = event => {
-      this.setState({ name: event.target.value });
-    };
     
-    componentWillMount(){
+    }
+   /*  handleChange = event => {
+      this.setState({ name: event.target.value });
+    }; */
+    
+    componentDidMount(){
       let id=parseInt(this.props.match.params.uid ||0);
-      if(id>0)
-      this.getUserById(id);
-    }
-    handleDomainChange(event){
-      this.setState({selectedDomainVal:event.target.value});
-      //this.setSelectedCustomer(event.target.value);
-    }
+      this.getDomainList('EdithJTowle@jourrapide.com');
+     
+      if(id>0){
+        this.getUserById(id);
+      }
+    }   
     getUserById(id){
       let state=this;      
       getUser(id).then((resp)=>{
+        resp.data.user.envronmentArray=resp.data.user.envronment.split(',');
         state.setState({user:resp.data.user});
+      }).catch(function(error){
+        console.log(error);
+      });
+    }
+    getDomainList(eid){
+      let state=this;      
+      getDomains(eid).then((resp)=>{
+        state.setState({domains:resp.data.result});
+      }).catch(function(error){
+        console.log(error);
+      });
+    }
+    getCompanies(sysid,eid){
+      let state=this;      
+      getCompanies(sysid,eid).then((resp)=>{
+        state.setState({companies:resp.data.result});
       }).catch(function(error){
         console.log(error);
       });
     }
     saveUser(){
       let state=this;
+      let user=JSON.parse( JSON.stringify( state.state.user ) );
+      user.envronment=state.state.user.envronmentArray.join(',');
       if(state.state.user.id<=0){        
-      createUser(state.state.user).then((resp)=>{
+      createUser(user).then((resp)=>{
         if(resp.data.success){
           alert(resp.data.message);
           state.props.history.push('/home/roster');
@@ -76,7 +107,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,
 
       }
       else{
-        updateUser(state.state.user).then((resp)=>{
+        updateUser(user).then((resp)=>{
           if(resp.data.success){
             alert(resp.data.message);
             state.props.history.push('/home/roster');
@@ -96,23 +127,13 @@ import { Grid,TextField ,Checkbox,FormControlLabel,
       var user = {...this.state.user}
       user[e.target.name] = e.target.value;
       this.setState({user});
+      if(e.target.name=='domain'){
+        this.getCompanies(e.target.value,'EdithJTowle@jourrapide.com')
+      }
     };
     checkboxChangd  (e)  {    
-      var user = {...this.state.user}
-      switch(e.target.id){
-        case 'isAdmin':
-          if(e.target.checked){
-            user[e.target.id] = e.target.checked;
-            user['isEmployee'] = false;
-          }else{
-            user[e.target.id] = e.target.checked;
-            user['isEmployee'] = true;
-          }
-        break;
-        case 'isActive' :
-          user[e.target.id] = e.target.checked;
-        break;
-      }
+      var user = {...this.state.user}        
+      user[e.target.name] = e.target.checked;
       this.setState({user});
     };
     onCancelBtnClicks(){
@@ -185,68 +206,171 @@ import { Grid,TextField ,Checkbox,FormControlLabel,
                 </ItemGrid>
               </Grid>
               <Grid container>
-                <ItemGrid xs={12} sm={12} md={4}>
+                <ItemGrid xs={12} sm={12} md={3}>
                 <TextField
-                  id="mobile"
-                  name="mobile"
+                  id="mobilePhone"
+                  name="mobilePhone"
                   label="Mobile Phone"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
-                  value= {stateObj.state.user.mobile}
+                  value= {stateObj.state.user.mobilePhone}
                   fullWidth
                   required
                 />     
                 </ItemGrid>
-                <ItemGrid xs={12} sm={12} md={4}>
+                <ItemGrid xs={12} sm={12} md={3}>
                 <TextField
-                  id="phone"
-                  name="phone"
+                  id="homeMobile"
+                  name="homeMobile"
                   label="Home Phone"
                   margin="normal"
                   onChange={this.handleChange.bind(this)}
-                  value= {stateObj.state.user.phone}
+                  value= {stateObj.state.user.homeMobile}
                   fullWidth
                 /> 
                                             
                 </ItemGrid>
-                <ItemGrid xs={12} sm={12} md={4}>
+                <ItemGrid xs={12} sm={12} md={3}>
+                <TextField
+                  id="businessPhone"
+                  name="businessPhone"
+                  label="Business Phone"
+                  margin="normal"
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.businessPhone}
+                  fullWidth
+                /> 
+                                            
+                </ItemGrid>
+                <ItemGrid xs={12} sm={12} md={3}>
                 <TextField
                   id="email"
                   name="email"
                   label="E-Mail Id"
                   margin="normal"
+                  type='email'
                   onChange={this.handleChange.bind(this)}
                   value= {stateObj.state.user.email}
+                  fullWidth
+                  required
+                />                
+                </ItemGrid>
+               {/*  <ItemGrid xs={12} sm={12} md={4}>
+                <TextField
+                  id="userName"
+                  name="userName"
+                  label="User Name"
+                  margin="normal"
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.userName}
                   fullWidth
                   required
                 />
                 
                 </ItemGrid>
-              </Grid>
-              <Grid container>                
+                <ItemGrid xs={12} sm={12} md={4}>
+                <TextField
+                  id="password"
+                  name="password"
+                  label="Password"
+                  margin="normal"
+                  type="password"
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.password}
+                  fullWidth
+                  required
+                />
+                
+                </ItemGrid>               
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
                   id="passphrase"
                   name="passphrase"
                   label="Pass phrase"
                   margin="normal"
+                  type='password'
                   onChange={this.handleChange.bind(this)}
                   value= {stateObj.state.user.passphrase}
+                  fullWidth
+                  required
+                />               
+                </ItemGrid>*/}  
+                
+                
+                <ItemGrid xs={12} sm={12} md={3}>
+                <FormControlLabel
+                    control={
+                      <Checkbox id="emailNotifications" name="emailNotifications" onChange={this.checkboxChangd.bind(this)}
+                      checked={stateObj.state.user.emailNotifications}
+                      required
+                      />
+                    }
+                    label="Email Notifications"
+                  />
+                </ItemGrid>
+                <ItemGrid xs={12} sm={12} md={3}>
+                <FormControlLabel
+                    control={
+                      <Checkbox id="ticketRequester" name="ticketRequester" onChange={this.checkboxChangd.bind(this)}
+                      checked={stateObj.state.user.ticketRequester}
+                      required
+                      />
+                    }
+                    label="Ticket Requester"
+                  />
+                </ItemGrid>
+                <ItemGrid xs={12} sm={12} md={3}>
+                <FormControlLabel
+                    control={
+                      <Checkbox id="notifierOnly" name="notifierOnly" onChange={this.checkboxChangd.bind(this)}
+                      checked={stateObj.state.user.notifierOnly}
+                      required
+                      />
+                    }
+                    label="Notifier Only"
+                  />
+                </ItemGrid>
+                <ItemGrid xs={12} sm={12} md={3}>
+                <FormControlLabel
+                    control={
+                      <Checkbox id="userStatus" name="userStatus" onChange={this.checkboxChangd.bind(this)}
+                      checked={stateObj.state.user.userStatus}
+                      required
+                      />
+                    }
+                    label="User Status"
+                  />
+                </ItemGrid>
+                <ItemGrid xs={12} sm={12} md={4}>
+                <TextField
+                  id="userType"
+                  name="userType"
+                  label="User Type"
+                  margin="normal"
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.userType}
                   fullWidth
                   required
                 />
                 
                 </ItemGrid>
+
                 <ItemGrid xs={12} sm={12} md={3}>
-                <FormControlLabel
-                    control={
-                      <Checkbox id="isAdmin" name="isAdmin" onChange={this.checkboxChangd.bind(this)}
-                      checked={stateObj.state.user.isAdmin}     
-                      required                   
-                      />
-                    }
-                    label="Is Admin"
-                  />
+                <TextField
+                  select
+                  id="roles"
+                  name="roles"
+                  label="Roles"
+                  margin="normal"
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.roles}
+                  fullWidth
+                >
+                    {stateObj.state.rolesList.map(function(item,key) {
+                  return <MenuItem key={key} value={item.value}>{item.roleName}</MenuItem>
+                  })}
+                </TextField>
+
                 </ItemGrid>
                 <ItemGrid xs={12} sm={12} md={4}>
                 <TextField
@@ -255,69 +379,47 @@ import { Grid,TextField ,Checkbox,FormControlLabel,
                   name="domain"
                   label="Domain"
                   margin="normal"
-                  onChange={this.handleDomainChange.bind(this)}
-                  value= {stateObj.state.selectedDomainVal}
+                  onChange={this.handleChange.bind(this)}
+                  value= {stateObj.state.user.domain}
                   fullWidth
                 >
                     {stateObj.state.domains.map(function(item,key) {
-                  return <MenuItem key={key} value={item.id}>{item.domainName}</MenuItem>
+                  return <MenuItem key={key} value={item['sys_domain.sys_id']}>{item['sys_domain.name']}</MenuItem>
                   })}
                 </TextField>
 
                
                 </ItemGrid>
 
-                <ItemGrid xs={12} sm={12} md={4}>
-                <FormControl fullWidth >
-          <InputLabel htmlFor="select-multiple-chip">Companies</InputLabel>
-          <Select
-            fullWidth
-            multiple
-            value={this.state.name}
-            onChange={this.handleChange}
-            input={<Input id="select-multiple-chip" />}
-            renderValue={selected => (
-              <div >
-                {selected.map(value => <Chip key={value} label={value} />)}
-              </div>
-            )}
-          >
-          <MenuItem value="1">Company1</MenuItem>
-          <MenuItem value="2">Company2</MenuItem>
-          <MenuItem value="3">Company3</MenuItem>
-          <MenuItem value="4">Company4</MenuItem>
+                <ItemGrid xs={12} sm={12} md={12}>
+                    <FormControl fullWidth >
+                      <InputLabel >Environment</InputLabel>
+                      <Select
+                      fullWidth
+                      name="envronmentArray"
+                      multiple
+                      value={stateObj.state.user.envronmentArray||[]}
+                      onChange={stateObj.handleChange.bind(this)}
+                      input={<Input id="select-multiple-chip" />}
+                      renderText={selected => (
+                        <div>
+                          {selected.map(value => <Chip key={value} label={value} />)}
+                        </div>
+                      )}
+                      
+                    >
+            {stateObj.state.companies.map(item => (
+              <MenuItem
+                
+                value={item['company.sys_id']}
+                
+              >
+                {item['company.name']}
+              </MenuItem>
+            ))}
           </Select>
-        </FormControl>
-
-
-
-                {/* <TextField
-                  select
-                  id="environment"
-                  name="environment"
-                  label="Environment"
-                  margin="normal"
-                  onChange={this.handleChange.bind(this)}
-                  value= {stateObj.state.user.title}
-                  fullWidth
-                >
-                    <MenuItem value={0}>
-                      {''}
-                    </MenuItem>
-                </TextField> */}
-                </ItemGrid>
-                </Grid>
-                <Grid>
-                <ItemGrid xs={12} sm={12} md={3}>
-                <FormControlLabel
-                    control={
-                      <Checkbox id="isActive" name="isActive" onChange={this.checkboxChangd.bind(this)}
-                      checked={stateObj.state.user.isActive}
-                      required
-                      />
-                    }
-                    label="Is Active"
-                  />
+                                                                       
+                  </FormControl>
                 </ItemGrid>
               </Grid>
               
