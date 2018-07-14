@@ -141,9 +141,9 @@ class UploadFiles extends React.Component {
                
               </div>
             }
-            footer={<div><Button type="submit" style={{ 'background-color': '#333333' }} 
+            footer={<div><Button type="submit" style={{ 'background-color': '#1A237E' }} 
              variant="contained" color="primary" >Save</Button>
-              <Button style={{ 'background-color': '#333333' }} variant="contained" color="primary" 
+              <Button style={{ 'background-color': '#1A237E' }} variant="contained" color="primary" 
               onClick={()=>{state.props.history.push('/home/fileexchange');}}
               >Cancel</Button></div>}
 

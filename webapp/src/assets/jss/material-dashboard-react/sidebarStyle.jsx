@@ -54,6 +54,7 @@ const sidebarStyle = theme => ({
   logo: {
     position: "relative",
     padding: "15px 15px",
+    backgroundColor :"#FFF",
     zIndex: "4",
     "&:after": {
       content: '""',
@@ -168,13 +169,15 @@ const sidebarStyle = theme => ({
     }
   },
   blue: {
-    backgroundColor: infoColor,
+    backgroundColor: "#CA8D13",
     boxShadow:
-      "0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)",
+      // "0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)",
+      "#EBA925",
     "&:hover": {
-      backgroundColor: infoColor,
+      backgroundColor: "#EBA925",
       boxShadow:
-        "0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)"
+        // "0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)"
+        "#EBA925"
     }
   },
   green: {
@@ -213,7 +216,8 @@ const sidebarStyle = theme => ({
     overflow: "auto",
     width: "260px",
     zIndex: "4",
-    overflowScrolling: 'touch'
+    overflowScrolling: 'touch',
+    backgroundColor: '#1A237E'
   }
 });
 

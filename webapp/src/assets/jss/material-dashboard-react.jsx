@@ -48,7 +48,8 @@ const card = {
 };
 
 const defaultFont = {
-  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  // fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  fontFamily: '"Century Gothic", "Arial", "Verdana", sans-serif',
   fontWeight: "300",
   lineHeight: "1.5em"
 };
@@ -107,7 +108,8 @@ const purpleCardHeader = {
 };
 
 const blackCardHeader = {
-  background: "linear-gradient(60deg, #333333, #797474)",
+  // background: "linear-gradient(60deg, #333333, #797474)",
+  background: "linear-gradient(60deg, #1A237E, #404ed7)",
   ...blackBoxShadow
 };
 

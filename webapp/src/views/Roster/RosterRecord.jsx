@@ -434,8 +434,8 @@ class RosterRecord extends React.Component {
               
             </div>
           }
-          footer={<div><Button style={{'background-color':'#333333'}} variant="contained" color="primary" onClick={this.saveUser} >Save</Button>
-          <Button style={{'background-color':'#333333'}} variant="contained" color="primary" onClick={this.onCancelBtnClicks.bind(this)} >Cancel</Button></div>}
+          footer={<div><Button style={{'background-color':'#1A237E'}} variant="contained" color="primary" onClick={this.saveUser} >Save</Button>
+          <Button style={{'background-color':'#1A237E'}} variant="contained" color="primary" onClick={this.onCancelBtnClicks.bind(this)} >Cancel</Button></div>}
           />
             </ItemGrid>
       </Grid>

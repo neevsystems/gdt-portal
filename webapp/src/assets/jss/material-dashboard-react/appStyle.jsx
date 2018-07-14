@@ -20,12 +20,14 @@ const appStyle = theme => ({
     ...transition,
     maxHeight: "100%",
     width: "100%",
-    overflowScrolling: 'touch'
+    overflowScrolling: 'touch',
+    backgroundColor:"#FFF"
   },
   content: {
     marginTop: "70px",
     padding: "30px 15px",
-    minHeight: "calc(100% - 123px)"
+    minHeight: "calc(100% - 123px)",
+    backgroundColor: "#ffffff"
   },
   container,
   map: {

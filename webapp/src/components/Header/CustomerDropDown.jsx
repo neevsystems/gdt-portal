@@ -76,8 +76,8 @@ class CustomerDropDown extends React.Component {
             return <MenuItem key={key} value={item.id}>{item.customerName}</MenuItem>
             })}
           </Select>
-        </FormControl> 
-         <Manager style={{ display: "inline-block" }}>*/}
+        </FormControl> */}
+        
         <Manager >
           <Target>
             <Button variant="fab" mini
