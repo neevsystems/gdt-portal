@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
     super(props);
     this.state={
       email:'EdithJTowle@jourrapide.com',
-      tabVal:'resolved',
+      tabVal:'',
       openTickets:[],
       openTicketCount:0,
       resolvTickets:[],
@@ -74,10 +74,10 @@ class Dashboard extends React.Component {
   componentDidMount(){
     this.getOpenTickets();
     this.getResolveTickets();
+    this.setState({tabVal:'resolved'});
   }
   handleChange = (event, value) => {
     this.setState({ tabVal: value });
-
   };
  
   render() {

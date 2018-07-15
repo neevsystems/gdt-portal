@@ -8,7 +8,8 @@ import {
 import { Person, Dashboard, Search,ExitToApp } from "@material-ui/icons";
 import headerLinksStyle from "assets/jss/material-dashboard-react/headerLinksStyle";
 import {getAllCustomers} from "../../services/customerService.js";
-
+import {logout} from "../../services/rosterService.js";
+const logoutEmail='EdithJTowle@jourrapide.com';
 class CustomerDropDown extends React.Component {
   constructor(prop){
     super(prop);
@@ -52,6 +53,17 @@ class CustomerDropDown extends React.Component {
   handleChange(event){
     this.setState({selectedCustomerVal:event.target.value});
    // this.setSelectedCustomer(event.target.value);
+  }
+  onLogoutClick(){
+    var state=this;
+    logout(logoutEmail).then((resp)=>{
+      sessionStorage.clear();
+      state.props.history.push('/');
+    }).catch((error)=>{
+console.log(error);
+    });
+
+    this.setState({ open: false });
   }
  
   componentWillMount(){
@@ -114,7 +126,7 @@ class CustomerDropDown extends React.Component {
                 <Paper className={classes.dropdown}>
                   <MenuList role="menu">                   
                     <MenuItem
-                      onClick={this.handleClose}
+                      onClick={this.onLogoutClick.bind(this)}
                       className={classes.dropdownItem} >
                       <ExitToApp />  Logout
                     </MenuItem>

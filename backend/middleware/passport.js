@@ -1,6 +1,6 @@
 const JwtStrategy   = require('passport-jwt').Strategy;
 const ExtractJwt    = require('passport-jwt').ExtractJwt;
-const SamlStrategy  = require('passport-saml').Strategy;;
+const SamlStrategy  = require('./Saml');
 const fs            = require('fs');
 const path          = require('path');
 const User          = require('../models').User;
@@ -20,7 +20,7 @@ module.exports = function(passport){
 
       passport.use(SamlStrategy);
 
-    passport.use(new SamlStrategy(
+    /* passport.use( SamlStrategy(
         {
           path: '/login/callback',
           entryPoint: CONFIG.entryPoint,
@@ -37,7 +37,7 @@ module.exports = function(passport){
                 return done(null, false);
             }
         }
-      ));
+      )); */
 
     passport.use(new JwtStrategy(opts, async function(jwt_payload, done){
 

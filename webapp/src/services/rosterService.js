@@ -78,3 +78,14 @@ export const login=function () {
   })
   return promise;
 }
+
+
+export const logout=function (eid) {
+  axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
+  let fullurl=BASE_URL+'logout';
+  let promise =axios({
+    method:'post',
+    url:fullurl
+  })
+  return promise;
+}

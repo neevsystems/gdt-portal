@@ -9,6 +9,7 @@ const title = [
     { value: 'Mrs.', label: 'Mrs.'},
     { value: 'Miss.', label: 'Miss.'}
   ];
+  const loginUserEmail='ashok.kumar@neevsystems.com';
 class RosterRecord extends React.Component {
     constructor(props){
       super(props);
@@ -38,7 +39,7 @@ class RosterRecord extends React.Component {
           domainName:''
         },
         companies:[],
-        domains:[],
+        envronments:[],
         userTypesArray:[{value:'Customer_Standard',text:'Customer_Standard'},],
         rolesList:[{value:'Admin',roleName:'Admin'},{value:'Employee',roleName:'Employee'}],
         
@@ -57,7 +58,7 @@ class RosterRecord extends React.Component {
     
     componentDidMount(){
       let id=parseInt(this.props.match.params.uid ||0);
-      this.getCompanies('ashok.kumar@neevsystems.com');
+      this.getCompanies(loginUserEmail);
      
       if(id>0){
         this.getUserById(id);
@@ -83,7 +84,7 @@ class RosterRecord extends React.Component {
     getEnvronments(sysid,eid){
       let state=this;      
       getEnvronments(sysid,eid).then((resp)=>{
-        state.setState({companies:resp.data.result});
+        state.setState({envronments:resp.data.result});
       }).catch(function(error){
         console.log(error);
       });
@@ -128,12 +129,12 @@ class RosterRecord extends React.Component {
       }
     }
     handleChange  (e)  {    
-      var user = {...this.state.user}
-      user[e.target.name] = e.target.value;
-      this.setState({user});
+      var userobj = {...this.state.user}
+      userobj[e.target.name] = e.target.value;
+      this.setState({user:userobj});
       if(e.target.name=='company'){
        // this.state.domainName=e.target.text
-        this.getEnvronments(e.target.value)
+        this.getEnvronments(e.target.value,loginUserEmail);
       }
     };
     checkboxChangd  (e)  {    
@@ -417,7 +418,7 @@ class RosterRecord extends React.Component {
                       )}
                       
                     >
-            {stateObj.state.companies.map(item => (
+            {stateObj.state.envronments.map(item => (
               <MenuItem
                 
                 value={item['sys_id']}
