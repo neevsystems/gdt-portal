@@ -102,7 +102,7 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
-  { redirect: true, path: "/", to: "/home/dashboard", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/home", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;
