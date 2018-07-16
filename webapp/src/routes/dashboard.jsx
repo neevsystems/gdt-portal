@@ -25,7 +25,6 @@ const dashboardRoutes = [
     path: "/home/dashboard",
     sidebarName: "Home",
     navbarName: "Dashboard",
-    //hide:true,
     icon: Home,
     component: DashboardPage
   },
