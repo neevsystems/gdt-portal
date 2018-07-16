@@ -56,14 +56,9 @@ class CustomerDropDown extends React.Component {
   }
   onLogoutClick(){
     var state=this;
-    logout(logoutEmail).then((resp)=>{
-      sessionStorage.clear();
-      state.props.history.push('/');
-    }).catch((error)=>{
-console.log(error);
-    });
-
-    this.setState({ open: false });
+    sessionStorage.clear();
+    state.props.history.push('/logout');
+   
   }
  
   componentWillMount(){
