@@ -20,11 +20,11 @@ import {
 } from "@material-ui/icons";
 
 const dashboardRoutes = [
+  
   {
     path: "/home/dashboard",
     sidebarName: "Home",
     navbarName: "Dashboard",
-    // hide:true,
     icon: Home,
     component: DashboardPage
   },
@@ -101,7 +101,7 @@ const dashboardRoutes = [
     url: "http://www.google.com",
   },
   { redirect: true, path: "/home/servererror", to: "/servererror", navbarName: "Redirect" } ,
-  { redirect: true, path: "/", to: "/home/dashboard", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/home", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

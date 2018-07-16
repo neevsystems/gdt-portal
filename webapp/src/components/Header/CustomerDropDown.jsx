@@ -8,7 +8,8 @@ import {
 import { Person, Dashboard, Search,ExitToApp } from "@material-ui/icons";
 import headerLinksStyle from "assets/jss/material-dashboard-react/headerLinksStyle";
 import {getAllCustomers} from "../../services/customerService.js";
-
+import {logout} from "../../services/rosterService.js";
+const logoutEmail='EdithJTowle@jourrapide.com';
 class CustomerDropDown extends React.Component {
   constructor(prop){
     super(prop);
@@ -18,7 +19,7 @@ class CustomerDropDown extends React.Component {
     }
 
     this.getCustomers=this.getCustomers.bind(this);
-    this.setSelectedCustomer=this.setSelectedCustomer.bind(this);
+    //this.setSelectedCustomer=this.setSelectedCustomer.bind(this);
   }
   state = {
     open: false
@@ -43,19 +44,30 @@ class CustomerDropDown extends React.Component {
       console.log(error);
     });
   }
-  setSelectedCustomer(cid){
+  /* setSelectedCustomer(cid){
     this.props.dispatch({
       type:'SELECT_CUST',
-     data: cid});
+     data: cid}); 
   
-  }
+  }*/
   handleChange(event){
     this.setState({selectedCustomerVal:event.target.value});
-    this.setSelectedCustomer(event.target.value);
+   // this.setSelectedCustomer(event.target.value);
+  }
+  onLogoutClick(){
+    var state=this;
+    logout(logoutEmail).then((resp)=>{
+      sessionStorage.clear();
+      state.props.history.push('/');
+    }).catch((error)=>{
+console.log(error);
+    });
+
+    this.setState({ open: false });
   }
  
   componentWillMount(){
-    this.getCustomers();
+   // this.getCustomers();
   }
  
   render() {
@@ -66,7 +78,7 @@ class CustomerDropDown extends React.Component {
 
       <div>
         
-        <FormControl style={{paddingRight: "20px", width:"150px"}}>
+       {/*  <FormControl style={{paddingRight: "20px", width:"150px"}}>
           <Select
             onChange={objState.handleChange.bind(this)}
             value= {objState.state.selectedCustomerVal}
@@ -76,8 +88,9 @@ class CustomerDropDown extends React.Component {
             return <MenuItem key={key} value={item.id}>{item.customerName}</MenuItem>
             })}
           </Select>
-        </FormControl>
-         <Manager style={{ display: "inline-block" }}>
+        </FormControl> */}
+        
+        <Manager >
           <Target>
             <Button variant="fab" mini
                            
@@ -113,7 +126,7 @@ class CustomerDropDown extends React.Component {
                 <Paper className={classes.dropdown}>
                   <MenuList role="menu">                   
                     <MenuItem
-                      onClick={this.handleClose}
+                      onClick={this.onLogoutClick.bind(this)}
                       className={classes.dropdownItem} >
                       <ExitToApp />  Logout
                     </MenuItem>
@@ -128,4 +141,4 @@ class CustomerDropDown extends React.Component {
   }
 }
 
-export default connect()(withStyles(headerLinksStyle)(CustomerDropDown));
+export default withStyles(headerLinksStyle)(CustomerDropDown);

@@ -55,13 +55,41 @@ const getDomainsByUser=async function(email){
     return output;
 
 } 
-module.exports.getDomainsByUser=getDomainsByUser;
 
-const getCompanies=async function(sys_id,email){
-    const _email=querystring.escape(email);
+const getCompanies=async function(email){
+        const _email=querystring.escape(email); 
+        let derr,domain   
+        [derr, domain] = await to(getDomainsByUser(email));
+        if(derr){
+            TE(derr);
+        }
+        let err, output;
+        if((domain.result||[]).length>0){
+        let sys_id =domain.result[0]['sys_domain.sys_id']
+        var auth = 'Basic ' + Buffer.from(CONFIG.SERVICE_AC_USERNAME + ':' + CONFIG.SERVICE_AC_PASSWORD).toString('base64');   
+        const options = {
+            url:`${CONFIG.SERVICE_AC_URL}/api/now/table/sys_user?sysparm_query=sys_domain%3D${sys_id}%5Eemail%3D${_email}&sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_fields=company.name%2Ccompany.sys_id`,
+            headers: {
+                'Authorization': auth
+            },
+            json: true // Automatically parses the JSON string in the response
+        };
+        [err, output] = await to( rp(options));
+        if(err) TE(err);   
+        return output;     
+    }
+    else{
+        return {"result": []};
+    }
+    
+}
+module.exports.getCompanies=getCompanies;
+
+const getEnvronments=async function(sys_id){
+   // const _email=querystring.escape(email);
     var auth = 'Basic ' + Buffer.from(CONFIG.SERVICE_AC_USERNAME + ':' + CONFIG.SERVICE_AC_PASSWORD).toString('base64');   
     const options = {
-        url:`${CONFIG.SERVICE_AC_URL}/api/now/table/sys_user?sysparm_query=sys_domain%3D${sys_id}%5Eemail%3D${_email}&sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_fields=company.name%2Ccompany.sys_id`,
+        url:`${CONFIG.SERVICE_AC_URL}/api/now/table/u_customer_environments?sysparm_query=u_company%3D${sys_id}&sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_fields=u_name%2Csys_id`,
         headers: {
             'Authorization': auth
         },
@@ -71,4 +99,4 @@ const getCompanies=async function(sys_id,email){
     if(err) TE(err);
     return output;
 }
-module.exports.getCompanies=getCompanies;
+module.exports.getEnvronments=getEnvronments;

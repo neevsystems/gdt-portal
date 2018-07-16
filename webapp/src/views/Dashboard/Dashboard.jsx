@@ -13,6 +13,9 @@ import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 import {dashboardLinks} from '../../util/constants';
 import {getOpenTickets,getResolvedTickets} from "../../services/dashboardService";
 import Pagination from "../Dashboard/Pagination";
+
+import PaginationCss from "../Dashboard/Pagination.css";
+
 import Typography from '@material-ui/core/Typography';
 
 class TabContainer extends React.Component {
@@ -36,7 +39,7 @@ class Dashboard extends React.Component {
     super(props);
     this.state={
       email:'EdithJTowle@jourrapide.com',
-      tabVal:0,
+      tabVal:'',
       openTickets:[],
       openTicketCount:0,
       resolvTickets:[],
@@ -54,8 +57,6 @@ class Dashboard extends React.Component {
       function(resp){
         stateObj.setState({openTickets:resp.data.openTickets.result});
         stateObj.setState({openTicketCount:resp.data.openTickets.result.length});
-        console.log("RESULT 1: ----"+stateObj.state.openTicketCount);
-        console.log("RESULT er: -----"+stateObj.state.openTickets);
 
       }).catch(function(error){
         console.log(error)
@@ -67,10 +68,10 @@ class Dashboard extends React.Component {
     getResolvedTickets(stateObj.state.email).then(
       function(resp){
         stateObj.setState({resolvTickets:resp.data.resTickets.result});
-        console.log("RESULT 2: "+stateObj.state.resolvTickets);
-        stateObj.setState({resolveTicketCount:resp.data.resTickets.result.length});
-        console.log("RESULT 3: "+stateObj.state.resolveTicketCount);
-        
+
+        stateObj.setState({resolveTicketCount:resp.data.resTickets.result.length}); 
+
+
       }).catch(function(error){
         console.log(error)
       })
@@ -79,6 +80,7 @@ class Dashboard extends React.Component {
   componentDidMount(){
     this.getOpenTickets();
     this.getResolveTickets();
+    this.setState({tabVal:'resolved'});
   }
   handleChange = (event, value) => {
     this.setState({ tabVal: value });
@@ -91,6 +93,9 @@ const divStyle = {
   right: '-28px !important'
 };
 //const { value } = this.state;
+
+const { classes } = this.props;
+
 const { tabVal } = this.state
     return (
       <div>
@@ -100,7 +105,7 @@ const { tabVal } = this.state
       <RegularCard
           cardTitle="Incidents"         
           content={ 
-            <div>
+            <div className={classes.root}>
               <Grid container>
               
               <a href={dashboardLinks.create_instance}  target='_blank'><Icon>+</Icon> Create New Incident</a>
@@ -129,22 +134,16 @@ const { tabVal } = this.state
                   </Badge>
                 }
               >
-               <Card >
-                  <CardContent> <p >
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </p></CardContent></Card>
-              </Tab>
-              
-              
-             
+              </Tab>   
         </Tabs>
     
       </AppBar>  
+
       {/* <Pagination /> */}
       {console.log("result dashboard resolvTickets"+this.state.resolvTickets)}
         {tabVal === 'open' && <TabContainer><Pagination TabData={this.state.openTickets}/> </TabContainer>}
     {tabVal === 'resolved' && <TabContainer><Pagination TabData={this.state.resolvTickets}/> </TabContainer>}
+
 
                   </Grid> 
 
@@ -161,7 +160,7 @@ const { tabVal } = this.state
                 <List>
                   <ListItem><a href={dashboardLinks.dns_change}  target='_blank'>DNS Change</a></ListItem>
                   <ListItem><a href={dashboardLinks.firewall_role_change}  target='_blank'>Firewall Rule Change</a></ListItem>
-                  <ListItem><a href={dashboardLinks.temp_access_req}  target='_blank'>Temp Access Request</a></ListItem>
+                  <ListItem><a href={dashboardLinks.temp_access_req}  target='_blank'>Request Temporary Access</a></ListItem>
                   <ListItem><a href={dashboardLinks.make_other_req}  target='_blank'>Make Other Requests</a></ListItem>
                 </List>              
           } />

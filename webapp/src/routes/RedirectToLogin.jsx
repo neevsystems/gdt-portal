@@ -6,11 +6,11 @@ export class RedirectToLogin extends Component {
     this.state = { ...props };
   }
   componentWillMount(){
-  //  window.location = 'http://localhost:3001/login';
+    window.location = 'http://localhost:3001/login';
   }
   render(){
-   // return (<section>Redirecting...</section>);
-    return <Redirect to='/home' />;
+   return (<section>Redirecting...</section>);
+  //return <Redirect to='/home' />;
   }
 }
 

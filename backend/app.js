@@ -117,6 +117,28 @@ app.get('/login',
     res.redirect('/app');
   }
 );
+app.post('/logout/callback',function(req, res){
+    console.log('/logout/callback');
+    req.logout();
+    res.redirect('/app');
+}
+);
+
+app.get('/api/logout',passport.authenticate('jwt', {session:false})    ,function(req,res){
+    console.log('*******Redirect**********',req.user);
+    req.user = {};
+    req.user.nameID = req.user.email;
+    req.user.nameIDFormat = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress';
+    console.log('Redirect');
+    samlStrategy.logout(req, function(err, request){
+        if(!err){
+            //redirect to the IdP Logout URL
+            return ReS(res, {path:request }, 201 );
+        }else{
+            return ReE(res,'Unable to logout');
+        }
+    });
+});
 
 app.use('/api', routes);
 app.use('/documents', express.static(__dirname + '/documents'));

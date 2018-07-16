@@ -78,7 +78,7 @@ import {getAllUsers} from '../../services/rosterService';
                  {n.firstName+' '+n.lastName}
                 </TableCell>
                 <TableCell >{n.email}</TableCell>
-                <TableCell >Customer_Standard</TableCell>
+                <TableCell >{n.userType}</TableCell>
                 <TableCell >{n.isActive?'Active':'In-Active'}</TableCell>
                 <TableCell>
               <IconButton onClick={()=>{stateObj.editUserClick(n.id)}}  > <Edit /></IconButton>

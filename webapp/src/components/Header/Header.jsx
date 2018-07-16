@@ -42,11 +42,10 @@ function Header({ ...props }) {
     else
     return false;
   }
-  const { classes, color } = props;
+  const { classes, color, ...rest  } = props;
   const appBarClasses = cx({
     [" " + classes[color]]: color
   });
-  
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
@@ -56,7 +55,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-         <CustomerDropDown />  
+         <CustomerDropDown {...rest} />  
         </Hidden>
         <Hidden mdUp>
           <IconButton
