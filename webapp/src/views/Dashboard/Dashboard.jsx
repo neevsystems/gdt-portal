@@ -13,7 +13,9 @@ import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 import {dashboardLinks} from '../../util/constants';
 import {getOpenTickets,getResolvedTickets} from "../../services/dashboardService";
 import Pagination from "../Dashboard/Pagination";
+
 import PaginationCss from "../Dashboard/Pagination.css";
+
 import Typography from '@material-ui/core/Typography';
 
 class TabContainer extends React.Component {
@@ -55,6 +57,7 @@ class Dashboard extends React.Component {
       function(resp){
         stateObj.setState({openTickets:resp.data.openTickets.result});
         stateObj.setState({openTicketCount:resp.data.openTickets.result.length});
+
       }).catch(function(error){
         console.log(error)
       })
@@ -65,7 +68,10 @@ class Dashboard extends React.Component {
     getResolvedTickets(stateObj.state.email).then(
       function(resp){
         stateObj.setState({resolvTickets:resp.data.resTickets.result});
+
         stateObj.setState({resolveTicketCount:resp.data.resTickets.result.length}); 
+
+
       }).catch(function(error){
         console.log(error)
       })
@@ -87,7 +93,9 @@ const divStyle = {
   right: '-28px !important'
 };
 //const { value } = this.state;
+
 const { classes } = this.props;
+
 const { tabVal } = this.state
     return (
       <div>
@@ -130,10 +138,13 @@ const { tabVal } = this.state
         </Tabs>
     
       </AppBar>  
-      {/* <Pagination TabData={this.state.openTickets}/> */}
-        {tabVal === 'open' && <TabContainer><Pagination TabData={this.state.openTickets}/></TabContainer>}
-        {tabVal === 'resolved' && <TabContainer><Pagination TabData={this.state.resolvTickets}/></TabContainer>}
-      
+
+      {/* <Pagination /> */}
+      {console.log("result dashboard resolvTickets"+this.state.resolvTickets)}
+        {tabVal === 'open' && <TabContainer><Pagination TabData={this.state.openTickets}/> </TabContainer>}
+    {tabVal === 'resolved' && <TabContainer><Pagination TabData={this.state.resolvTickets}/> </TabContainer>}
+
+
                   </Grid> 
 
             </div>
