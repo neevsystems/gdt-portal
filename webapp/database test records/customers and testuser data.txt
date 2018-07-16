@@ -1,0 +1,19 @@
+INSERT INTO `GDTDB`.`Customers` (`customerName`, `createdAt`, `updatedAt`, `isCustomer`, `isComplaince`) VALUES ('Chiefhead', '2017-07-14', '2017-07-14', 1, 1);
+INSERT INTO `GDTDB`.`Customers` (`customerName`, `createdAt`, `updatedAt`, `isCustomer`, `isComplaince`) VALUES ('Crystal Coms', '2017-07-14', '2017-07-14', 1, 1);
+INSERT INTO `GDTDB`.`Customers` (`customerName`, `createdAt`, `updatedAt`, `isCustomer`, `isComplaince`) VALUES ('Omegawares', '2017-07-14', '2017-07-14', 1, 0);
+INSERT INTO `GDTDB`.`Customers` (`customerName`, `createdAt`, `updatedAt`, `isCustomer`, `isComplaince`) VALUES ('Red Productions', '2017-07-14', '2017-07-14', 1, 0);
+INSERT INTO `GDTDB`.`Customers` (`customerName`, `createdAt`, `updatedAt`, `isCustomer`) VALUES ('Spiderways -GDT', '2017-07-14', '2017-07-14', 0);
+
+
+
+
+INSERT INTO `TestUsers` VALUES (1,'Edith J. Towle',1,'SUPERUSER','EdithJTowle@jourrapide.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(2,'Daniel E. Gaylor',1,'USER','DanielEGaylor@armyspy.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(3,'James J. Jordan',2,'SUPERUSER','JamesJJordan@teleworm.us','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(4,'Jane B. Kitchens',2,'USER','JaneBKitchens@rhyta.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(5,'Charles E. Avis',3,'SUPERUSER','CharlesEAvis@dayrep.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(6,'Darleen R. Aparicio',3,'USER','DarleenRAparicio@armyspy.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(7,'Joann D. Rapp',4,'SUPERUSER','JoannDRapp@armyspy.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(8,'Elmer G. Dinger',4,'USER','ElmerGDinger@jourrapide.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(9,'Randall E. Brooker',5,'ADMIN','RandallEBrooker@dayrep.com','2017-07-14 00:00:00','2017-07-14 00:00:00'),
+(10,'Richard A. Parker',5,'NONADMIN','RichardAParker@rhyta.com','2017-07-14 00:00:00','2017-07-14 00:00:00');
