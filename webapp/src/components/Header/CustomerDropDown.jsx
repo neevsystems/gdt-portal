@@ -4,11 +4,12 @@ import {connect} from 'react-redux';
 import { Manager, Target, Popper } from "react-popper";
 import {
   withStyles, IconButton,  MenuItem,  MenuList,  Grow,  Paper,  ClickAwayListener,  
-  Hidden,FormControl,Select,Button} from "material-ui";
+  Hidden,FormControl,Select,Button,Chip,Avatar} from "material-ui";
 import { Person, Dashboard, Search,ExitToApp } from "@material-ui/icons";
 import headerLinksStyle from "assets/jss/material-dashboard-react/headerLinksStyle";
 import {getAllCustomers} from "../../services/customerService.js";
 import {logout} from "../../services/rosterService.js";
+import defaultImage from '../../assets/img/profile.png';
 const logoutEmail='EdithJTowle@jourrapide.com';
 class CustomerDropDown extends React.Component {
   constructor(prop){
@@ -87,21 +88,25 @@ class CustomerDropDown extends React.Component {
         
         <Manager >
           <Target>
-            <Button variant="fab" mini
+          <Chip label={logoutEmail} avatar={<Avatar src={defaultImage} />}
+         onClick={this.handleClick} aria-owns={open ? "menu-list" : null}
+         aria-haspopup="true" >
+            {/* <Button variant="fab" mini
                            
               aria-owns={open ? "menu-list" : null}
               aria-haspopup="true"
               onClick={this.handleClick}
               className={classes.button}
-            >
-              <Person className={classes.links} />
+            > 
+              <Person className={classes.links} />*/}
              
               <Hidden mdUp>
                 <p onClick={this.handleClick} className={classes.linkText}>
                   Notification
                 </p>
               </Hidden>
-            </Button>
+              </Chip>
+            {/* </Button> */}
           </Target>
           <Popper
             placement="bottom-start"
