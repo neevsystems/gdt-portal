@@ -7,7 +7,8 @@ const HomeController 	= require('./controllers/HomeController');
 const FileExchangeController=require('./controllers/FileExchange');
 const CalenderController=require('./controllers/CalenderController');
 const CustomerController=require('./controllers/CustomerController');
-const DashboardController=require('./controllers/DashboardController')
+const DashboardController=require('./controllers/DashboardController');
+const TestUsersController=require('./controllers/TestUserController')
 
 const passport      	= require('passport');
 const path              = require('path');
@@ -48,7 +49,7 @@ router.get(     '/allcustomers',         CustomerController.getall);
 router.get(     '/openTickets/:eid',         DashboardController.openTickets);
 router.get(     '/resolvedTickets/:eid',     DashboardController.resolvedTickets);
 
-
+router.get(     '/getuserAccessdetails/:eid', TestUsersController.getUserAccessDetails);
 
 
 
