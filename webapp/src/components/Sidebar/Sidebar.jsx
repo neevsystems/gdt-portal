@@ -27,7 +27,7 @@ const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  const { classes, color, logo, image, logoText, routes } = props;
+  const { classes, color, logo, image, logoText, routes,accessData } = props;
   var links = (
     <List className={classes.list}>
       {routes
@@ -61,8 +61,12 @@ const Sidebar = ({ ...props }) => {
               </a>
           );
         } else {
-          return (
-            <NavLink
+          if(!(accessData.company?accessData.company.isCustomer: true) && (prop.gdtUserView==undefined?true:prop.gdtUserView)==false)
+         return null;
+            else{
+            return (
+            
+            (  <NavLink
               to={prop.path}
               className={classes.item}
               activeClassName="active"
@@ -79,9 +83,12 @@ const Sidebar = ({ ...props }) => {
                 />
               </ListItem>
 
-            </NavLink>
+            </NavLink>)
           );
         }
+        }
+        
+     
 
       })}
     </List>

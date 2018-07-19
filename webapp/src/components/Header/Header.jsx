@@ -21,7 +21,7 @@ import {getAccessDetails} from '../../services/UserService'
 function Header({ ...props }) {
 
   function createUserAccessStore(){
-    let userEmail="JaneBKitchens@rhyta.com";
+    let userEmail= sessionStorage.getItem('email')|| "JaneBKitchens@rhyta.com";
     getAccessDetails(userEmail).then(function (response) {
       var data=response.data;
       props.dispatch({
