@@ -1,5 +1,5 @@
 import React from "react";
-
+import {connect} from 'react-redux';
 import { withStyles, Grid, Card,
   CardContent,
   CardHeader,
@@ -77,27 +77,41 @@ class FileExchange extends React.Component {
   componentWillMount(){
     this.getCustomers();
     let cid=(this.state.selectedCustomer)==''?0:(this.state.selectedCustomer||0);
-    this.getAllDocs(cid,loginUsrCompany);
+    let userCompany=(this.props.accessData.testuser)?this.props.accessData.testuser.customerId:0
+    this.getAllDocs(cid,userCompany);
   }
   
   
   onCustomerChange(event){
     this.setState({selectedCustomer:event.target.value}); 
     let cid=(event.target.value)==''?0:(event.target.value||0); 
-    this.getAllDocs(cid,loginUsrCompany); 
+    let userCompany=(this.props.accessData.testuser)?this.props.accessData.testuser.customerId:0
+    this.getAllDocs(cid,userCompany); 
   }
 
   getCustomers(){
     let stateObj=this;
-    getAllCustomers().then(function(resp){
-      stateObj.setState({customers:resp.data.customers});
-      if(stateObj.state.customers.length>0){
-        //stateObj.setState({selectedCustomer:stateObj.state.customers[0].id});
-      }
+    let customerList=[];
 
-    }).catch(function (error) {
-      console.log(error);
-    });
+    if(stateObj.props.accessData.accesscompanys!=undefined){
+      if(Array.isArray(stateObj.props.accessData.accesscompanys)){
+        customerList=stateObj.props.accessData.accesscompanys;
+      }else{
+        customerList= [stateObj.props.accessData.accesscompanys];
+      }
+    }
+    stateObj.setState({customers:customerList});
+    // getAllCustomers().then(function(resp){
+    //   stateObj.setState({customers:resp.data.customers});
+    //   if(stateObj.state.customers.length>0){
+    //     //stateObj.setState({selectedCustomer:stateObj.state.customers[0].id});
+    //   }
+
+    // }).catch(function (error) {
+    //   console.log(error);
+    // });
+
+
   }
   
   render() {
@@ -178,7 +192,11 @@ class FileExchange extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+      accessData: state
+  }
+}
 
-
-export default withStyles(dashboardStyle)(FileExchange);
+export default connect(mapStateToProps)(withStyles(dashboardStyle)(FileExchange));
 

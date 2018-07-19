@@ -7,11 +7,11 @@ import "assets/css/material-dashboard-react.css?v=1.2.0";
 import "assets/css/material-design-iconic-font.min.css?v=1.2.0";
 
 import indexRoutes from "routes/index.jsx";
-//import { createStore } from 'redux';
-//import { Provider } from 'react-redux';
-//import customerReducer from '../src/views/reducer/customerReducer';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import userAccessReducer from '../src/views/reducer/userAccessReducer';
 
-//const store = createStore(customerReducer);
+const store = createStore(userAccessReducer);
 
 
 const hist = createBrowserHistory();
@@ -46,7 +46,7 @@ const PrivateRoute = ({component: Component, ...rest}) =>(
 
 
 ReactDOM.render(
-//<Provider store={store}>
+<Provider store={store}>
   <Router history={hist}>
     <Switch>
       {indexRoutes.map((prop, key) => {
@@ -57,7 +57,7 @@ ReactDOM.render(
       })}
     </Switch>
   </Router>
-  //</Provider>,
+  </Provider>
   ,
   document.getElementById("root")
 );

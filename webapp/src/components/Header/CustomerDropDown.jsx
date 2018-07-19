@@ -10,7 +10,8 @@ import headerLinksStyle from "assets/jss/material-dashboard-react/headerLinksSty
 import {getAllCustomers} from "../../services/customerService.js";
 import {logout} from "../../services/rosterService.js";
 import defaultImage from '../../assets/img/profile.png';
-const logoutEmail='EdithJTowle@jourrapide.com';
+//const logoutEmail='EdithJTowle@jourrapide.com';
+
 class CustomerDropDown extends React.Component {
   constructor(prop){
     super(prop);
@@ -88,9 +89,11 @@ class CustomerDropDown extends React.Component {
         
         <Manager >
           <Target>
-          <Chip label={logoutEmail} avatar={<Avatar src={defaultImage} />}
+           
+          <Chip label={Object.keys(this.props.accessData).length>0?this.props.accessData.testuser.userName:''} avatar={<Avatar src={defaultImage} />}
          onClick={this.handleClick} aria-owns={open ? "menu-list" : null}
          aria-haspopup="true" >
+          
             {/* <Button variant="fab" mini
                            
               aria-owns={open ? "menu-list" : null}
@@ -140,5 +143,10 @@ class CustomerDropDown extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+      accessData: state
+  }
+}
 
-export default withStyles(headerLinksStyle)(CustomerDropDown);
+export default connect(mapStateToProps)( withStyles(headerLinksStyle)(CustomerDropDown));

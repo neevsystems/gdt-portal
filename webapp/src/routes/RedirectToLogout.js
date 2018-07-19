@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
-import getLogoutURL from '../services/UserService';
+import {getLogoutURL} from '../services/UserService';
 export class RedirectToLogout extends Component {
   constructor( props ){
     super();

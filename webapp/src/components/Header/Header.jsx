@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Menu } from "@material-ui/icons";
+import {connect} from 'react-redux';
 import {
   withStyles,
   AppBar,
@@ -13,8 +14,27 @@ import cx from "classnames";
 import {HeaderLinks,CustomerDropDown } from "components";
 
 import headerStyle from "assets/jss/material-dashboard-react/headerStyle.jsx";
+import {getAccessDetails} from '../../services/UserService'
+
+
 
 function Header({ ...props }) {
+
+  function createUserAccessStore(){
+    let userEmail="JaneBKitchens@rhyta.com";
+    getAccessDetails(userEmail).then(function (response) {
+      var data=response.data;
+      props.dispatch({
+      type:'SET_ACCESS',
+      data});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+  }
+  createUserAccessStore();
   function makeBrand() {
     var name;
     props.routes.map((prop, key) => {
@@ -77,4 +97,4 @@ Header.propTypes = {
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
 };
 
-export default withStyles(headerStyle)(Header);
+export default connect()(withStyles(headerStyle)(Header));

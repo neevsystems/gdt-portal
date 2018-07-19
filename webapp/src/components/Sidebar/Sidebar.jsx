@@ -17,7 +17,7 @@ import {
 import {
   Launch
 } from "@material-ui/icons";
-
+import {connect} from 'react-redux';
 import sidebarStyle from "assets/jss/material-dashboard-react/sidebarStyle.jsx";
 import '../Sidebar/Sidebar.css';
 //import { Icon } from "material-ui";
@@ -148,5 +148,10 @@ const Sidebar = ({ ...props }) => {
 Sidebar.propTypes = {
   classes: PropTypes.object.isRequired
 };
+const mapStateToProps = (state) => {
+  return {
+    accessData: state
+  }
+}
 
-export default withStyles(sidebarStyle)(Sidebar);
+export default connect(mapStateToProps)(withStyles(sidebarStyle)(Sidebar));

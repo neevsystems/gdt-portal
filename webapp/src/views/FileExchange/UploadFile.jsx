@@ -7,6 +7,7 @@ import { RegularCard, ItemGrid, CustomInput, Button } from "components";
 import { Edit, Delete, CloudUpload, AttachFile } from "@material-ui/icons";
 import {saveDocument} from "../../services/documentsService.js";
 import {getAllCustomers} from "../../services/customerService.js";
+import {connect} from 'react-redux';
 //import { connect } from 'react-redux';
 const loginUsrCompany='GDT';
 class UploadFiles extends React.Component {
@@ -24,7 +25,7 @@ class UploadFiles extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.getCustomers=this.getCustomers.bind(this);
   }
-  componentWillMount(){
+  componentDidMount(){
     this.getCustomers();
   }
   handleChange = (event, value) => {
@@ -36,7 +37,17 @@ class UploadFiles extends React.Component {
   }
   getCustomers(){
     let stateObj=this;
-    getAllCustomers().then(function(resp){
+    let customerList=[];
+
+    if(stateObj.props.accessData.accesscompanys!=undefined){
+      if(Array.isArray(stateObj.props.accessData.accesscompanys)){
+        customerList=stateObj.props.accessData.accesscompanys;
+      }else{
+        customerList= [stateObj.props.accessData.accesscompanys];
+      }
+    }
+    stateObj.setState({customers:customerList});
+   /*  getAllCustomers().then(function(resp){
       stateObj.setState({customers:resp.data.customers});
       if(stateObj.state.customers.length>0){
         stateObj.setState({selectedCustomerVal:stateObj.state.customers[0].id});
@@ -45,7 +56,10 @@ class UploadFiles extends React.Component {
 
     }).catch(function (error) {
       console.log(error);
-    });
+    }); */
+  }
+  componentWillReceiveProps(newProps) {
+    this.getCustomers();
   }
   onCustomerChange(event){
     this.setState({selectedCustomer:event.target.value}); 
@@ -60,10 +74,10 @@ class UploadFiles extends React.Component {
     const formData = new FormData();    
     formData.append('fileName',this.myInput.files[0].name);
     formData.append('fileFor', state.state.selectedCustomer);
-    formData.append('fileFrom',loginUsrCompany);
+    formData.append('fileFrom',state.props.accessData.testuser.customerId);
     formData.append('fileDesc',state.state.filedesc);
     formData.append('files',this.myInput.files[0]);
-    formData.append('createdBy',loginUsrCompany);
+    formData.append('createdBy',state.props.accessData.testuser.email);
     saveDocument(formData).then(function (response) {
      alert("File uploaded sucessfully!.");
      state.props.history.push('/home/fileexchange');
@@ -157,5 +171,10 @@ class UploadFiles extends React.Component {
     </div>);
   }
 }
+const mapStateToProps = (state) => {
+  return {
+      accessData: state
+  }
+}
 
-export default UploadFiles ;
+export default connect(mapStateToProps)(UploadFiles) ;
