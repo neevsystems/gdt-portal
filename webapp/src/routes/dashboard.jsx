@@ -34,7 +34,8 @@ const dashboardRoutes = [
     navbarName: "Asset Manager",
     icon: Devices,
     isLauncher: true,
-    url: "https://172.16.28.220",
+    // url: "https://172.16.28.220",
+    url: "https://demo.macaw.io/app-dimensions",
   },
   {
     path: "/home/monitoring",
@@ -42,7 +43,7 @@ const dashboardRoutes = [
     navbarName: "Monitoring",
     icon: TrackChanges,
     isLauncher: true,
-    url: "https://demo.macaw.io",
+    url: "https://demo.macaw.io/home",
   },
   {
     path: "/home/servicedesk",
