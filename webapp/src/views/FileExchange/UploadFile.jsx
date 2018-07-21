@@ -8,7 +8,6 @@ import { Edit, Delete, CloudUpload, AttachFile } from "@material-ui/icons";
 import {saveDocument} from "../../services/documentsService.js";
 import {getAllCustomers} from "../../services/customerService.js";
 import {connect} from 'react-redux';
-//import { connect } from 'react-redux';
 const loginUsrCompany='GDT';
 class UploadFiles extends React.Component {
   constructor(props) {

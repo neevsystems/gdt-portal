@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 
 
 router.post(    '/user',           UserController.createUser);
-router.get(     '/allusers',        UserController.getall);
+router.get(     '/allusers/:cid',        UserController.getall);
 // passport.authenticate('jwt', {session:false})                                            // C
 router.get(     '/users',            UserController.get);        // R
 

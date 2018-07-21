@@ -4,37 +4,29 @@ const ldapService =require('../services/LdapService');
 const ServiceAcService =require('../services/ServiceAcService');
 const createUser =  async function(req, res){
     const userInfo = req.body;
-    if(await ldapService.addLdapUser(userInfo)){
-        [err, user] = await to(User.create(userInfo));
-            if(err) { console.log(err);
+    await ldapService.addLdapUser(userInfo);
+    [err, user] = await to(User.create(userInfo));
+        if(err) 
+        { console.log(err);
                 return ReE(res,'Unable to Create user');
-            }
+        }
         return ReS(res, {message:'Successfully created new user.',user:user.toJSON()}, 201);
-    }
-    else{
-        return ReE(res,'Unable to Create user');
-    }   
+     
 
 }
 module.exports.createUser = createUser;
 const updateUser =  async function(req, res){
-
     const userInfo = req.body;
      if(userInfo.id){
         [err, user] = await to(User.findById(userInfo.id));
         if(err || !user) return ReE(res,'Unable to find user');
-        if(await ldapService.update(userInfo)){
+        await ldapService.update(userInfo);
             [err, resuser] = await to(user.update(userInfo));
             if(err) return ReE(res,'Unable to Update user');
-            return ReS(res, {message:'Successfully updated new user.', user:resuser.toJSON()}, 201);
-        }
-        else{
-            return ReE(res,'Unable to Update user');
-        }
+            return ReS(res, {message:'Successfully updated new user.', user:resuser.toJSON()}, 201);        
     }else{
         ReE(res,'can not update user without ID');
     }
-
 }
 module.exports.updateUser = updateUser;
 
@@ -68,7 +60,7 @@ module.exports.get = get;
 const getall = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let users,err;
-    [err, users] = await to(User.findAll());
+    [err, users] = await to(User.findAll({where:{loginUserCompanyId:req.params.cid}}));
     if(err)
         return ReE(res, err, 422);
     else

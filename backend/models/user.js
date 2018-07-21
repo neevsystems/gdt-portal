@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
         roles    : DataTypes.STRING,
         company:DataTypes.STRING,
         envronment:DataTypes.STRING,
-        userType: DataTypes.STRING  
+        userType: DataTypes.STRING,
+        loginUserCompanyId: DataTypes.INTEGER
     });
 
      /* Model.associate = function(models){

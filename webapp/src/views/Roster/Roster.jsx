@@ -4,7 +4,7 @@ import { Grid,Table, TableHead, TableRow,TableCell, TableBody ,
 import {  RegularCard, ItemGrid} from "components";
 import {  Edit,Delete,PersonAdd} from "@material-ui/icons";
 import {getAllUsers} from '../../services/rosterService';
-
+import {connect} from 'react-redux';
 
   class Roster extends React.Component {
     constructor(props){
@@ -22,7 +22,7 @@ import {getAllUsers} from '../../services/rosterService';
     }
     getUserList(){
       var state=this;
-      getAllUsers().then(function (response) {
+      getAllUsers((state.props.accessData)?state.props.accessData.company.id:0).then(function (response) {
         state.setState({userList:response.data.users});
       })
       .catch(function (error) {
@@ -95,4 +95,9 @@ import {getAllUsers} from '../../services/rosterService';
   );
 }
 }
-export default Roster;
+const mapStateToProps = (state) => {
+  return {
+      accessData: state
+  }
+}
+export default connect(mapStateToProps)(Roster);

@@ -4,6 +4,7 @@ import { Grid,TextField ,Checkbox,FormControlLabel,
 import {  RegularCard, ItemGrid,Button} from "components";
 import {  Edit,Delete, Save} from "@material-ui/icons";
 import {getUser,createUser,updateUser,getEnvronments,getCompanies} from '../../services/rosterService';
+import {connect} from 'react-redux';
 const title = [
     { value: 'Mr.', label: 'Mr.'},
     { value: 'Mrs.', label: 'Mrs.'},
@@ -94,7 +95,8 @@ class RosterRecord extends React.Component {
       let user=JSON.parse( JSON.stringify( state.state.user ) );
       user.envronment=state.state.user.envronmentArray.join(',');
       
-      if(state.state.user.id<=0){        
+      if(state.state.user.id<=0){     
+        user.loginUserCompanyId=  this.props.accessData.company.id 
       createUser(user).then((resp)=>{
         if(resp.data.success){
           alert(resp.data.message);
@@ -444,4 +446,10 @@ class RosterRecord extends React.Component {
         </div>);
     }
 }
-export default RosterRecord;
+const mapStateToProps = (state) => {
+  return {
+      accessData: state
+  }
+}
+
+export default connect(mapStateToProps)(RosterRecord);

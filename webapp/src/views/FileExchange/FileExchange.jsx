@@ -78,7 +78,7 @@ class FileExchange extends React.Component {
     this.getCustomers();
     let cid=(this.state.selectedCustomer)==''?0:(this.state.selectedCustomer||0);
     let userCompany=(this.props.accessData.testuser)?this.props.accessData.testuser.customerId:0
-    this.getAllDocs(cid,userCompany);
+    this.getAllDocs(userCompany,cid);
   }
   
   
@@ -86,7 +86,7 @@ class FileExchange extends React.Component {
     this.setState({selectedCustomer:event.target.value}); 
     let cid=(event.target.value)==''?0:(event.target.value||0); 
     let userCompany=(this.props.accessData.testuser)?this.props.accessData.testuser.customerId:0
-    this.getAllDocs(cid,userCompany); 
+    this.getAllDocs(userCompany,cid); 
   }
 
   getCustomers(){

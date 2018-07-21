@@ -2,9 +2,9 @@ import axios from 'axios';
 import {BASE_URL} from '../util/constants';
 var token=sessionStorage.getItem('jwttoken');
 
-export const getAllUsers=function () {
+export const getAllUsers=function (cid) {
   axios.defaults.headers.common['Authorization'] ='Bearer '+sessionStorage.getItem('jwttoken');
-  let fullurl=BASE_URL+'allusers';
+  let fullurl=BASE_URL+'allusers/'+cid;
   let promise =axios({
     method:'get',
     url:fullurl

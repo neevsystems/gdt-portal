@@ -61,8 +61,8 @@ const Sidebar = ({ ...props }) => {
               </a>
           );
         } else {
-          if(!(accessData.company?accessData.company.isCustomer: true) && (prop.gdtUserView==undefined?true:prop.gdtUserView)==false)
-         return null;
+         if(['NONADMIN', 'ADMIN', 'USER'].includes((accessData.testuser?accessData.testuser.role: '')) &&(prop.sidebarName=='Roster'))
+          return null;
             else{
             return (
             

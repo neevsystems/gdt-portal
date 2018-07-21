@@ -73,7 +73,6 @@ const dashboardRoutes = [
     path: "/home/roster",
     sidebarName: "Roster",
     navbarName: "Roster",    
-    gdtUserView:false,
     icon: Person,
     component: Roster
   },
